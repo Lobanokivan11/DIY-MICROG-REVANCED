@@ -8,7 +8,7 @@ git clone https://github.com/microg/GmsCore.git input
 cd input
 patch -t -s -p1 < ../gmscore.patch
 export GRADLE_MICROG_VERSION_WITHOUT_GIT=1
-./gradlew --no-daemon :play-services-core:assembleMapboxDefault :play-services-core:assembleMapboxHuawei
+gradle --no-daemon :play-services-core:assembleMapboxDefault :play-services-core:assembleMapboxHuawei
 mkdir ../outputog
 mkdir ../outputhw
 cp play-services-core/build/outputs/apk/mapboxDefault/release/*.apk ../outputog
