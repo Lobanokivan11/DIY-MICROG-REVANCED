@@ -21,7 +21,6 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
 
     - name: Execute build script
       run: bash ./build.sh
