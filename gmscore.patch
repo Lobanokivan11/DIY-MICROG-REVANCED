@@ -63,6 +63,14 @@ diff -Naur Microg/firebase-auth/core/src/main/AndroidManifest.xml Rvmg/firebase-
              </intent-filter>
          </service>
          <activity
+diff -Naur Microg/gradle.properties Rvmg/gradle.properties
+--- Microg/gradle.properties	2024-12-23 17:33:54.646073301 +0300
++++ Rvmg/gradle.properties	2024-12-23 18:04:37.932923593 +0300
+@@ -2,3 +2,4 @@
+ org.gradle.configuration-cache=true
+ org.gradle.caching=true
+ org.gradle.jvmargs=-Xmx4096m -XX:+UseParallelGC --add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
++android.enableJetifier=true
 diff -Naur Microg/play-services-ads/core/build.gradle Rvmg/play-services-ads/core/build.gradle
 --- Microg/play-services-ads/core/build.gradle	2024-12-23 17:33:54.656073302 +0300
 +++ Rvmg/play-services-ads/core/build.gradle	2024-12-23 17:32:24.552730992 +0300
