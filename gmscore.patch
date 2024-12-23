@@ -1893,13 +1893,7 @@ diff -Naur Microg/play-services-core/src/main/res/xml/preferences_accounts.xml R
      <PreferenceCategory
 diff -Naur Microg/play-services-core/src/main/res/xml/preferences_auth.xml Rvmg/play-services-core/src/main/res/xml/preferences_auth.xml
 --- Microg/play-services-core/src/main/res/xml/preferences_auth.xml	2024-12-23 17:33:54.762739979 +0300
-+++ Rvmg/play-services-core/src/main/res/xml/preferences_auth.xml	2024-12-23 17:32:39.996065864 +0300
-@@ -1,4 +1,4 @@
--<?xml version="1.0" encoding="utf-8"?><!--
-+w<?xml version="1.0" encoding="utf-8"?><!--
-   ~ Copyright (C) 2013-2017 microG Project Team
-   ~
-   ~ Licensed under the Apache License, Version 2.0 (the "License");
++++ Rvmg/play-services-core/src/main/res/xml/preferences_auth.xml	2024-12-23 17:55:04.179533103 +0300
 @@ -19,21 +19,21 @@
          android:key="k2"
          android:title="@string/prefs_account_security">
