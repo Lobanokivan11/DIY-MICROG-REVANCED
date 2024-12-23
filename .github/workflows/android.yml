@@ -1,0 +1,29 @@
+name: Build GmsCore
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: "0 * * * *"
+
+jobs:
+  start_building_gmscore:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Prepare environment
+      run: |
+        sudo sed -Ei 's/^# deb-src /deb-src /' /etc/apt/sources.list
+
+    - name: Execute build script
+      run: bash ./build.sh
+
+    - name: Release Gmscore
+      uses: softprops/action-gh-release@v1
+      with:
+        body: Revanced GmsCore
+        tag_name: github_run
+        name: Revanced Gmscore Based on latest Microg Version
+        files: |
+           gmscore-huawei.apk
+           gmscore-original.apk
