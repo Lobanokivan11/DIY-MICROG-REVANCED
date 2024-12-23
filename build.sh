@@ -1,6 +1,5 @@
 sudo apt update
-sudo apt install git git-lfs
-sudo apt install openjdk-17
+sudo apt install git git-lfs openjdk-17 zipalign apksigner
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install gradle
