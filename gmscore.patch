@@ -1,82 +1,9 @@
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/.github/workflows/build.yml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/.github/workflows/build.yml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/.github/workflows/build.yml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/.github/workflows/build.yml	2024-04-05 05:27:32.000000000 +0300
-@@ -24,6 +24,8 @@
-         uses: gradle/wrapper-validation-action@v2
-       - name: "Setup Gradle"
-         uses: gradle/actions/setup-gradle@v3
-+      - name: Cache Gradle
-+        uses: burrunan/gradle-cache-action@v1
-       - name: "Setup matchers"
-         run: |
-           # Setting up matchers...
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/.github/workflows/release.yml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/.github/workflows/release.yml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/.github/workflows/release.yml	1970-01-01 03:00:00.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/.github/workflows/release.yml	2024-04-05 05:27:32.000000000 +0300
-@@ -0,0 +1,57 @@
-+name: Release
-+
-+on:
-+  push:
-+    tags:
-+      - "v*"
-+
-+jobs:
-+  release:
-+    runs-on: ubuntu-latest
-+    name: Release
-+    steps:
-+      - uses: actions/checkout@v2
-+        with:
-+          fetch-depth: 0
-+
-+      - name: Cache Gradle
-+        uses: burrunan/gradle-cache-action@v1
-+
-+      - name: Setup Java
-+        uses: actions/setup-java@v4
-+        with:
-+          distribution: "temurin"
-+          java-version: "17"
-+
-+      - name: Build
-+        run: ./gradlew --no-daemon :play-services-core:assembleMapboxDefault :play-services-core:assembleMapboxHuawei
-+
-+      - name: Move
-+        run: |
-+          mkdir play-services-core/build/outputs/apk/releases
-+          mv \
-+            play-services-core/build/outputs/apk/mapboxDefault/release/*.apk \
-+            play-services-core/build/outputs/apk/mapboxHuawei/release/*.apk \
-+            play-services-core/build/outputs/apk/releases
-+
-+      - name: Sign
-+        id: sign_apk
-+        uses: ilharp/sign-android-release@v1
-+        with:
-+          releaseDir: play-services-core/build/outputs/apk/releases
-+          signingKey: ${{ secrets.SIGNING_KEYSTORE }}
-+          keyAlias: ${{ secrets.SIGNING_KEY_ALIAS }}
-+          keyStorePassword: ${{ secrets.SIGNING_KEYSTORE_PASSWORD }}
-+          keyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
-+
-+      - name: Split
-+        uses: jungwinter/split@v2
-+        id: signed_files
-+        with:
-+          msg: ${{ steps.sign_apk.outputs.signedFiles }}
-+          separator: ':'
-+
-+      - name: Release
-+        uses: ncipollo/release-action@v1
-+        with:
-+          artifacts: play-services-core/build/outputs/apk/releases/*-signed.apk
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/README.md GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/README.md
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/README.md	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/README.md	2024-04-05 05:27:32.000000000 +0300
-@@ -6,6 +6,22 @@
+diff -Naur Microg/README.md Rvmg/README.md
+--- Microg/README.md	2024-12-23 17:33:54.626073299 +0300
++++ Rvmg/README.md	2024-12-23 17:32:22.522730790 +0300
+@@ -13,6 +13,22 @@
  
- ### Please refer to the [wiki](https://github.com/microg/GmsCore/wiki) for downloads and instructions
+ If you'd like to help translate microG, take a look at [TRANSLATION](TRANSLATION.md).
  
 +About this fork
 +-------
@@ -97,9 +24,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/README.md GmsCore-9d
  
  License
  -------
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/build.gradle Rvmg/build.gradle
+--- Microg/build.gradle	2024-12-23 17:33:54.636073300 +0300
++++ Rvmg/build.gradle	2024-12-23 17:32:22.742730812 +0300
 @@ -4,6 +4,9 @@
   */
  
@@ -110,9 +37,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/build.gradle GmsCore
      ext.cronetVersion = '102.5005.125'
      ext.wearableVersion = '0.1.1'
  
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/firebase-auth/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/firebase-auth/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/firebase-auth/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/firebase-auth/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/firebase-auth/core/build.gradle Rvmg/firebase-auth/core/build.gradle
+--- Microg/firebase-auth/core/build.gradle	2024-12-23 17:33:54.639406633 +0300
++++ Rvmg/firebase-auth/core/build.gradle	2024-12-23 17:32:22.846064156 +0300
 @@ -33,6 +33,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -124,9 +51,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/firebase-auth/core/b
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/firebase-auth/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/firebase-auth/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/firebase-auth/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/firebase-auth/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/firebase-auth/core/src/main/AndroidManifest.xml Rvmg/firebase-auth/core/src/main/AndroidManifest.xml
+--- Microg/firebase-auth/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.639406633 +0300
++++ Rvmg/firebase-auth/core/src/main/AndroidManifest.xml	2024-12-23 17:32:22.856064157 +0300
 @@ -12,7 +12,7 @@
      <application>
          <service android:name="org.microg.gms.firebase.auth.FirebaseAuthService">
@@ -136,9 +63,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/firebase-auth/core/s
              </intent-filter>
          </service>
          <activity
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-ads/core/build.gradle Rvmg/play-services-ads/core/build.gradle
+--- Microg/play-services-ads/core/build.gradle	2024-12-23 17:33:54.656073302 +0300
++++ Rvmg/play-services-ads/core/build.gradle	2024-12-23 17:32:24.552730992 +0300
 @@ -23,6 +23,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -150,9 +77,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads/co
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-ads/core/src/main/AndroidManifest.xml Rvmg/play-services-ads/core/src/main/AndroidManifest.xml
+--- Microg/play-services-ads/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.656073302 +0300
++++ Rvmg/play-services-ads/core/src/main/AndroidManifest.xml	2024-12-23 17:32:24.556064326 +0300
 @@ -7,7 +7,7 @@
      <application>
          <service android:name="org.microg.gms.ads.AdRequestService">
@@ -162,9 +89,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads/co
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
          </service>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-identifier/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads-identifier/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-identifier/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads-identifier/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-ads-identifier/core/build.gradle Rvmg/play-services-ads-identifier/core/build.gradle
+--- Microg/play-services-ads-identifier/core/build.gradle	2024-12-23 17:33:54.646073301 +0300
++++ Rvmg/play-services-ads-identifier/core/build.gradle	2024-12-23 17:32:23.656064236 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -176,9 +103,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-id
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-identifier/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads-identifier/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-ads-identifier/core/src/main/AndroidManifest.xml Rvmg/play-services-ads-identifier/core/src/main/AndroidManifest.xml
+--- Microg/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.646073301 +0300
++++ Rvmg/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2024-12-23 17:32:23.669397571 +0300
 @@ -8,7 +8,7 @@
      <application>
          <service android:name=".AdvertisingIdService">
@@ -188,9 +115,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-id
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
          </service>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt Rvmg/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt
+--- Microg/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2024-12-23 17:33:54.649406634 +0300
++++ Rvmg/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2024-12-23 17:32:23.699397574 +0300
 @@ -14,6 +14,7 @@
  import android.util.Log
  import androidx.core.os.bundleOf
@@ -208,9 +135,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-id
                          throw SecurityException("Permission not granted")
                      }
                  }
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-lite/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads-lite/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-lite/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads-lite/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-ads-lite/build.gradle Rvmg/play-services-ads-lite/build.gradle
+--- Microg/play-services-ads-lite/build.gradle	2024-12-23 17:33:54.649406634 +0300
++++ Rvmg/play-services-ads-lite/build.gradle	2024-12-23 17:32:24.119397616 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -222,9 +149,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-li
      }
  
      compileOptions {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-lite/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads-lite/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-lite/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-ads-lite/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-ads-lite/src/main/AndroidManifest.xml Rvmg/play-services-ads-lite/src/main/AndroidManifest.xml
+--- Microg/play-services-ads-lite/src/main/AndroidManifest.xml	2024-12-23 17:33:54.652739968 +0300
++++ Rvmg/play-services-ads-lite/src/main/AndroidManifest.xml	2024-12-23 17:32:24.192730957 +0300
 @@ -6,7 +6,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
      <uses-permission android:name="android.permission.INTERNET" />
@@ -234,9 +161,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-ads-li
  
      <queries>
          <!-- Website links -->
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appinvite/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-appinvite/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appinvite/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-appinvite/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-appinvite/core/build.gradle Rvmg/play-services-appinvite/core/build.gradle
+--- Microg/play-services-appinvite/core/build.gradle	2024-12-23 17:33:54.672739970 +0300
++++ Rvmg/play-services-appinvite/core/build.gradle	2024-12-23 17:32:26.892731226 +0300
 @@ -27,6 +27,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -248,9 +175,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appinv
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appinvite/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-appinvite/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appinvite/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-appinvite/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-appinvite/core/src/main/AndroidManifest.xml Rvmg/play-services-appinvite/core/src/main/AndroidManifest.xml
+--- Microg/play-services-appinvite/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.672739970 +0300
++++ Rvmg/play-services-appinvite/core/src/main/AndroidManifest.xml	2024-12-23 17:32:26.996064569 +0300
 @@ -11,7 +11,7 @@
              android:name="org.microg.gms.appinivite.AppInviteService"
              android:exported="true">
@@ -269,9 +196,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appinv
  
                  <category android:name="android.intent.category.BROWSABLE" />
                  <category android:name="android.intent.category.DEFAULT" />
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appset/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-appset/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appset/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-appset/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-appset/core/build.gradle Rvmg/play-services-appset/core/build.gradle
+--- Microg/play-services-appset/core/build.gradle	2024-12-23 17:33:54.672739970 +0300
++++ Rvmg/play-services-appset/core/build.gradle	2024-12-23 17:32:27.066064576 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -283,9 +210,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appset
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appset/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-appset/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appset/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-appset/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-appset/core/src/main/AndroidManifest.xml Rvmg/play-services-appset/core/src/main/AndroidManifest.xml
+--- Microg/play-services-appset/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.672739970 +0300
++++ Rvmg/play-services-appset/core/src/main/AndroidManifest.xml	2024-12-23 17:32:27.172731253 +0300
 @@ -9,7 +9,7 @@
  
          <service android:name="org.microg.gms.appset.AppSetService">
@@ -295,9 +222,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-appset
              </intent-filter>
          </service>
      </application>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-auth-api-phone/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-auth-api-phone/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-auth-api-phone/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-auth-api-phone/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-auth-api-phone/core/build.gradle Rvmg/play-services-auth-api-phone/core/build.gradle
+--- Microg/play-services-auth-api-phone/core/build.gradle	2024-12-23 17:33:54.676073304 +0300
++++ Rvmg/play-services-auth-api-phone/core/build.gradle	2024-12-23 17:32:27.432731279 +0300
 @@ -23,6 +23,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -309,9 +236,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-auth-a
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-auth-api-phone/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-auth-api-phone/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-auth-api-phone/core/src/main/AndroidManifest.xml Rvmg/play-services-auth-api-phone/core/src/main/AndroidManifest.xml
+--- Microg/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.676073304 +0300
++++ Rvmg/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2024-12-23 17:32:27.492731285 +0300
 @@ -27,7 +27,7 @@
              android:name="org.microg.gms.auth.phone.SmsRetrieverService"
              android:exported="true">
@@ -321,9 +248,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-auth-a
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-base/build.gradle Rvmg/play-services-base/build.gradle
+--- Microg/play-services-base/build.gradle	2024-12-23 17:33:54.689406638 +0300
++++ Rvmg/play-services-base/build.gradle	2024-12-23 17:32:28.922731428 +0300
 @@ -30,12 +30,15 @@
  
      buildFeatures {
@@ -340,9 +267,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/b
      }
  
      compileOptions {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/package/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/package/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/package/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/package/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-base/core/package/build.gradle Rvmg/play-services-base/core/package/build.gradle
+--- Microg/play-services-base/core/package/build.gradle	2024-12-23 17:33:54.689406638 +0300
++++ Rvmg/play-services-base/core/package/build.gradle	2024-12-23 17:32:28.939398096 +0300
 @@ -22,6 +22,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -354,9 +281,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/c
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/package/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/package/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/package/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/package/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-base/core/package/src/main/AndroidManifest.xml Rvmg/play-services-base/core/package/src/main/AndroidManifest.xml
+--- Microg/play-services-base/core/package/src/main/AndroidManifest.xml	2024-12-23 17:33:54.689406638 +0300
++++ Rvmg/play-services-base/core/package/src/main/AndroidManifest.xml	2024-12-23 17:32:28.952731431 +0300
 @@ -15,7 +15,7 @@
              android:name="org.microg.gms.moduleinstall.ModuleInstallService"
              android:exported="true">
@@ -366,9 +293,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/c
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
          </service>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java Rvmg/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java
+--- Microg/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2024-12-23 17:33:54.689406638 +0300
++++ Rvmg/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2024-12-23 17:32:29.019398104 +0300
 @@ -23,6 +23,7 @@
  import android.os.RemoteException;
  import android.util.Log;
@@ -386,9 +313,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/c
          request.scopes = scopes == null ? null : scopesFromStringArray(scopes);
          getService(callback, request);
      }
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java Rvmg/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java
+--- Microg/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2024-12-23 17:33:54.692739972 +0300
++++ Rvmg/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2024-12-23 17:32:29.066064775 +0300
 @@ -27,6 +27,7 @@
  import android.util.Log;
  
@@ -434,7 +361,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/c
                  return true;
              }
          }
-@@ -113,7 +126,7 @@
+@@ -142,7 +155,7 @@
              for (Signature sig : info.signatures) {
                  String digest = sha1sum(sig.toByteArray());
                  if (digest != null) {
@@ -443,7 +370,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/c
                  }
              }
          }
-@@ -145,7 +158,7 @@
+@@ -194,7 +207,7 @@
              for (Signature sig : info.signatures) {
                  byte[] digest = sha1bytes(sig.toByteArray());
                  if (digest != null) {
@@ -452,7 +379,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/c
                  }
              }
          }
-@@ -159,7 +172,7 @@
+@@ -208,7 +221,7 @@
          if (packageName == null) {
              packageName = firstPackageFromUserId(context, callingUid);
          }
@@ -461,9 +388,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/c
      }
  
      public static String[] getCallingPackageCandidates(Context context) {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt Rvmg/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt
+--- Microg/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2024-12-23 17:33:54.692739972 +0300
++++ Rvmg/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2024-12-23 17:32:29.412731477 +0300
 @@ -90,6 +90,10 @@
          PERMISSIONS_PRIVILEGED
      ),
@@ -475,9 +402,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/c
          PackageAndCertHash("com.google.android.apps.youtube.music", SHA1, "afb0fed5eeaebdd86f56a97742f4b6b33ef59875"),
          PERMISSIONS_PRIVILEGED
      ),
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	1970-01-01 03:00:00.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt Rvmg/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt
+--- Microg/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	1970-01-01 03:00:00.000000000 +0300
++++ Rvmg/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	2024-12-23 17:32:29.462731482 +0300
 @@ -0,0 +1,157 @@
 +package org.microg.gms.common
 +
@@ -637,18 +564,18 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/c
 +    }
 +}
 \ No newline at end of file
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2024-04-05 05:27:32.000000000 +0300
-@@ -27,6 +27,7 @@
- import android.content.pm.ResolveInfo;
+diff -Naur Microg/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java Rvmg/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java
+--- Microg/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2024-12-23 17:33:54.702739973 +0300
++++ Rvmg/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2024-12-23 17:32:31.959398397 +0300
+@@ -29,6 +29,7 @@
+ import android.content.pm.Signature;
  import android.os.IBinder;
  import android.util.Log;
 +import com.google.android.gms.base.BuildConfig;
  
- import java.util.HashMap;
- import java.util.HashSet;
-@@ -179,7 +180,7 @@
+ import java.security.MessageDigest;
+ import java.security.NoSuchAlgorithmException;
+@@ -298,7 +299,7 @@
              if (resolveInfo == null || resolveInfo.serviceInfo == null) return false;
              if (resolveInfo.serviceInfo.name.startsWith("org.microg.")) return true;
              try {
@@ -657,9 +584,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-base/s
                  return info.packageName.equals(resolveInfo.serviceInfo.packageName);
              } catch (PackageManager.NameNotFoundException e) {
                  return false;
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-basement/build.gradle Rvmg/play-services-basement/build.gradle
+--- Microg/play-services-basement/build.gradle	2024-12-23 17:33:54.706073307 +0300
++++ Rvmg/play-services-basement/build.gradle	2024-12-23 17:32:32.162731751 +0300
 @@ -50,7 +50,12 @@
          minSdkVersion androidMinSdk
          targetSdkVersion androidTargetSdk
@@ -673,9 +600,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-baseme
      }
  
      compileOptions {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-basement/src/main/AndroidManifest.xml Rvmg/play-services-basement/src/main/AndroidManifest.xml
+--- Microg/play-services-basement/src/main/AndroidManifest.xml	2024-12-23 17:33:54.706073307 +0300
++++ Rvmg/play-services-basement/src/main/AndroidManifest.xml	2024-12-23 17:32:32.282731762 +0300
 @@ -7,7 +7,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
      <application>
@@ -685,9 +612,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-baseme
                  android:value="@integer/google_play_services_version"/>
      </application>
  </manifest>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java Rvmg/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java
+--- Microg/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2024-12-23 17:33:54.709406640 +0300
++++ Rvmg/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2024-12-23 17:32:32.826065150 +0300
 @@ -16,6 +16,8 @@
  
  package org.microg.gms.auth;
@@ -706,9 +633,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-baseme
      public static final String GOOGLE_USER_ID = "GoogleUserId";
      public static final String GOOGLE_SIGN_IN_STATUS = "googleSignInStatus";
      public static final String GOOGLE_SIGN_IN_ACCOUNT = "googleSignInAccount";
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/src/main/java/org/microg/gms/common/Constants.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/src/main/java/org/microg/gms/common/Constants.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-basement/src/main/java/org/microg/gms/common/Constants.java Rvmg/play-services-basement/src/main/java/org/microg/gms/common/Constants.java
+--- Microg/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2024-12-23 17:33:54.709406640 +0300
++++ Rvmg/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2024-12-23 17:32:32.832731817 +0300
 @@ -20,7 +20,8 @@
  
  public class Constants {
@@ -716,17 +643,16 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-baseme
 -    public static final String GMS_PACKAGE_NAME = "com.google.android.gms";
 +    public static final String GOOGLE_SERVICES_PACKAGE_NAME = "com.google.android.gms";
 +    public static final String GMS_PACKAGE_NAME = BuildConfig.BASE_PACKAGE_NAME + ".android.gms";
+     public static final String USER_MICROG_PACKAGE_NAME = "org.microg.gms";
      public static final String GSF_PACKAGE_NAME = "com.google.android.gsf";
      public static final String GMS_PACKAGE_SIGNATURE_SHA1 = "38918a453d07199354f8b19af05ec6562ced5788";
-     public static final String GMS_SECONDARY_PACKAGE_SIGNATURE_SHA1 = "bd32424203e0fb25f36b57e5aa356f9bdd1da998";
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2024-04-05 05:27:32.000000000 +0300
-@@ -16,163 +16,166 @@
+diff -Naur Microg/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java Rvmg/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java
+--- Microg/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2024-12-23 17:33:54.709406640 +0300
++++ Rvmg/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2024-12-23 17:32:32.879398489 +0300
+@@ -16,163 +16,165 @@
  
  package org.microg.gms.common;
  
-+
 +import com.google.android.gms.common.BuildConfig;
 +
  public enum GmsService {
@@ -926,7 +852,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-baseme
 -    AD_CONSENT_LOOKUP(195, "com.google.android.gms.ads.service.CONSENT_LOOKUP"),
 -    CREDENTIAL_MANAGER(196, "com.google.android.gms.credential.manager.service.firstparty.START"),
 -    PHONE_INTERNAL(197, "com.google.android.gms.auth.api.phone.service.InternalService.START"),
--    PAY(198, "com.google.android.gms.pay.service.BIND"),
+-    PAY(198, "com.google.android.gms.pay.service.BIND", "com.google.android.gms.pay.service.THIRD_PARTY"),
 -    ASTERISM(199, "com.google.android.gms.asterism.service.START"),
 -    MODULE_RESTORE(201, "com.google.android.gms.backup.GMS_MODULE_RESTORE"),
 -    FACS_CACHE(202, "com.google.android.gms.facs.cache.service.START"),
@@ -1034,7 +960,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-baseme
      ;
  
      public int SERVICE_ID;
-@@ -187,7 +190,7 @@
+@@ -187,7 +189,7 @@
  
      public interface ADVERTISING_ID {
          // Has no service id
@@ -1043,9 +969,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-baseme
      }
  
      public static GmsService byServiceId(int serviceId) {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java Rvmg/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java
+--- Microg/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2024-12-23 17:33:54.709406640 +0300
++++ Rvmg/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2024-12-23 17:32:32.899398491 +0300
 @@ -16,18 +16,20 @@
  
  package org.microg.gms.gcm;
@@ -1087,7 +1013,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-baseme
      public static final String EXTRA_PUBLIC_KEY = "pub2";
      public static final String EXTRA_RAWDATA = "rawData";
      public static final String EXTRA_RAWDATA_BASE64 = "gcm.rawData64";
-@@ -79,10 +81,10 @@
+@@ -80,10 +82,10 @@
      public static final String SCHEDULER_ACTION_CANCEL_ALL = "CANCEL_ALL";
      public static final String SCHEDULER_ACTION_SCHEDULE = "SCHEDULE_TASK";
  
@@ -1102,9 +1028,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-baseme
  
      public static final String ERROR_SERVICE_NOT_AVAILABLE = "SERVICE_NOT_AVAILABLE";
  
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-cast/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-cast/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-cast/core/build.gradle Rvmg/play-services-cast/core/build.gradle
+--- Microg/play-services-cast/core/build.gradle	2024-12-23 17:33:54.712739974 +0300
++++ Rvmg/play-services-cast/core/build.gradle	2024-12-23 17:32:33.429398543 +0300
 @@ -32,6 +32,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -1116,9 +1042,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast/c
      }
  
      buildFeatures {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-cast/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-cast/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-cast/core/src/main/AndroidManifest.xml Rvmg/play-services-cast/core/src/main/AndroidManifest.xml
+--- Microg/play-services-cast/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.712739974 +0300
++++ Rvmg/play-services-cast/core/src/main/AndroidManifest.xml	2024-12-23 17:32:33.466065214 +0300
 @@ -15,7 +15,7 @@
  
          <service android:name="org.microg.gms.cast.CastDeviceControllerService">
@@ -1128,9 +1054,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast/c
              </intent-filter>
          </service>
      </application>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast-framework/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-cast-framework/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast-framework/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-cast-framework/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-cast-framework/build.gradle Rvmg/play-services-cast-framework/build.gradle
+--- Microg/play-services-cast-framework/build.gradle	2024-12-23 17:33:54.709406640 +0300
++++ Rvmg/play-services-cast-framework/build.gradle	2024-12-23 17:32:33.066065174 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -1142,9 +1068,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast-f
      }
  
      compileOptions {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast-framework/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-cast-framework/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast-framework/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-cast-framework/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-cast-framework/src/main/AndroidManifest.xml Rvmg/play-services-cast-framework/src/main/AndroidManifest.xml
+--- Microg/play-services-cast-framework/src/main/AndroidManifest.xml	2024-12-23 17:33:54.712739974 +0300
++++ Rvmg/play-services-cast-framework/src/main/AndroidManifest.xml	2024-12-23 17:32:33.119398512 +0300
 @@ -9,21 +9,21 @@
      <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
  
@@ -1171,10 +1097,10 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-cast-f
                  android:exported="false"/>
      </application>
  
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/build.gradle	2024-04-05 05:27:32.000000000 +0300
-@@ -103,6 +103,8 @@
+diff -Naur Microg/play-services-core/build.gradle Rvmg/play-services-core/build.gradle
+--- Microg/play-services-core/build.gradle	2024-12-23 17:33:54.719406641 +0300
++++ Rvmg/play-services-core/build.gradle	2024-12-23 17:32:34.592731993 +0300
+@@ -114,6 +114,8 @@
      }
  
      defaultConfig {
@@ -1183,7 +1109,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/b
          versionName version
          versionCode appVersionCode
  
-@@ -118,6 +120,18 @@
+@@ -132,6 +134,18 @@
          buildConfigField "String", "RECAPTCHA_ENTERPRISE_PROJECT_ID", "\"${localProperties.get("recaptchaEnterpreise.projectId", "")}\""
          buildConfigField "String", "RECAPTCHA_ENTERPRISE_SITE_KEY", "\"${localProperties.get("recaptchaEnterpreise.siteKey", "")}\""
          buildConfigField "String", "RECAPTCHA_ENTERPRISE_API_KEY", "\"${localProperties.get("recaptchaEnterpreise.apiKey", "")}\""
@@ -1202,136 +1128,10 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/b
  
          ndk {
              abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
-@@ -17,105 +17,105 @@
-     xmlns:tools="http://schemas.android.com/tools">
- 
-     <permission
--        android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"
-+        android:name="${basePackageName}.android.providers.gsf.permission.READ_GSERVICES"
-         android:label="@string/perm_gsf_read_gservices_label"
-         android:protectionLevel="normal" />
-     <permission
--        android:name="com.google.android.c2dm.permission.RECEIVE"
-+        android:name="${basePackageName}.android.c2dm.permission.RECEIVE"
-         android:label="@string/perm_c2dm_receive_label"
-         android:permissionGroup="android.permission-group.NETWORK"
-         android:protectionLevel="normal" />
-     <permission
--        android:name="com.google.android.c2dm.permission.SEND"
-+        android:name="${basePackageName}.android.c2dm.permission.SEND"
-         android:label="@string/perm_c2dm_send_label"
-         android:permissionGroup="android.permission-group.NETWORK"
-         android:protectionLevel="privileged|signature" />
-     <permission
--        android:name="com.google.android.gtalkservice.permission.GTALK_SERVICE"
-+        android:name="${basePackageName}.android.gtalkservice.permission.GTALK_SERVICE"
-         android:label="@string/perm_gtalk_svc_label"
-         android:permissionGroup="android.permission-group.MESSAGES"
-         android:protectionLevel="signature" />
- 
-     <permission-tree
--        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH"
-+        android:name="${basePackageName}.android.googleapps.permission.GOOGLE_AUTH"
-         android:icon="@drawable/proprietary_auth_ic_scope_icon_default" />
- 
-     <permission
--        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.cp"
-+        android:name="${basePackageName}.android.googleapps.permission.GOOGLE_AUTH.cp"
-         android:description="@string/permission_service_cp_description"
-         android:label="@string/permission_service_cp_label"
-         android:protectionLevel="dangerous" />
-     <permission
--        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.local"
-+        android:name="${basePackageName}.android.googleapps.permission.GOOGLE_AUTH.local"
-         android:description="@string/permission_service_local_description"
-         android:label="@string/permission_service_local_label"
-         android:protectionLevel="dangerous" />
-     <permission
--        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.mail"
-+        android:name="${basePackageName}.android.googleapps.permission.GOOGLE_AUTH.mail"
-         android:description="@string/permission_service_mail_description"
-         android:label="@string/permission_service_mail_label"
-         android:protectionLevel="dangerous" />
-     <permission
--        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.writely"
-+        android:name="${basePackageName}.android.googleapps.permission.GOOGLE_AUTH.writely"
-         android:description="@string/permission_service_writely_description"
-         android:label="@string/permission_service_writely_label"
-         android:protectionLevel="dangerous" />
- 
-     <permission
--        android:name="com.google.android.gms.permission.AD_ID"
-+        android:name="${basePackageName}.android.gms.permission.AD_ID"
-         android:label="@string/perm_ad_id_label"
-         android:description="@string/perm_ad_id_description"
-         android:protectionLevel="normal" />
-     <permission
--        android:name="com.google.android.gms.permission.AD_ID_NOTIFICATION"
-+        android:name="${basePackageName}.android.gms.permission.AD_ID_NOTIFICATION"
-         android:label="@string/perm_ad_id_notification_label"
-         android:description="@string/perm_ad_id_notification_description"
-         android:protectionLevel="normal" />
- 
- 
-     <permission
--        android:name="com.google.android.gms.auth.api.phone.permission.SEND"
-+        android:name="${basePackageName}.android.gms.auth.api.phone.permission.SEND"
-         android:protectionLevel="signature" />
- 
-     <permission
--        android:name="org.microg.gms.STATUS_BROADCAST"
-+        android:name="${basePackageName}.microg.gms.STATUS_BROADCAST"
-         android:label="@string/perm_status_broadcast_label"
-         android:protectionLevel="normal" />
-     <permission
--        android:name="org.microg.gms.EXTENDED_ACCESS"
-+        android:name="${basePackageName}.microg.gms.EXTENDED_ACCESS"
-         android:label="@string/perm_extended_access_label"
-         android:protectionLevel="dangerous" />
-     <permission
--        android:name="org.microg.gms.PROVISION"
-+        android:name="${basePackageName}.microg.gms.PROVISION"
-         android:description="@string/perm_provision_description"
-         android:label="@string/perm_provision_label"
-         android:protectionLevel="privileged|signature" />
- 
-     <permission
--        android:name="com.google.android.gms.permission.CAR_SPEED"
-+        android:name="${basePackageName}.android.gms.permission.CAR_SPEED"
-         android:label="@string/perm_car_speed_label"
-         android:description="@string/perm_car_speed_description"
-         android:permissionGroup="android.permission-group.LOCATION"
-         android:protectionLevel="dangerous" />
- 
-     <permission-group
--        android:name="com.google.android.gms.permission.CAR_INFORMATION"
-+        android:name="${basePackageName}.android.gms.permission.CAR_INFORMATION"
-         android:label="@string/perm_car_info_label"
-         android:description="@string/perm_car_info_description" />
-     <permission
--        android:name="com.google.android.gms.permission.CAR_FUEL"
-+        android:name="${basePackageName}.android.gms.permission.CAR_FUEL"
-         android:label="@string/perm_car_fuel_label"
-         android:description="@string/perm_car_fuel_description"
-         android:permissionGroup="com.google.android.gms.permission.CAR_INFORMATION"
-         android:protectionLevel="dangerous" />
-     <permission
--        android:name="com.google.android.gms.permission.CAR_MILEAGE"
-+        android:name="${basePackageName}.android.gms.permission.CAR_MILEAGE"
-         android:label="@string/perm_car_mileage_label"
-         android:description="@string/perm_car_mileage_description"
-         android:permissionGroup="com.google.android.gms.permission.CAR_INFORMATION"
-         android:protectionLevel="dangerous" />
-     <permission
--        android:name="com.google.android.gms.permission.CAR_VENDOR_EXTENSION"
-+        android:name="${basePackageName}.android.gms.permission.CAR_VENDOR_EXTENSION"
-         android:label="@string/perm_car_vendor_extension_label"
-         android:description="@string/perm_car_vendor_extension_description"
-         android:permissionGroup="com.google.android.gms.permission.CAR_INFORMATION"
-@@ -141,12 +141,12 @@
+diff -Naur Microg/play-services-core/src/main/AndroidManifest.xml Rvmg/play-services-core/src/main/AndroidManifest.xml
+--- Microg/play-services-core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.726073309 +0300
++++ Rvmg/play-services-core/src/main/AndroidManifest.xml	2024-12-23 17:32:34.902732023 +0300
+@@ -153,12 +153,12 @@
      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
  
@@ -1349,7 +1149,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
      <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
      <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-@@ -169,14 +169,14 @@
+@@ -201,14 +201,14 @@
          android:networkSecurityConfig="@xml/network_security_config"
          android:theme="@style/Theme.App">
  
@@ -1366,7 +1166,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
          <!-- Location -->
  
-@@ -187,7 +187,7 @@
+@@ -219,7 +219,7 @@
              android:process=":ui"
              android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
              <intent-filter>
@@ -1375,7 +1175,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-@@ -195,20 +195,20 @@
+@@ -227,20 +227,20 @@
  
          <service android:name="org.microg.gms.places.GeoDataService">
              <intent-filter>
@@ -1400,7 +1200,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
                  <data
                      android:host="*"
                      android:pathPrefix="/com/google/android/location/fused/wearable"
-@@ -220,25 +220,18 @@
+@@ -252,25 +252,18 @@
  
          <provider
              android:name="org.microg.gms.gservices.GServicesProvider"
@@ -1429,7 +1229,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
          </service>
  
-@@ -253,7 +246,7 @@
+@@ -285,7 +278,7 @@
                  <action android:name="android.intent.action.PACKAGE_RESTARTED" />
              </intent-filter>
              <intent-filter>
@@ -1438,7 +1238,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
                  <category android:name="android.server.checkin.CHECKIN" />
              </intent-filter>
-@@ -271,8 +264,8 @@
+@@ -303,8 +296,8 @@
              android:name="org.microg.gms.gcm.PushRegisterService"
              android:process=":persistent">
              <intent-filter>
@@ -1449,7 +1249,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-@@ -282,7 +275,7 @@
+@@ -314,7 +307,7 @@
              android:name="org.microg.gms.gcm.PushRegisterReceiver"
              android:process=":persistent">
              <intent-filter>
@@ -1458,7 +1258,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
          </receiver>
  
-@@ -294,7 +287,7 @@
+@@ -326,7 +319,7 @@
              android:name="org.microg.gms.gcm.SendReceiver"
              android:process=":persistent">
              <intent-filter>
@@ -1467,7 +1267,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
          </receiver>
  
-@@ -341,7 +334,7 @@
+@@ -373,7 +366,7 @@
  
          <service android:name="org.microg.gms.car.CarService">
              <intent-filter>
@@ -1476,7 +1276,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-@@ -351,7 +344,7 @@
+@@ -383,7 +376,7 @@
  
          <service android:name="org.microg.gms.people.PeopleService">
              <intent-filter>
@@ -1485,7 +1285,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-@@ -372,7 +365,7 @@
+@@ -404,7 +397,7 @@
  
          <service android:name="org.microg.gms.wearable.WearableService">
              <intent-filter>
@@ -1494,7 +1294,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
          </service>
  
-@@ -383,7 +376,7 @@
+@@ -415,7 +408,7 @@
                  <action android:name="android.accounts.AccountAuthenticator" />
              </intent-filter>
              <intent-filter>
@@ -1503,17 +1303,8 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
  
              <meta-data
-@@ -401,7 +394,7 @@
-             android:process=":ui"
-             android:theme="@style/Theme.App.DayNight.Dialog.Alert.NoActionBar">
-             <intent-filter>
--                <action android:name="com.google.android.gms.common.account.CHOOSE_ACCOUNT" />
-+                <action android:name="${basePackageName}.android.gms.common.account.CHOOSE_ACCOUNT" />
- 
-                 <category android:name="android.intent.category.DEFAULT" />
-             </intent-filter>
-@@ -414,7 +407,7 @@
-             android:process=":ui"
+@@ -448,7 +441,7 @@
+             android:launchMode="singleTask"
              android:theme="@style/Theme.LoginBlue">
              <intent-filter>
 -                <action android:name="com.google.android.gms.auth.login.LOGIN" />
@@ -1521,7 +1312,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-@@ -438,39 +431,39 @@
+@@ -479,39 +472,39 @@
  
          <provider
              android:name="org.microg.gms.auth.AccountContentProvider"
@@ -1567,8 +1358,8 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
          </service>
  
-@@ -480,21 +473,21 @@
-             android:process=":ui"
+@@ -522,21 +515,21 @@
+             android:configChanges="keyboardHidden|keyboard|orientation|screenSize"
              android:exported="true">
              <intent-filter>
 -                <action android:name="com.google.android.gms.auth.GOOGLE_SIGN_IN" />
@@ -1592,7 +1383,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
          </service>
-@@ -505,7 +498,7 @@
+@@ -547,7 +540,7 @@
  
          <service android:name="org.microg.gms.auth.credentials.identity.IdentitySignInService">
              <intent-filter>
@@ -1601,7 +1392,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
          </service>
  
-@@ -529,7 +522,7 @@
+@@ -618,7 +611,7 @@
              android:process=":ui"
              android:theme="@style/Theme.AppCompat.DayNight.Dialog">
              <intent-filter>
@@ -1610,7 +1401,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
          </activity>
-@@ -538,7 +531,7 @@
+@@ -627,7 +620,7 @@
              android:name="org.microg.gms.games.GamesService"
              android:exported="true">
              <intent-filter>
@@ -1619,7 +1410,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
          </service>
-@@ -547,7 +540,7 @@
+@@ -636,7 +629,7 @@
              android:name="org.microg.gms.games.GamesConnectService"
              android:exported="true">
              <intent-filter>
@@ -1628,7 +1419,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
          </service>
-@@ -559,13 +552,13 @@
+@@ -648,13 +641,13 @@
          <!-- Chimera -->
          <provider
              android:name="org.microg.gms.chimera.ServiceProvider"
@@ -1644,16 +1435,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              android:exported="true" />
  
          <!-- microG Settings activity -->
-@@ -590,7 +583,7 @@
-             </intent-filter>
-             <intent-filter>
-                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
--                <action android:name="com.google.android.gms.settings.EXPOSURE_NOTIFICATION_SETTINGS" />
-+                <action android:name="${basePackageName}.android.gms.settings.EXPOSURE_NOTIFICATION_SETTINGS" />
- 
-                 <category android:name="android.intent.category.DEFAULT" />
-             </intent-filter>
-@@ -645,7 +638,7 @@
+@@ -736,7 +729,7 @@
  
          <!-- microG Settings activity-alias for Google settings compatibility -->
          <activity-alias
@@ -1662,7 +1444,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              android:process=":ui"
              android:exported="true"
              android:targetActivity="org.microg.gms.ui.MainSettingsActivity"
-@@ -677,10 +670,10 @@
+@@ -768,10 +761,10 @@
              android:taskAffinity="org.microg.gms.settings"
              android:theme="@style/Theme.AppCompat.Light.NoActionBar">
              <intent-filter>
@@ -1677,7 +1459,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-@@ -693,11 +686,11 @@
+@@ -784,11 +777,11 @@
              android:excludeFromRecents="true"
              android:theme="@style/Theme.App.DayNight.Dialog.Alert.NoActionBar">
              <intent-filter>
@@ -1691,7 +1473,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
                  <category android:name="android.intent.category.DEFAULT" />
                  <category android:name="android.intent.category.BROWSABLE" />
-@@ -709,9 +702,9 @@
+@@ -804,9 +797,9 @@
              android:process=":ui"
              android:taskAffinity="org.microg.gms.settings">
              <intent-filter>
@@ -1704,7 +1486,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-@@ -721,12 +714,12 @@
+@@ -816,12 +809,12 @@
  
          <provider
              android:name="org.microg.gms.phenotype.ConfigurationProvider"
@@ -1719,7 +1501,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
          </service>
  
-@@ -736,7 +729,7 @@
+@@ -831,7 +824,7 @@
              android:name="org.microg.gms.googlehelp.GoogleHelpService"
              android:exported="true">
              <intent-filter>
@@ -1728,8 +1510,8 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
          </service>
-@@ -747,7 +740,7 @@
-             android:theme="@android:style/Theme.Translucent.NoTitleBar"
+@@ -841,7 +834,7 @@
+             android:theme="@style/Theme.App.Translucent"
              android:exported="true">
              <intent-filter>
 -                <action android:name="com.google.android.gms.googlehelp.HELP" />
@@ -1737,7 +1519,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
  
-@@ -760,7 +753,7 @@
+@@ -854,7 +847,7 @@
  
          <service android:name="org.microg.gms.potokens.PoTokensService">
              <intent-filter>
@@ -1746,16 +1528,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
          </service>
  
-@@ -771,7 +764,7 @@
-             android:enabled="true"
-             android:exported="true">
-             <intent-filter>
--                <action android:name="com.google.android.gms.fitness.HistoryApi" />
-+                <action android:name="${basePackageName}.android.gms.fitness.HistoryApi" />
-             </intent-filter>
-         </service>
- 
-@@ -782,7 +775,7 @@
+@@ -865,7 +858,7 @@
              android:theme="@android:style/Theme.Translucent.NoTitleBar"
              android:exported="true">
              <intent-filter>
@@ -1764,7 +1537,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
                  <category android:name="android.intent.category.DEFAULT"/>
              </intent-filter>
          </activity>
-@@ -793,7 +786,7 @@
+@@ -876,7 +869,7 @@
              android:name="org.microg.gms.measurement.MeasurementService"
              android:exported="true">
              <intent-filter>
@@ -1773,7 +1546,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-@@ -802,38 +795,38 @@
+@@ -885,38 +878,38 @@
              android:name="org.microg.gms.languageprofile.LanguageProfileService"
              android:exported="true">
              <intent-filter>
@@ -1818,7 +1591,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
          </service>
          <service
-@@ -842,7 +835,7 @@
+@@ -925,7 +918,7 @@
  
          <service android:name="org.microg.gms.ads.GService">
              <intent-filter>
@@ -1827,7 +1600,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
          </service>
  
-@@ -850,7 +843,7 @@
+@@ -933,7 +926,7 @@
  
          <service android:name="org.microg.gms.feedback.FeedbackService">
              <intent-filter>
@@ -1836,394 +1609,10 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              </intent-filter>
          </service>
  
-@@ -862,231 +855,244 @@
- 
-         <service android:name="org.microg.gms.clearcut.ClearcutLoggerService">
-             <intent-filter>
--                <action android:name="com.google.android.gms.clearcut.service.START" />
-+                <action android:name="${basePackageName}.android.gms.clearcut.service.START" />
-                 <category android:name="android.intent.category.DEFAULT" />
-             </intent-filter>
-         </service>
-         <service android:name="org.microg.gms.drive.api.DriveApiService">
-             <intent-filter>
--                <action android:name="com.google.android.gms.drive.ApiService.START" />
--                <action android:name="com.google.android.gms.drive.ApiService.STOP" />
--                <action android:name="com.google.android.gms.drive.ApiService.RESET_AFTER_BOOT" />
-+                <action android:name="${basePackageName}.android.gms.drive.ApiService.START" />
-+                <action android:name="${basePackageName}.android.gms.drive.ApiService.STOP" />
-+                <action android:name="${basePackageName}.android.gms.drive.ApiService.RESET_AFTER_BOOT" />
- 
-                 <category android:name="android.intent.category.DEFAULT" />
-             </intent-filter>
-         </service>
-         <service android:name="org.microg.gms.reminders.RemindersService">
-             <intent-filter>
--                <action android:name="com.google.android.gms.reminders.service.START" />
-+                <action android:name="${basePackageName}.android.gms.reminders.service.START" />
-                 <category android:name="android.intent.category.DEFAULT" />
-             </intent-filter>
-         </service>
- 
-         <service android:name="org.microg.gms.wallet.PaymentService">
-             <intent-filter>
--                <action android:name="com.google.android.gms.wallet.service.BIND" />
-+                <action android:name="${basePackageName}.android.gms.wallet.service.BIND" />
-             </intent-filter>
-         </service>
- 
-         <service android:name="org.microg.gms.firebase.dynamiclinks.DynamicLinksService">
-             <intent-filter>
--                <action android:name="com.google.firebase.dynamiclinks.service.START" />
-+                <action android:name="${basePackageName}.firebase.dynamiclinks.service.START" />
-             </intent-filter>
-         </service>
- 
-         <service android:name="org.microg.gms.udc.FacsCacheService">
-             <intent-filter>
--                <action android:name="com.google.android.gms.facs.cache.service.START" />
-+                <action android:name="${basePackageName}.android.gms.facs.cache.service.START" />
-             </intent-filter>
-         </service>
- 
-         <service android:name="org.microg.gms.usagereporting.UsageReportingService">
-             <intent-filter>
--                <action android:name="com.google.android.gms.usagereporting.service.START" />
-+                <action android:name="${basePackageName}.android.gms.usagereporting.service.START" />
-             </intent-filter>
-         </service>
- 
-         <service android:name="org.microg.gms.pseudonymous.PseudonymousIdService" >
-             <intent-filter>
--                <action android:name="com.google.android.gms.pseudonymous.service.START" />
-+                <action android:name="${basePackageName}.android.gms.pseudonymous.service.START" />
-             </intent-filter>
-         </service>
- 
-         <service android:name="org.microg.gms.gass.GassService">
-             <intent-filter>
--                <action android:name="com.google.android.gms.gass.START" />
-+                <action android:name="${basePackageName}.android.gms.gass.START" />
-             </intent-filter>
-         </service>
- 
-         <service android:name="org.microg.gms.auth.account.data.AccountDataService">
-             <intent-filter>
--                <action android:name="com.google.android.gms.auth.account.data.service.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.account.data.service.START" />
-             </intent-filter>
-         </service>
- 
-         <service android:name=".semanticlocation.SemanticLocationService" android:exported="true">
-             <intent-filter>
--                <action android:name="com.google.android.gms.semanticlocation.service.START_ODLH" />
-+                <action android:name="${basePackageName}.android.gms.semanticlocation.service.START_ODLH" />
-             </intent-filter>
-         </service>
- 
-         <service android:name="org.microg.gms.audit.AuditService">
-             <intent-filter>
--                <action android:name="com.google.android.gms.audit.service.START" />
-+                <action android:name="${basePackageName}.android.gms.audit.service.START" />
-             </intent-filter>
-         </service>
- 
-         <service android:name="org.microg.gms.DummyService">
-             <intent-filter>
--                <action android:name="com.google.android.contextmanager.service.ContextManagerService.START" />
--                <action android:name="com.google.android.gms.accounts.ACCOUNT_SERVICE" />
--                <action android:name="com.google.android.gms.ads.identifier.service.EVENT_ATTESTATION" />
--                <action android:name="com.google.android.gms.ads.service.CACHE" />
--                <action android:name="com.google.android.gms.ads.service.CONSENT_LOOKUP" />
--                <action android:name="com.google.android.gms.ads.service.HTTP" />
--                <action android:name="com.google.android.gms.appstate.service.START" />
--                <action android:name="com.google.android.gms.appusage.service.START" />
--                <action android:name="com.google.android.gms.asterism.service.START" />
--                <action android:name="com.google.android.gms.audiomodem.service.AudioModemService.START" />
--                <action android:name="com.google.android.gms.auth.account.authapi.START" />
--                <action android:name="com.google.android.gms.auth.account.authenticator.auto.service.START" />
--                <action android:name="com.google.android.gms.auth.account.authenticator.chromeos.START" />
--                <action android:name="com.google.android.gms.auth.account.authenticator.tv.service.START" />
--                <action android:name="com.google.android.gms.auth.api.identity.service.authorization.START" />
--                <action android:name="com.google.android.gms.auth.api.identity.service.credentialsaving.START" />
--                <action android:name="com.google.android.gms.auth.api.phone.service.InternalService.START" />
--                <action android:name="com.google.android.gms.auth.api.signin.service.START" />
--                <action android:name="com.google.android.gms.auth.blockstore.service.START"/>
--                <action android:name="com.google.android.gms.auth.config.service.START" />
--                <action android:name="com.google.android.gms.auth.cryptauth.cryptauthservice.START" />
--                <action android:name="com.google.android.gms.auth.proximity.devicesyncservice.START" />
--                <action android:name="com.google.android.gms.auth.proximity.securechannelservice.START" />
--                <action android:name="com.google.android.gms.auth.proximity.START" />
--                <action android:name="com.google.android.gms.auth.service.START" />
--                <action android:name="com.google.android.gms.backup.G1_BACKUP" />
--                <action android:name="com.google.android.gms.backup.G1_RESTORE" />
--                <action android:name="com.google.android.gms.backup.GMS_MODULE_RESTORE" />
--                <action android:name="com.google.android.gms.beacon.internal.IBleService.START" />
--                <action android:name="com.google.android.gms.carrierauth.service.START" />
--                <action android:name="com.google.android.gms.cast.firstparty.START" />
--                <action android:name="com.google.android.gms.cast_mirroring.service.START" />
--                <action android:name="com.google.android.gms.cast.remote_display.service.START" />
--                <action android:name="com.google.android.gms.chromesync.service.START" />
--                <action android:name="com.google.android.gms.common.download.START" />
--                <action android:name="com.google.android.gms.common.service.START" />
--                <action android:name="com.google.android.gms.common.telemetry.service.START" />
--                <action android:name="com.google.android.gms.config.START" />
--                <action android:name="com.google.android.gms.constellation.service.START" />
--                <action android:name="com.google.android.gms.deviceconnection.service.START" />
--                <action android:name="com.google.android.gms.enterprise.loader.service.START" />
--                <action android:name="com.google.android.gms.facs.internal.service.START" />
--                <action android:name="com.google.android.gms.fido.credentialstore.internal_service.START" />
--                <action android:name="com.google.android.gms.fido.fido2.regular.START" />
--                <action android:name="com.google.android.gms.fido.fido2.zeroparty.START" />
--                <action android:name="com.google.android.gms.fido.sourcedevice.service.START" />
--                <action android:name="com.google.android.gms.fido.targetdevice.internal_service.START" />
--                <action android:name="com.google.android.gms.fido.u2f.privileged.START" />
--                <action android:name="com.google.android.gms.fido.u2f.thirdparty.START" />
--                <action android:name="com.google.android.gms.fido.u2f.zeroparty.START" />
--                <action android:name="com.google.android.gms.fitness.BleApi" />
--                <action android:name="com.google.android.gms.fitness.ConfigApi" />
--                <action android:name="com.google.android.gms.fitness.GoalsApi" />
--                <action android:name="com.google.android.gms.fitness.GoogleFitnessService.START" />
--                <action android:name="com.google.android.gms.fitness.InternalApi" />
--                <action android:name="com.google.android.gms.fitness.RecordingApi" />
--                <action android:name="com.google.android.gms.fitness.SensorsApi" />
--                <action android:name="com.google.android.gms.fitness.SessionsApi" />
--                <action android:name="com.google.android.gms.fonts.service.START" />
--                <action android:name="com.google.android.gms.freighter.service.START" />
--                <action android:name="com.google.android.gms.growth.service.START" />
--                <action android:name="com.google.android.gms.googlehelp.service.GoogleHelpService.START" />
--                <action android:name="com.google.android.gms.herrevad.services.LightweightNetworkQualityAndroidService.START" />
--                <action android:name="com.google.android.gms.identity.service.BIND" />
--                <action android:name="com.google.android.gms.inappreach.service.START"/>
--                <action android:name="com.google.android.gms.instantapps.START" />
--                <action android:name="com.google.android.gms.kids.service.START" />
--                <action android:name="com.google.android.gms.learning.internal.dynamitesupport.START" />
--                <action android:name="com.google.android.gms.learning.intservice.START" />
--                <action android:name="com.google.android.gms.learning.predictor.START" />
--                <action android:name="com.google.android.gms.learning.trainer.START" />
--                <action android:name="com.google.android.gms.learning.training.background.START" />
--                <action android:name="com.google.android.gms.locationsharing.api.START" />
--                <action android:name="com.google.android.gms.locationsharingreporter.service.START" />
--                <action android:name="com.google.android.gms.lockbox.service.START" />
--                <action android:name="com.google.android.gms.matchstick.lighter.service.START" />
--                <action android:name="com.google.android.gms.mdm.services.DeviceManagerApiService.START" />
--                <action android:name="com.google.android.gms.mdns.service.START" />
--                <action android:name="com.google.android.gms.nearby.bootstrap.service.NearbyBootstrapService.START" />
--                <action android:name="com.google.android.gms.nearby.connection.service.START" />
--                <action android:name="com.google.android.gms.nearby.fastpair.START" />
--                <action android:name="com.google.android.gms.nearby.messages.service.NearbyMessagesService.START" />
--                <action android:name="com.google.android.gms.nearby.sharing.service.NearbySharingService.START" />
--                <action android:name="com.google.android.gms.nearby.sharing.START_SERVICE" />
--                <action android:name="com.google.android.gms.notifications.service.START" />
--                <action android:name="com.google.android.gms.ocr.service.internal.START" />
--                <action android:name="com.google.android.gms.ocr.service.START" />
--                <action android:name="com.google.android.gms.payse.service.BIND" />
--                <action android:name="com.google.android.gms.people.contactssync.service.START" />
--                <action android:name="com.google.android.gms.photos.autobackup.service.START" />
--                <action android:name="com.google.android.gms.plus.service.default.INTENT" />
--                <action android:name="com.google.android.gms.plus.service.image.INTENT" />
--                <action android:name="com.google.android.gms.plus.service.internal.START" />
--                <action android:name="com.google.android.gms.plus.service.START" />
--                <action android:name="com.google.android.gms.rcs.START" />
--                <action android:name="com.google.android.gms.romanesco.MODULE_BACKUP_AGENT" />
--                <action android:name="com.google.android.gms.romanesco.service.START" />
--                <action android:name="com.google.android.gms.search.service.SEARCH_AUTH_START" />
--                <action android:name="com.google.android.gms.sesame.service.BIND" />
--                <action android:name="com.google.android.gms.telephonyspam.service.START" />
--                <action android:name="com.google.android.gms.testsupport.service.START" />
--                <action android:name="com.google.android.gms.scheduler.ACTION_PROXY_SCHEDULE" />
--                <action android:name="com.google.android.gms.setup.auth.SecondDeviceAuth.START" />
--                <action android:name="com.google.android.gms.smartdevice.d2d.SourceDeviceService.START" />
--                <action android:name="com.google.android.gms.smartdevice.d2d.TargetDeviceService.START" />
--                <action android:name="com.google.android.gms.smartdevice.directtransfer.SourceDirectTransferService.START" />
--                <action android:name="com.google.android.gms.smartdevice.directtransfer.TargetDirectTransferService.START" />
--                <action android:name="com.google.android.gms.smartdevice.postsetup.PostSetupService.START" />
--                <action android:name="com.google.android.gms.smartdevice.setup.accounts.AccountsService.START" />
--                <action android:name="com.google.android.gms.smartdevice.wifi.START_WIFI_HELPER_SERVICE" />
--                <action android:name="com.google.android.gms.social.location.activity.service.START" />
--                <action android:name="com.google.android.gms.statementservice.EXECUTE" />
--                <action android:name="com.google.android.gms.stats.ACTION_UPLOAD_DROPBOX_ENTRIES" />
--                <action android:name="com.google.android.gms.speech.service.START" />
--                <action android:name="com.google.android.gms.thunderbird.service.START" />
--                <action android:name="com.google.android.gms.trustagent.BridgeApi.START" />
--                <action android:name="com.google.android.gms.trustagent.StateApi.START" />
--                <action android:name="com.google.android.gms.trustagent.trustlet.trustletmanagerservice.BIND" />
--                <action android:name="com.google.android.gms.trustlet.bluetooth.service.BIND" />
--                <action android:name="com.google.android.gms.trustlet.connectionlessble.service.BIND" />
--                <action android:name="com.google.android.gms.trustlet.face.service.BIND" />
--                <action android:name="com.google.android.gms.trustlet.nfc.service.BIND" />
--                <action android:name="com.google.android.gms.trustlet.onbody.service.BIND" />
--                <action android:name="com.google.android.gms.trustlet.place.service.BIND" />
--                <action android:name="com.google.android.gms.trustlet.voiceunlock.service.BIND" />
--                <action android:name="com.google.android.gms.udc.service.START" />
--                <action android:name="com.google.android.gms.update.START_API_SERVICE" />
--                <action android:name="com.google.android.gms.update.START_SERVICE" />
--                <action android:name="com.google.android.gms.update.START_SINGLE_USER_API_SERVICE" />
--                <action android:name="com.google.android.gms.update.START_TV_API_SERVICE" />
--                <action android:name="com.google.android.gms.userlocation.service.START" />
--                <action android:name="com.google.android.gms.vehicle.cabin.service.START" />
--                <action android:name="com.google.android.gms.vehicle.climate.service.START" />
--                <action android:name="com.google.android.gms.vehicle.info.service.START" />
--                <action android:name="com.google.android.gms.walletp2p.service.firstparty.BIND" />
--                <action android:name="com.google.android.gms.walletp2p.service.zeroparty.BIND" />
--                <action android:name="com.google.android.gms.wearable.BIND" />
--                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
--                <action android:name="com.google.android.gms.wearable.NODE_CHANGED" />
--                <action android:name="com.google.android.mdd.service.START" />
--                <action android:name="com.google.android.mdh.service.START" />
--                <action android:name="com.google.android.mdh.service.listener.START" />
--                <action android:name="com.google.android.mobstore.service.START" />
-+                <action android:name="${basePackageName}.android.contextmanager.service.ContextManagerService.START" />
-+                <action android:name="${basePackageName}.android.gms.accounts.ACCOUNT_SERVICE" />
-+                <action android:name="${basePackageName}.android.gms.ads.identifier.service.EVENT_ATTESTATION" />
-+                <action android:name="${basePackageName}.android.gms.ads.service.CACHE" />
-+                <action android:name="${basePackageName}.android.gms.ads.service.CONSENT_LOOKUP" />
-+                <action android:name="${basePackageName}.android.gms.ads.service.HTTP" />
-+                <action android:name="${basePackageName}.android.gms.appstate.service.START" />
-+                <action android:name="${basePackageName}.android.gms.appusage.service.START" />
-+                <action android:name="${basePackageName}.android.gms.asterism.service.START" />
-+                <action android:name="${basePackageName}.android.gms.audiomodem.service.AudioModemService.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.account.authapi.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.account.authenticator.auto.service.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.account.authenticator.chromeos.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.account.authenticator.tv.service.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.api.identity.service.authorization.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.api.identity.service.credentialsaving.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.api.phone.service.InternalService.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.api.signin.service.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.blockstore.service.START"/>
-+                <action android:name="${basePackageName}.android.gms.auth.config.service.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.cryptauth.cryptauthservice.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.proximity.devicesyncservice.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.proximity.securechannelservice.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.proximity.START" />
-+                <action android:name="${basePackageName}.android.gms.auth.service.START" />
-+                <action android:name="${basePackageName}.android.gms.backup.G1_BACKUP" />
-+                <action android:name="${basePackageName}.android.gms.backup.G1_RESTORE" />
-+                <action android:name="${basePackageName}.android.gms.backup.GMS_MODULE_RESTORE" />
-+                <action android:name="${basePackageName}.android.gms.beacon.internal.IBleService.START" />
-+                <action android:name="${basePackageName}.android.gms.carrierauth.service.START" />
-+                <action android:name="${basePackageName}.android.gms.cast.firstparty.START" />
-+                <action android:name="${basePackageName}.android.gms.cast_mirroring.service.START" />
-+                <action android:name="${basePackageName}.android.gms.cast.remote_display.service.START" />
-+                <action android:name="${basePackageName}.android.gms.chromesync.service.START" />
-+                <action android:name="${basePackageName}.android.gms.common.download.START" />
-+                <action android:name="${basePackageName}.android.gms.common.service.START" />
-+                <action android:name="${basePackageName}.android.gms.common.telemetry.service.START" />
-+                <action android:name="${basePackageName}.android.gms.config.START" />
-+                <action android:name="${basePackageName}.android.gms.constellation.service.START" />
-+                <action android:name="${basePackageName}.android.gms.deviceconnection.service.START" />
-+                <action android:name="${basePackageName}.android.gms.enterprise.loader.service.START" />
-+                <action android:name="${basePackageName}.android.gms.facs.internal.service.START" />
-+                <action android:name="${basePackageName}.android.gms.fido.credentialstore.internal_service.START" />
-+                <action android:name="${basePackageName}.android.gms.fido.fido2.regular.START" />
-+                <action android:name="${basePackageName}.android.gms.fido.fido2.zeroparty.START" />
-+                <action android:name="${basePackageName}.android.gms.fido.sourcedevice.service.START" />
-+                <action android:name="${basePackageName}.android.gms.fido.targetdevice.internal_service.START" />
-+                <action android:name="${basePackageName}.android.gms.fido.u2f.privileged.START" />
-+                <action android:name="${basePackageName}.android.gms.fido.u2f.thirdparty.START" />
-+                <action android:name="${basePackageName}.android.gms.fido.u2f.zeroparty.START" />
-+                <action android:name="${basePackageName}.android.gms.fitness.BleApi" />
-+                <action android:name="${basePackageName}.android.gms.fitness.ConfigApi" />
-+                <action android:name="${basePackageName}.android.gms.fitness.GoalsApi" />
-+                <action android:name="${basePackageName}.android.gms.fitness.GoogleFitnessService.START" />
-+                <action android:name="${basePackageName}.android.gms.fitness.InternalApi" />
-+                <action android:name="${basePackageName}.android.gms.fitness.RecordingApi" />
-+                <action android:name="${basePackageName}.android.gms.fitness.SensorsApi" />
-+                <action android:name="${basePackageName}.android.gms.fitness.SessionsApi" />
-+                <action android:name="${basePackageName}.android.gms.fonts.service.START" />
-+                <action android:name="${basePackageName}.android.gms.freighter.service.START" />
-+                <action android:name="${basePackageName}.android.gms.growth.service.START" />
-+                <action android:name="${basePackageName}.android.gms.googlehelp.service.GoogleHelpService.START" />
-+                <action android:name="${basePackageName}.android.gms.herrevad.services.LightweightNetworkQualityAndroidService.START" />
-+                <action android:name="${basePackageName}.android.gms.identity.service.BIND" />
-+                <action android:name="${basePackageName}.android.gms.inappreach.service.START"/>
-+                <action android:name="${basePackageName}.android.gms.instantapps.START" />
-+                <action android:name="${basePackageName}.android.gms.kids.service.START" />
-+                <action android:name="${basePackageName}.android.gms.learning.internal.dynamitesupport.START" />
-+                <action android:name="${basePackageName}.android.gms.learning.intservice.START" />
-+                <action android:name="${basePackageName}.android.gms.learning.predictor.START" />
-+                <action android:name="${basePackageName}.android.gms.learning.trainer.START" />
-+                <action android:name="${basePackageName}.android.gms.learning.training.background.START" />
-+                <action android:name="${basePackageName}.android.gms.locationsharing.api.START" />
-+                <action android:name="${basePackageName}.android.gms.locationsharingreporter.service.START" />
-+                <action android:name="${basePackageName}.android.gms.lockbox.service.START" />
-+                <action android:name="${basePackageName}.android.gms.matchstick.lighter.service.START" />
-+                <action android:name="${basePackageName}.android.gms.mdm.services.DeviceManagerApiService.START" />
-+                <action android:name="${basePackageName}.android.gms.mdns.service.START" />
-+                <action android:name="${basePackageName}.android.gms.nearby.bootstrap.service.NearbyBootstrapService.START" />
-+                <action android:name="${basePackageName}.android.gms.nearby.connection.service.START" />
-+                <action android:name="${basePackageName}.android.gms.nearby.fastpair.START" />
-+                <action android:name="${basePackageName}.android.gms.nearby.messages.service.NearbyMessagesService.START" />
-+                <action android:name="${basePackageName}.android.gms.nearby.sharing.service.NearbySharingService.START" />
-+                <action android:name="${basePackageName}.android.gms.nearby.sharing.START_SERVICE" />
-+                <action android:name="${basePackageName}.android.gms.notifications.service.START" />
-+                <action android:name="${basePackageName}.android.gms.ocr.service.internal.START" />
-+                <action android:name="${basePackageName}.android.gms.ocr.service.START" />
-+                <action android:name="${basePackageName}.android.gms.payse.service.BIND" />
-+                <action android:name="${basePackageName}.android.gms.people.contactssync.service.START" />
-+                <action android:name="${basePackageName}.android.gms.photos.autobackup.service.START" />
-+                <action android:name="${basePackageName}.android.gms.plus.service.default.INTENT" />
-+                <action android:name="${basePackageName}.android.gms.plus.service.image.INTENT" />
-+                <action android:name="${basePackageName}.android.gms.plus.service.internal.START" />
-+                <action android:name="${basePackageName}.android.gms.plus.service.START" />
-+                <action android:name="${basePackageName}.android.gms.rcs.START" />
-+                <action android:name="${basePackageName}.android.gms.romanesco.MODULE_BACKUP_AGENT" />
-+                <action android:name="${basePackageName}.android.gms.romanesco.service.START" />
-+                <action android:name="${basePackageName}.android.gms.search.service.SEARCH_AUTH_START" />
-+                <action android:name="${basePackageName}.android.gms.sesame.service.BIND" />
-+                <action android:name="${basePackageName}.android.gms.telephonyspam.service.START" />
-+                <action android:name="${basePackageName}.android.gms.testsupport.service.START" />
-+                <action android:name="${basePackageName}.android.gms.scheduler.ACTION_PROXY_SCHEDULE" />
-+                <action android:name="${basePackageName}.android.gms.setup.auth.SecondDeviceAuth.START" />
-+                <action android:name="${basePackageName}.android.gms.smartdevice.d2d.SourceDeviceService.START" />
-+                <action android:name="${basePackageName}.android.gms.smartdevice.d2d.TargetDeviceService.START" />
-+                <action android:name="${basePackageName}.android.gms.smartdevice.directtransfer.SourceDirectTransferService.START" />
-+                <action android:name="${basePackageName}.android.gms.smartdevice.directtransfer.TargetDirectTransferService.START" />
-+                <action android:name="${basePackageName}.android.gms.smartdevice.postsetup.PostSetupService.START" />
-+                <action android:name="${basePackageName}.android.gms.smartdevice.setup.accounts.AccountsService.START" />
-+                <action android:name="${basePackageName}.android.gms.smartdevice.wifi.START_WIFI_HELPER_SERVICE" />
-+                <action android:name="${basePackageName}.android.gms.social.location.activity.service.START" />
-+                <action android:name="${basePackageName}.android.gms.statementservice.EXECUTE" />
-+                <action android:name="${basePackageName}.android.gms.stats.ACTION_UPLOAD_DROPBOX_ENTRIES" />
-+                <action android:name="${basePackageName}.android.gms.speech.service.START" />
-+                <action android:name="${basePackageName}.android.gms.thunderbird.service.START" />
-+                <action android:name="${basePackageName}.android.gms.trustagent.BridgeApi.START" />
-+                <action android:name="${basePackageName}.android.gms.trustagent.StateApi.START" />
-+                <action android:name="${basePackageName}.android.gms.trustagent.trustlet.trustletmanagerservice.BIND" />
-+                <action android:name="${basePackageName}.android.gms.trustlet.bluetooth.service.BIND" />
-+                <action android:name="${basePackageName}.android.gms.trustlet.connectionlessble.service.BIND" />
-+                <action android:name="${basePackageName}.android.gms.trustlet.face.service.BIND" />
-+                <action android:name="${basePackageName}.android.gms.trustlet.nfc.service.BIND" />
-+                <action android:name="${basePackageName}.android.gms.trustlet.onbody.service.BIND" />
-+                <action android:name="${basePackageName}.android.gms.trustlet.place.service.BIND" />
-+                <action android:name="${basePackageName}.android.gms.trustlet.voiceunlock.service.BIND" />
-+                <action android:name="${basePackageName}.android.gms.udc.service.START" />
-+                <action android:name="${basePackageName}.android.gms.update.START_API_SERVICE" />
-+                <action android:name="${basePackageName}.android.gms.update.START_SERVICE" />
-+                <action android:name="${basePackageName}.android.gms.update.START_SINGLE_USER_API_SERVICE" />
-+                <action android:name="${basePackageName}.android.gms.update.START_TV_API_SERVICE" />
-+                <action android:name="${basePackageName}.android.gms.userlocation.service.START" />
-+                <action android:name="${basePackageName}.android.gms.vehicle.cabin.service.START" />
-+                <action android:name="${basePackageName}.android.gms.vehicle.climate.service.START" />
-+                <action android:name="${basePackageName}.android.gms.vehicle.info.service.START" />
-+                <action android:name="${basePackageName}.android.gms.walletp2p.service.firstparty.BIND" />
-+                <action android:name="${basePackageName}.android.gms.walletp2p.service.zeroparty.BIND" />
-+                <action android:name="${basePackageName}.android.gms.wearable.BIND" />
-+                <action android:name="${basePackageName}.android.gms.wearable.DATA_CHANGED" />
-+                <action android:name="${basePackageName}.android.gms.wearable.NODE_CHANGED" />
-+                <action android:name="${basePackageName}.android.mdd.service.START" />
-+                <action android:name="${basePackageName}.android.mdh.service.START" />
-+                <action android:name="${basePackageName}.android.mdh.service.listener.START" />
-+                <action android:name="${basePackageName}.android.mobstore.service.START" />
- 
-                 <action
--                    android:name="com.google.android.gms.wearable.BIND_LISTENER"
-+                    android:name="${basePackageName}.android.gms.wearable.BIND_LISTENER"
+@@ -1180,6 +1173,18 @@
                      tools:ignore="WearableBindListener" />
              </intent-filter>
          </service>
-+
 +        <meta-data
 +                android:name="org.microg.gms.settings.checkin_enable_service"
 +                android:value="true" />
@@ -2239,19 +1628,19 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
      </application>
  
  </manifest>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2024-04-05 05:27:32.000000000 +0300
-@@ -14,6 +14,8 @@
- import android.util.Log;
- 
- import androidx.annotation.RequiresPermission;
+diff -Naur Microg/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java Rvmg/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java
+--- Microg/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2024-12-23 17:33:54.729406642 +0300
++++ Rvmg/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2024-12-23 17:32:35.376065404 +0300
+@@ -17,6 +17,8 @@
+ import org.microg.gms.accountaction.ErrorResolverKt;
+ import org.microg.gms.accountaction.Resolution;
+ import org.microg.gms.common.NotOkayException;
 +import com.google.android.gms.base.BuildConfig;
 +import org.microg.gms.common.PackageSpoofUtils;
  import org.microg.gms.common.PackageUtils;
  import org.microg.gms.settings.SettingsContract;
  
-@@ -29,7 +31,7 @@
+@@ -32,7 +34,7 @@
  public class AuthManager {
  
      private static final String TAG = "GmsAuthManager";
@@ -2260,7 +1649,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
      public static final String PREF_AUTH_VISIBLE = SettingsContract.Auth.VISIBLE;
      public static final int ONE_HOUR_IN_SECONDS = 60 * 60;
      public Map<Object, Object> dynamicFields = new HashMap<>();
-@@ -268,7 +270,10 @@
+@@ -329,7 +331,10 @@
          }
          AuthRequest request = new AuthRequest().fromContext(context)
                  .source("android")
@@ -2272,21 +1661,21 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
                  .email(accountName)
                  .token(getAccountManager().getPassword(account))
                  .service(service)
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2024-04-05 05:27:32.000000000 +0300
-@@ -75,8 +75,7 @@
+diff -Naur Microg/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java Rvmg/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java
+--- Microg/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2024-12-23 17:33:54.729406642 +0300
++++ Rvmg/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2024-12-23 17:32:35.416065408 +0300
+@@ -76,8 +76,7 @@
  import static android.view.View.VISIBLE;
  import static android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT;
  import static org.microg.gms.auth.AuthPrefs.isAuthVisible;
 -import static org.microg.gms.common.Constants.GMS_PACKAGE_NAME;
 -import static org.microg.gms.common.Constants.GMS_VERSION_CODE;
 +import static org.microg.gms.common.Constants.*;
+ import static org.microg.gms.common.Constants.VENDING_PACKAGE_NAME;
  
  public class LoginActivity extends AssistantActivity {
-     public static final String TMPL_NEW_ACCOUNT = "new_account";
-@@ -354,7 +353,7 @@
-         }
+@@ -368,7 +367,7 @@
+         sendBroadcast(intent, PERMISSION_UPDATE_ACCOUNT);
      }
      private void retrieveGmsToken(final Account account) {
 -        final AuthManager authManager = new AuthManager(this, account.name, GMS_PACKAGE_NAME, "ac2dm");
@@ -2294,18 +1683,18 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
          authManager.setPermitted(true);
          new AuthRequest().fromContext(this)
                  .appIsGms()
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2024-04-05 05:27:32.000000000 +0300
-@@ -34,6 +34,7 @@
- import org.microg.gms.auth.AuthManager;
- import org.microg.gms.auth.AuthResponse;
+diff -Naur Microg/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java Rvmg/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java
+--- Microg/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2024-12-23 17:33:54.729406642 +0300
++++ Rvmg/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2024-12-23 17:32:35.422732075 +0300
+@@ -32,6 +32,7 @@
+ import com.google.android.gms.common.internal.CertData;
+ import org.microg.gms.auth.*;
  import org.microg.gms.auth.login.LoginActivity;
 +import org.microg.gms.common.PackageSpoofUtils;
  import org.microg.gms.common.PackageUtils;
- 
- import java.util.Arrays;
-@@ -107,7 +108,7 @@
+ import org.microg.gms.utils.ExtendedPackageInfo;
+ import org.microg.gms.utils.PackageManagerUtilsKt;
+@@ -144,7 +145,7 @@
                  Intent i = new Intent(context, AskPermissionActivity.class);
                  i.putExtras(options);
                  i.putExtra(KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
@@ -2314,9 +1703,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
                  i.putExtra(KEY_ACCOUNT_TYPE, account.type);
                  i.putExtra(KEY_ACCOUNT_NAME, account.name);
                  i.putExtra(KEY_AUTHTOKEN, authTokenType);
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java Rvmg/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java
+--- Microg/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2024-12-23 17:33:54.732739976 +0300
++++ Rvmg/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2024-12-23 17:32:35.542732087 +0300
 @@ -20,11 +20,12 @@
  import android.content.ContentValues;
  import android.database.Cursor;
@@ -2333,9 +1722,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
      public static int setString(ContentResolver resolver, String key, String value) {
          ContentValues values = new ContentValues();
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java Rvmg/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java
+--- Microg/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2024-12-23 17:33:54.732739976 +0300
++++ Rvmg/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2024-12-23 17:32:35.546065421 +0300
 @@ -22,6 +22,7 @@
  import android.database.MatrixCursor;
  import android.net.Uri;
@@ -2353,10 +1742,10 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
      public static final Uri MAIN_URI = Uri.withAppendedPath(CONTENT_URI, "main");
      public static final Uri OVERRIDE_URI = Uri.withAppendedPath(CONTENT_URI, "override");
      public static final Uri PREFIX_URI = Uri.withAppendedPath(CONTENT_URI, "prefix");
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2024-04-05 05:27:32.000000000 +0300
-@@ -113,7 +113,7 @@
+diff -Naur Microg/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java Rvmg/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java
+--- Microg/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2024-12-23 17:33:54.732739976 +0300
++++ Rvmg/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2024-12-23 17:32:35.782732111 +0300
+@@ -143,7 +143,7 @@
      }
  
      public static String getUserInfoAuthKey(Context context, Account account) {
@@ -2365,9 +1754,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
          authManager.setPermitted(true);
          String result = authManager.getAuthToken();
          if (result == null) {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt Rvmg/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt
+--- Microg/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2024-12-23 17:33:54.736073310 +0300
++++ Rvmg/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2024-12-23 17:32:36.466065513 +0300
 @@ -22,6 +22,7 @@
  import kotlinx.coroutines.withContext
  import org.microg.gms.auth.AuthManager
@@ -2382,13 +1771,20 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              val service = "weblogin:continue=" + URLEncoder.encode(url, "utf-8")
 -            val authManager = AuthManager(activity, accountName, GMS_PACKAGE_NAME, service)
 +            val authManager = AuthManager(activity, accountName, GOOGLE_SERVICES_PACKAGE_NAME, service)
-             val authUrl = authManager.requestAuth(false)?.auth
+             val authUrl = authManager.requestAuthWithForegroundResolution(false)?.auth
              if (authUrl?.contains("WILL_NOT_SIGN_IN") == true) {
                  throw RuntimeException("Would not sign in")
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2024-04-05 05:27:32.000000000 +0300
-@@ -5,11 +5,13 @@
+@@ -127,4 +128,4 @@
+         settings.setSupportZoom(false)
+         settings.javaScriptCanOpenWindowsAutomatically = false
+     }
+-}
+\ No newline at end of file
++}
+diff -Naur Microg/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt Rvmg/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt
+--- Microg/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2024-12-23 17:33:54.736073310 +0300
++++ Rvmg/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2024-12-23 17:32:36.466065513 +0300
+@@ -5,12 +5,13 @@
  
  package org.microg.gms.accountsettings.ui
  
@@ -2397,6 +1793,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
 -const val ACTION_ACCOUNT_PREFERENCES_SETTINGS = "com.google.android.gms.accountsettings.ACCOUNT_PREFERENCES_SETTINGS"
 -const val ACTION_PRIVACY_SETTINGS = "com.google.android.gms.accountsettings.PRIVACY_SETTINGS"
 -const val ACTION_SECURITY_SETTINGS = "com.google.android.gms.accountsettings.SECURITY_SETTINGS"
+-const val ACTION_LOCATION_SHARING = "com.google.android.gms.location.settings.LOCATION_SHARING"
 +import com.google.android.gms.base.BuildConfig
 +
 +const val ACTION_BROWSE_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.action.BROWSE_SETTINGS"
@@ -2407,9 +1804,16 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
  
  const val EXTRA_CALLING_PACKAGE_NAME = "extra.callingPackageName"
  const val EXTRA_IGNORE_ACCOUNT = "extra.ignoreAccount"
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2024-04-05 05:27:32.000000000 +0300
+@@ -23,4 +24,4 @@
+ const val EXTRA_SCREEN_MY_ACTIVITY_PRODUCT = "extra.screen.myactivityProduct"
+ const val EXTRA_SCREEN_KID_ONBOARDING_PARAMS = "extra.screen.kidOnboardingParams"
+ 
+-const val OPTION_SCREEN_FLAVOR = "screenFlavor"
+\ No newline at end of file
++const val OPTION_SCREEN_FLAVOR = "screenFlavor"
+diff -Naur Microg/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt Rvmg/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt
+--- Microg/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2024-12-23 17:33:54.739406643 +0300
++++ Rvmg/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2024-12-23 17:32:36.729398872 +0300
 @@ -15,6 +15,7 @@
  import android.os.Bundle
  import android.util.Log
@@ -2427,21 +1831,21 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
      }
  
      companion object {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2024-04-05 05:27:32.000000000 +0300
-@@ -154,7 +154,7 @@
- )
+diff -Naur Microg/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt Rvmg/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt
+--- Microg/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2024-12-23 17:33:54.739406643 +0300
++++ Rvmg/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2024-12-23 17:32:36.946065560 +0300
+@@ -207,7 +207,7 @@
+ }
  
  suspend fun registerForGames(context: Context, account: Account, queue: RequestQueue = singleInstanceOf { Volley.newRequestQueue(context.applicationContext) }) {
 -    val authManager = AuthManager(context, account.name, Constants.GMS_PACKAGE_NAME, "oauth2:${Scopes.GAMES_FIRSTPARTY}")
 +    val authManager = AuthManager(context, account.name, Constants.GOOGLE_SERVICES_PACKAGE_NAME, "oauth2:${Scopes.GAMES_FIRSTPARTY}")
      authManager.setOauth2Foreground("1")
-     val authToken = withContext(Dispatchers.IO) { authManager.requestAuth(false).auth }
+     val authToken = withContext(Dispatchers.IO) { authManager.requestAuthWithBackgroundResolution(false).auth }
      val androidId = getSettings(context, CheckIn.getContentUri(context), arrayOf(CheckIn.ANDROID_ID)) { cursor: Cursor -> cursor.getLong(0) }
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt Rvmg/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt
+--- Microg/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt	2024-12-23 17:33:54.742739977 +0300
++++ Rvmg/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt	2024-12-23 17:32:37.259398925 +0300
 @@ -32,7 +32,7 @@
          callback.onPostInitCompleteWithConnectionInfo(
              CommonStatusCodes.SUCCESS,
@@ -2451,9 +1855,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              ),
              ConnectionInfo().apply { features = FEATURES }
          )
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/res/xml/authenticator.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/res/xml/authenticator.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/res/xml/authenticator.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/res/xml/authenticator.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-core/src/main/res/xml/authenticator.xml Rvmg/play-services-core/src/main/res/xml/authenticator.xml
+--- Microg/play-services-core/src/main/res/xml/authenticator.xml	2024-12-23 17:33:54.762739979 +0300
++++ Rvmg/play-services-core/src/main/res/xml/authenticator.xml	2024-12-23 17:32:39.986065863 +0300
 @@ -16,7 +16,7 @@
  
  <account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
@@ -2463,9 +1867,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
      android:customTokens="true"
      android:icon="@drawable/proprietary_auth_gls_ic_google_selected"
      android:smallIcon="@drawable/proprietary_auth_gls_ic_google_minitab_selected"
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/res/xml/contact_syncadapter.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/res/xml/contact_syncadapter.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/res/xml/contact_syncadapter.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/res/xml/contact_syncadapter.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-core/src/main/res/xml/contact_syncadapter.xml Rvmg/play-services-core/src/main/res/xml/contact_syncadapter.xml
+--- Microg/play-services-core/src/main/res/xml/contact_syncadapter.xml	2024-12-23 17:33:54.762739979 +0300
++++ Rvmg/play-services-core/src/main/res/xml/contact_syncadapter.xml	2024-12-23 17:32:39.989399197 +0300
 @@ -16,6 +16,6 @@
    -->
  
@@ -2475,10 +1879,10 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
                android:contentAuthority="com.android.contacts"
                android:userVisible="false"/>
 \ No newline at end of file
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/res/xml/preferences_accounts.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/res/xml/preferences_accounts.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/res/xml/preferences_accounts.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/res/xml/preferences_accounts.xml	2024-04-05 05:27:32.000000000 +0300
-@@ -15,7 +15,7 @@
+diff -Naur Microg/play-services-core/src/main/res/xml/preferences_accounts.xml Rvmg/play-services-core/src/main/res/xml/preferences_accounts.xml
+--- Microg/play-services-core/src/main/res/xml/preferences_accounts.xml	2024-12-23 17:33:54.762739979 +0300
++++ Rvmg/play-services-core/src/main/res/xml/preferences_accounts.xml	2024-12-23 17:32:39.989399197 +0300
+@@ -17,7 +17,7 @@
              android:title="@string/pref_add_account_summary">
              <intent
                  android:targetClass="org.microg.gms.auth.login.LoginActivity"
@@ -2487,15 +1891,21 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
          </Preference>
      </PreferenceCategory>
      <PreferenceCategory
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/res/xml/preferences_auth.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/res/xml/preferences_auth.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/res/xml/preferences_auth.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/res/xml/preferences_auth.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-core/src/main/res/xml/preferences_auth.xml Rvmg/play-services-core/src/main/res/xml/preferences_auth.xml
+--- Microg/play-services-core/src/main/res/xml/preferences_auth.xml	2024-12-23 17:33:54.762739979 +0300
++++ Rvmg/play-services-core/src/main/res/xml/preferences_auth.xml	2024-12-23 17:32:39.996065864 +0300
+@@ -1,4 +1,4 @@
+-<?xml version="1.0" encoding="utf-8"?><!--
++w<?xml version="1.0" encoding="utf-8"?><!--
+   ~ Copyright (C) 2013-2017 microG Project Team
+   ~
+   ~ Licensed under the Apache License, Version 2.0 (the "License");
 @@ -19,21 +19,21 @@
          android:key="k2"
          android:title="@string/prefs_account_security">
          <intent
 -            android:action="com.google.android.gms.accountsettings.SECURITY_SETTINGS"
--            android:targetPackage="com.google.android.gms" />
+-            android:targetPackage="@string/package_id" />
 +            android:action="@string/var_pref_auth_action_security_settings"
 +            android:targetPackage="@string/var_pref_start_gms_package" />
      </PreferenceScreen>
@@ -2504,7 +1914,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
          android:title="@string/prefs_account_privacy">
          <intent
 -            android:action="com.google.android.gms.accountsettings.PRIVACY_SETTINGS"
--            android:targetPackage="com.google.android.gms" />
+-            android:targetPackage="@string/package_id" />
 +            android:action="@string/var_pref_auth_action_privacy_settings"
 +            android:targetPackage="@string/var_pref_start_gms_package" />
      </PreferenceScreen>
@@ -2513,19 +1923,19 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
          android:title="@string/prefs_account">
          <intent
 -            android:action="com.google.android.gms.accountsettings.ACCOUNT_PREFERENCES_SETTINGS"
--            android:targetPackage="com.google.android.gms" />
+-            android:targetPackage="@string/package_id" />
 +            android:action="@string/var_pref_auth_action_preferences_settings"
 +            android:targetPackage="@string/var_pref_start_gms_package" />
      </PreferenceScreen>
  </PreferenceScreen>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/res/xml/preferences_start.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/res/xml/preferences_start.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/src/main/res/xml/preferences_start.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-core/src/main/res/xml/preferences_start.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-core/src/main/res/xml/preferences_start.xml Rvmg/play-services-core/src/main/res/xml/preferences_start.xml
+--- Microg/play-services-core/src/main/res/xml/preferences_start.xml	2024-12-23 17:33:54.766073313 +0300
++++ Rvmg/play-services-core/src/main/res/xml/preferences_start.xml	2024-12-23 17:32:40.029399201 +0300
 @@ -23,7 +23,7 @@
              android:title="@string/self_check_title">
              <intent
                  android:targetClass="org.microg.gms.ui.SelfCheckFragment$AsActivity"
--                android:targetPackage="com.google.android.gms" />
+-                android:targetPackage="@string/package_id" />
 +                android:targetPackage="@string/var_pref_start_gms_package" />
          </Preference>
      </PreferenceCategory>
@@ -2534,15 +1944,15 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-core/s
              app:isPreferenceVisible="false">
              <intent
                  android:targetClass="org.microg.gms.ui.GoogleMoreFragment$AsActivity"
--                android:targetPackage="com.google.android.gms" />
+-                android:targetPackage="@string/package_id" />
 +                android:targetPackage="@string/var_pref_start_gms_package" />
          </Preference>
      </PreferenceCategory>
      <PreferenceCategory android:layout="@layout/preference_category_no_label" android:key="prefcat_other_services">
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-droidguard/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-droidguard/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-droidguard/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-droidguard/build.gradle	2024-04-05 05:27:32.000000000 +0300
-@@ -21,6 +21,10 @@
+diff -Naur Microg/play-services-droidguard/build.gradle Rvmg/play-services-droidguard/build.gradle
+--- Microg/play-services-droidguard/build.gradle	2024-12-23 17:33:54.772739980 +0300
++++ Rvmg/play-services-droidguard/build.gradle	2024-12-23 17:32:41.149399312 +0300
+@@ -22,6 +22,10 @@
          versionName version
          minSdkVersion androidMinSdk
          targetSdkVersion androidTargetSdk
@@ -2553,9 +1963,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-droidg
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-droidguard/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-droidguard/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-droidguard/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-droidguard/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-droidguard/core/src/main/AndroidManifest.xml Rvmg/play-services-droidguard/core/src/main/AndroidManifest.xml
+--- Microg/play-services-droidguard/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.772739980 +0300
++++ Rvmg/play-services-droidguard/core/src/main/AndroidManifest.xml	2024-12-23 17:32:41.159399313 +0300
 @@ -15,9 +15,9 @@
              android:exported="true"
              android:process="com.google.android.gms.unstable">
@@ -2569,9 +1979,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-droidg
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java Rvmg/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java
+--- Microg/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2024-12-23 17:33:54.772739980 +0300
++++ Rvmg/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2024-12-23 17:32:41.216065986 +0300
 @@ -13,6 +13,7 @@
  
  import androidx.annotation.Nullable;
@@ -2589,9 +1999,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-droidg
              return new DroidGuardServiceBroker(this);
          }
          return null;
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-fido/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-fido/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-fido/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-fido/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-fido/core/build.gradle Rvmg/play-services-fido/core/build.gradle
+--- Microg/play-services-fido/core/build.gradle	2024-12-23 17:33:54.776073314 +0300
++++ Rvmg/play-services-fido/core/build.gradle	2024-12-23 17:32:42.122732743 +0300
 @@ -44,6 +44,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2603,9 +2013,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-fido/c
      }
  
      buildFeatures {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-fido/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-fido/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-fido/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-fido/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-fido/core/src/main/AndroidManifest.xml Rvmg/play-services-fido/core/src/main/AndroidManifest.xml
+--- Microg/play-services-fido/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.779406647 +0300
++++ Rvmg/play-services-fido/core/src/main/AndroidManifest.xml	2024-12-23 17:32:42.132732744 +0300
 @@ -21,7 +21,7 @@
              android:name=".privileged.Fido2PrivilegedService"
              android:exported="true">
@@ -2615,9 +2025,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-fido/c
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
          </service>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-gcm/build.gradle Rvmg/play-services-gcm/build.gradle
+--- Microg/play-services-gcm/build.gradle	2024-12-23 17:33:54.799406649 +0300
++++ Rvmg/play-services-gcm/build.gradle	2024-12-23 17:32:45.739399770 +0300
 @@ -15,6 +15,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2629,9 +2039,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/bu
      }
  
      compileOptions {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-gcm/src/main/AndroidManifest.xml Rvmg/play-services-gcm/src/main/AndroidManifest.xml
+--- Microg/play-services-gcm/src/main/AndroidManifest.xml	2024-12-23 17:33:54.799406649 +0300
++++ Rvmg/play-services-gcm/src/main/AndroidManifest.xml	2024-12-23 17:32:45.749399771 +0300
 @@ -18,7 +18,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -2641,9 +2051,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/sr
      <uses-permission android:name="android.permission.INTERNET"/>
  
      <!-- Move to play-services-measurement -->
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java Rvmg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java
+--- Microg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2024-12-23 17:33:54.799406649 +0300
++++ Rvmg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2024-12-23 17:32:45.786066441 +0300
 @@ -53,7 +53,7 @@
   *     android:name=".YourGcmListenerService"
   *     android:exported="false" >
@@ -2653,9 +2063,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/sr
   *     </intent-filter>
   * </service></pre>
   */
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java Rvmg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java
+--- Microg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2024-12-23 17:33:54.799406649 +0300
++++ Rvmg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2024-12-23 17:32:45.799399776 +0300
 @@ -67,9 +67,9 @@
   * <pre>
   * <service android:name=".MyUploadService"
@@ -2668,9 +2078,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/sr
   *     </intent-filter>
   * </service>
   * </pre>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java Rvmg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java
+--- Microg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2024-12-23 17:33:54.799406649 +0300
++++ Rvmg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2024-12-23 17:32:45.802733109 +0300
 @@ -44,12 +44,12 @@
   * <p/>
   * <pre>
@@ -2688,9 +2098,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/sr
   *         <category android:name="YOUR_PACKAGE_NAME" />
   *     </intent-filter>
   * </receiver></pre>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java Rvmg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java
+--- Microg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2024-12-23 17:33:54.799406649 +0300
++++ Rvmg/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2024-12-23 17:32:45.806066443 +0300
 @@ -38,10 +38,10 @@
   * {@link com.google.android.gms.gcm.GcmTaskService#SERVICE_ACTION_EXECUTE_TASK}. Here's an example:
   * <pre>
@@ -2704,9 +2114,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gcm/sr
   *              </intent-filter>
   *     </service>
   * </pre>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gmscompliance/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gmscompliance/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gmscompliance/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gmscompliance/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-gmscompliance/core/build.gradle Rvmg/play-services-gmscompliance/core/build.gradle
+--- Microg/play-services-gmscompliance/core/build.gradle	2024-12-23 17:33:54.802739983 +0300
++++ Rvmg/play-services-gmscompliance/core/build.gradle	2024-12-23 17:32:46.376066500 +0300
 @@ -35,6 +35,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2718,9 +2128,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gmscom
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gmscompliance/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gmscompliance/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-gmscompliance/core/src/main/AndroidManifest.xml Rvmg/play-services-gmscompliance/core/src/main/AndroidManifest.xml
+--- Microg/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.802739983 +0300
++++ Rvmg/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2024-12-23 17:32:46.382733167 +0300
 @@ -9,7 +9,7 @@
      <application>
          <service android:name="org.microg.gms.gmscompliance.GmsDeviceComplianceService">
@@ -2730,9 +2140,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-gmscom
              </intent-filter>
          </service>
      </application>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-iid/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-iid/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-iid/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-iid/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-iid/build.gradle Rvmg/play-services-iid/build.gradle
+--- Microg/play-services-iid/build.gradle	2024-12-23 17:33:54.802739983 +0300
++++ Rvmg/play-services-iid/build.gradle	2024-12-23 17:32:46.506066513 +0300
 @@ -19,6 +19,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2744,9 +2154,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-iid/bu
      }
  
      compileOptions {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-iid/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-iid/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-iid/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-iid/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-iid/src/main/AndroidManifest.xml Rvmg/play-services-iid/src/main/AndroidManifest.xml
+--- Microg/play-services-iid/src/main/AndroidManifest.xml	2024-12-23 17:33:54.802739983 +0300
++++ Rvmg/play-services-iid/src/main/AndroidManifest.xml	2024-12-23 17:32:46.519399847 +0300
 @@ -7,6 +7,6 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -2755,9 +2165,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-iid/sr
 +    <uses-permission android:name="${basePackageName}.android.c2dm.permission.RECEIVE"/>
      <uses-permission android:name="android.permission.INTERNET"/>
  </manifest>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java Rvmg/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java
+--- Microg/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2024-12-23 17:33:54.802739983 +0300
++++ Rvmg/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2024-12-23 17:32:46.589399854 +0300
 @@ -43,7 +43,7 @@
   * <pre>
   * <service android:name=".YourInstanceIDListenerService" android:exported="false">
@@ -2767,11 +2177,11 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-iid/sr
   *     </intent-filter>
   * </service></pre>
   * Do not export this service. Instead, keep it private to prevent other apps
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-location/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-location/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-location/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-location/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
-@@ -44,6 +44,10 @@
-         buildConfigField "String", "ICHNAEA_KEY", "\"${localProperties.get("ichnaea.key", "")}\""
+diff -Naur Microg/play-services-location/core/build.gradle Rvmg/play-services-location/core/build.gradle
+--- Microg/play-services-location/core/build.gradle	2024-12-23 17:33:54.802739983 +0300
++++ Rvmg/play-services-location/core/build.gradle	2024-12-23 17:32:46.702733199 +0300
+@@ -43,6 +43,10 @@
+         targetSdkVersion androidTargetSdk
          buildConfigField "String", "FORCE_SHOW_BACKGROUND_PERMISSION", "\"\""
          buildConfigField "boolean", "SHOW_NOTIFICATION_WHEN_NOT_PERMITTED", "false"
 +
@@ -2781,13 +2191,13 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-locati
      }
  
      lintOptions {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-location/core/provider/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-location/core/provider/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-location/core/provider/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-location/core/provider/build.gradle	2024-04-05 05:27:32.000000000 +0300
-@@ -40,6 +40,10 @@
+diff -Naur Microg/play-services-location/core/provider/build.gradle Rvmg/play-services-location/core/provider/build.gradle
+--- Microg/play-services-location/core/provider/build.gradle	2024-12-23 17:33:54.802739983 +0300
++++ Rvmg/play-services-location/core/provider/build.gradle	2024-12-23 17:32:46.716066534 +0300
+@@ -41,6 +41,10 @@
          minSdkVersion androidMinSdk
          targetSdkVersion androidTargetSdk
-         buildConfigField "String", "ICHNAEA_KEY", "\"${localProperties.get("ichnaea.key", "")}\""
+         buildConfigField "String", "ICHNAEA_USER_AGENT", "\"microG/${version}\""
 +
 +        manifestPlaceholders = [
 +                basePackageName: "$basePackageName"
@@ -2795,10 +2205,10 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-locati
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-location/core/provider/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-location/core/provider/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-location/core/provider/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-location/core/provider/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
-@@ -54,7 +54,7 @@
+diff -Naur Microg/play-services-location/core/provider/src/main/AndroidManifest.xml Rvmg/play-services-location/core/provider/src/main/AndroidManifest.xml
+--- Microg/play-services-location/core/provider/src/main/AndroidManifest.xml	2024-12-23 17:33:54.802739983 +0300
++++ Rvmg/play-services-location/core/provider/src/main/AndroidManifest.xml	2024-12-23 17:32:46.726066535 +0300
+@@ -78,7 +78,7 @@
              android:permission="android.permission.WRITE_SECURE_SETTINGS">
              <intent-filter>
                  <action android:name="com.android.location.service.GeocodeProvider" />
@@ -2807,10 +2217,10 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-locati
              </intent-filter>
              <meta-data
                  android:name="serviceVersion"
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-location/core/src/huawei/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-location/core/src/huawei/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-location/core/src/huawei/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-location/core/src/huawei/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
-@@ -16,15 +16,15 @@
+diff -Naur Microg/play-services-location/core/src/huawei/AndroidManifest.xml Rvmg/play-services-location/core/src/huawei/AndroidManifest.xml
+--- Microg/play-services-location/core/src/huawei/AndroidManifest.xml	2024-12-23 17:33:54.809406650 +0300
++++ Rvmg/play-services-location/core/src/huawei/AndroidManifest.xml	2024-12-23 17:32:46.972733226 +0300
+@@ -17,15 +17,15 @@
              android:name="org.microg.gms.location.manager.LocationManagerService"
              android:exported="true">
              <intent-filter>
@@ -2829,11 +2239,11 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-locati
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-location/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-location/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-location/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-location/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
-@@ -29,7 +29,7 @@
-             android:process=":ui"
+diff -Naur Microg/play-services-location/core/src/main/AndroidManifest.xml Rvmg/play-services-location/core/src/main/AndroidManifest.xml
+--- Microg/play-services-location/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.809406650 +0300
++++ Rvmg/play-services-location/core/src/main/AndroidManifest.xml	2024-12-23 17:32:47.032733232 +0300
+@@ -31,7 +31,7 @@
+             android:launchMode="singleTask"
              android:theme="@style/Theme.App.Translucent">
              <intent-filter android:priority="-1">
 -                <action android:name="com.google.android.gms.location.settings.CHECK_SETTINGS" />
@@ -2841,15 +2251,16 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-locati
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
          </activity>
-@@ -45,15 +45,15 @@
+@@ -62,7 +62,7 @@
              android:name="org.microg.gms.location.manager.LocationManagerService"
              android:exported="true">
              <intent-filter>
 -                <action android:name="com.google.android.location.internal.GoogleLocationManagerService.START" />
-+                <action android:name="${basePackageName}.android.location.internal.GoogleLocationManagerService.START" />
++                 <action android:name="${basePackageName}.android.location.internal.GoogleLocationManagerService.START" />
              </intent-filter>
          </service>
-         <service
+ 
+@@ -70,8 +70,8 @@
              android:name="org.microg.gms.location.reporting.ReportingAndroidService"
              android:exported="true">
              <intent-filter>
@@ -2860,9 +2271,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-locati
  
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-maps/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-maps/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-maps/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-maps/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-maps/build.gradle Rvmg/play-services-maps/build.gradle
+--- Microg/play-services-maps/build.gradle	2024-12-23 17:33:54.826073319 +0300
++++ Rvmg/play-services-maps/build.gradle	2024-12-23 17:32:48.422733370 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2874,9 +2285,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-maps/b
      }
  
      compileOptions {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-maps/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-maps/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-maps/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-maps/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-maps/src/main/AndroidManifest.xml Rvmg/play-services-maps/src/main/AndroidManifest.xml
+--- Microg/play-services-maps/src/main/AndroidManifest.xml	2024-12-23 17:33:54.879406657 +0300
++++ Rvmg/play-services-maps/src/main/AndroidManifest.xml	2024-12-23 17:32:53.159400509 +0300
 @@ -12,7 +12,7 @@
      <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
  
@@ -2886,9 +2297,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-maps/s
      </queries>
  
      <application>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-nearby/build.gradle Rvmg/play-services-nearby/build.gradle
+--- Microg/play-services-nearby/build.gradle	2024-12-23 17:33:54.889406658 +0300
++++ Rvmg/play-services-nearby/build.gradle	2024-12-23 17:32:54.042733930 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2900,9 +2311,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby
      }
  
      compileOptions {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-nearby/core/build.gradle Rvmg/play-services-nearby/core/build.gradle
+--- Microg/play-services-nearby/core/build.gradle	2024-12-23 17:33:54.889406658 +0300
++++ Rvmg/play-services-nearby/core/build.gradle	2024-12-23 17:32:54.049400597 +0300
 @@ -40,6 +40,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2914,9 +2325,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby
      }
  
      buildFeatures {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/core/package/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/core/package/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/core/package/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/core/package/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-nearby/core/package/build.gradle Rvmg/play-services-nearby/core/package/build.gradle
+--- Microg/play-services-nearby/core/package/build.gradle	2024-12-23 17:33:54.889406658 +0300
++++ Rvmg/play-services-nearby/core/package/build.gradle	2024-12-23 17:32:54.052733931 +0300
 @@ -24,6 +24,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2928,9 +2339,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/core/package/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/core/package/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/core/package/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/core/package/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-nearby/core/package/src/main/AndroidManifest.xml Rvmg/play-services-nearby/core/package/src/main/AndroidManifest.xml
+--- Microg/play-services-nearby/core/package/src/main/AndroidManifest.xml	2024-12-23 17:33:54.889406658 +0300
++++ Rvmg/play-services-nearby/core/package/src/main/AndroidManifest.xml	2024-12-23 17:32:54.059400598 +0300
 @@ -15,7 +15,7 @@
      <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
  
@@ -2940,9 +2351,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby
          android:protectionLevel="normal" />
  
      <application>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-nearby/core/src/main/AndroidManifest.xml Rvmg/play-services-nearby/core/src/main/AndroidManifest.xml
+--- Microg/play-services-nearby/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.889406658 +0300
++++ Rvmg/play-services-nearby/core/src/main/AndroidManifest.xml	2024-12-23 17:32:54.182733944 +0300
 @@ -5,7 +5,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -2970,9 +2381,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
          </activity>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-nearby/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-nearby/src/main/AndroidManifest.xml Rvmg/play-services-nearby/src/main/AndroidManifest.xml
+--- Microg/play-services-nearby/src/main/AndroidManifest.xml	2024-12-23 17:33:54.899406659 +0300
++++ Rvmg/play-services-nearby/src/main/AndroidManifest.xml	2024-12-23 17:32:54.836067343 +0300
 @@ -6,8 +6,8 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
      <application>
@@ -2984,9 +2395,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-nearby
 +                android:permission="${basePackageName}.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK"/>
      </application>
  </manifest>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-licenses/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-oss-licenses/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-licenses/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-oss-licenses/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-oss-licenses/build.gradle Rvmg/play-services-oss-licenses/build.gradle
+--- Microg/play-services-oss-licenses/build.gradle	2024-12-23 17:33:54.902739993 +0300
++++ Rvmg/play-services-oss-licenses/build.gradle	2024-12-23 17:32:55.836067442 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2998,9 +2409,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-li
      }
  
      lintOptions {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-licenses/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-oss-licenses/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-licenses/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-oss-licenses/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-oss-licenses/core/build.gradle Rvmg/play-services-oss-licenses/core/build.gradle
+--- Microg/play-services-oss-licenses/core/build.gradle	2024-12-23 17:33:54.902739993 +0300
++++ Rvmg/play-services-oss-licenses/core/build.gradle	2024-12-23 17:32:55.839400776 +0300
 @@ -23,6 +23,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3012,9 +2423,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-li
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-licenses/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-oss-licenses/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-oss-licenses/core/src/main/AndroidManifest.xml Rvmg/play-services-oss-licenses/core/src/main/AndroidManifest.xml
+--- Microg/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.902739993 +0300
++++ Rvmg/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2024-12-23 17:32:55.846067443 +0300
 @@ -10,7 +10,7 @@
              android:name=".OssLicensesService"
              android:exported="true">
@@ -3024,9 +2435,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-li
              </intent-filter>
          </service>
      </application>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-licenses/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-oss-licenses/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-licenses/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-oss-licenses/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-oss-licenses/src/main/AndroidManifest.xml Rvmg/play-services-oss-licenses/src/main/AndroidManifest.xml
+--- Microg/play-services-oss-licenses/src/main/AndroidManifest.xml	2024-12-23 17:33:54.902739993 +0300
++++ Rvmg/play-services-oss-licenses/src/main/AndroidManifest.xml	2024-12-23 17:32:55.882734113 +0300
 @@ -7,8 +7,8 @@
  
      <application>
@@ -3038,9 +2449,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-oss-li
 +        <activity android:name="${basePackageName}.android.gms.oss.licenses.OssLicensesActivity" />
      </application>
  </manifest>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-panorama/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-panorama/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-panorama/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-panorama/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-panorama/core/build.gradle Rvmg/play-services-panorama/core/build.gradle
+--- Microg/play-services-panorama/core/build.gradle	2024-12-23 17:33:54.906073327 +0300
++++ Rvmg/play-services-panorama/core/build.gradle	2024-12-23 17:32:56.312734156 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3052,9 +2463,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-panora
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-panorama/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-panorama/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-panorama/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-panorama/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-panorama/core/src/main/AndroidManifest.xml Rvmg/play-services-panorama/core/src/main/AndroidManifest.xml
+--- Microg/play-services-panorama/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.906073327 +0300
++++ Rvmg/play-services-panorama/core/src/main/AndroidManifest.xml	2024-12-23 17:32:56.322734157 +0300
 @@ -8,7 +8,7 @@
      <application>
          <service android:name="org.microg.gms.panorama.PanoramaService">
@@ -3064,9 +2475,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-panora
              </intent-filter>
          </service>
      </application>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-pay/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-pay/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-pay/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-pay/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-pay/core/build.gradle Rvmg/play-services-pay/core/build.gradle
+--- Microg/play-services-pay/core/build.gradle	2024-12-23 17:33:54.909406660 +0300
++++ Rvmg/play-services-pay/core/build.gradle	2024-12-23 17:32:56.402734165 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3078,38 +2489,38 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-pay/co
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-pay/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-pay/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-pay/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-pay/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
-@@ -7,13 +7,13 @@
+diff -Naur Microg/play-services-pay/core/src/main/AndroidManifest.xml Rvmg/play-services-pay/core/src/main/AndroidManifest.xml
+--- Microg/play-services-pay/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.909406660 +0300
++++ Rvmg/play-services-pay/core/src/main/AndroidManifest.xml	2024-12-23 17:32:56.416067500 +0300
+@@ -6,13 +6,13 @@
  
      <application>
          <activity-alias
--                android:name="com.google.android.gms.pay.main.PayActivity"
-+                android:name="${basePackageName}.android.gms.pay.main.PayActivity"
-                 android:targetActivity="org.microg.gms.pay.PayActivity"
-                 android:exported="true"
-                 android:process=":ui">
+-            android:name="com.google.android.gms.pay.main.PayActivity"
++            android:name="${basePackageName}.android.gms.pay.main.PayActivity"
+             android:exported="true"
+             android:process=":ui"
+             android:targetActivity="org.microg.gms.pay.PayActivity">
              <intent-filter>
--                <action android:name="com.google.android.gms.pay.PAY"/>
--                <action android:name="com.google.android.gms.pay.PAY_OPTIONAL"/>
+-                <action android:name="com.google.android.gms.pay.PAY" />
+-                <action android:name="com.google.android.gms.pay.PAY_OPTIONAL" />
 +                <action android:name="${basePackageName}.android.gms.pay.PAY"/>
 +                <action android:name="${basePackageName}.android.gms.pay.PAY_OPTIONAL"/>
-                 <category android:name="android.intent.category.DEFAULT"/>
+ 
+                 <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
-         </activity-alias>
-@@ -22,7 +22,7 @@
-                   android:process=":ui"/>
+@@ -24,7 +24,7 @@
+ 
          <service android:name="org.microg.gms.pay.PayService">
              <intent-filter>
 -                <action android:name="com.google.android.gms.pay.service.BIND" />
 +                <action android:name="${basePackageName}.android.gms.pay.service.BIND" />
              </intent-filter>
          </service>
-     </application>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-recaptcha/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-recaptcha/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-recaptcha/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-recaptcha/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+         <service
+diff -Naur Microg/play-services-recaptcha/core/build.gradle Rvmg/play-services-recaptcha/core/build.gradle
+--- Microg/play-services-recaptcha/core/build.gradle	2024-12-23 17:33:54.912739994 +0300
++++ Rvmg/play-services-recaptcha/core/build.gradle	2024-12-23 17:32:56.902734215 +0300
 @@ -42,6 +42,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3121,9 +2532,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-recapt
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-recaptcha/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-recaptcha/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-recaptcha/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-recaptcha/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-recaptcha/core/src/main/AndroidManifest.xml Rvmg/play-services-recaptcha/core/src/main/AndroidManifest.xml
+--- Microg/play-services-recaptcha/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.912739994 +0300
++++ Rvmg/play-services-recaptcha/core/src/main/AndroidManifest.xml	2024-12-23 17:32:56.912734216 +0300
 @@ -11,7 +11,7 @@
          <service android:name="org.microg.gms.recaptcha.RecaptchaService"
                   android:process=":ui">
@@ -3133,9 +2544,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-recapt
              </intent-filter>
          </service>
      </application>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-safetynet/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-safetynet/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-safetynet/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-safetynet/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-safetynet/core/build.gradle Rvmg/play-services-safetynet/core/build.gradle
+--- Microg/play-services-safetynet/core/build.gradle	2024-12-23 17:33:54.916073328 +0300
++++ Rvmg/play-services-safetynet/core/build.gradle	2024-12-23 17:32:57.169400908 +0300
 @@ -46,6 +46,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3147,9 +2558,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-safety
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-safetynet/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-safetynet/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-safetynet/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-safetynet/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-safetynet/core/src/main/AndroidManifest.xml Rvmg/play-services-safetynet/core/src/main/AndroidManifest.xml
+--- Microg/play-services-safetynet/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.916073328 +0300
++++ Rvmg/play-services-safetynet/core/src/main/AndroidManifest.xml	2024-12-23 17:32:57.176067576 +0300
 @@ -9,7 +9,7 @@
      <application>
          <service android:name="org.microg.gms.safetynet.SafetyNetClientService">
@@ -3159,9 +2570,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-safety
              </intent-filter>
          </service>
          <activity
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-tapandpay/core/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-tapandpay/core/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-tapandpay/core/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-tapandpay/core/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-tapandpay/core/build.gradle Rvmg/play-services-tapandpay/core/build.gradle
+--- Microg/play-services-tapandpay/core/build.gradle	2024-12-23 17:33:54.919406661 +0300
++++ Rvmg/play-services-tapandpay/core/build.gradle	2024-12-23 17:32:57.432734268 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3173,9 +2584,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-tapand
      }
  
      sourceSets {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-tapandpay/core/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-tapandpay/core/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-tapandpay/core/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/play-services-tapandpay/core/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/play-services-tapandpay/core/src/main/AndroidManifest.xml Rvmg/play-services-tapandpay/core/src/main/AndroidManifest.xml
+--- Microg/play-services-tapandpay/core/src/main/AndroidManifest.xml	2024-12-23 17:33:54.919406661 +0300
++++ Rvmg/play-services-tapandpay/core/src/main/AndroidManifest.xml	2024-12-23 17:32:57.462734271 +0300
 @@ -9,7 +9,7 @@
          <service android:name="org.microg.gms.tapandpay.TapAndPayService"
                   android:exported="true">
@@ -3185,9 +2596,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/play-services-tapand
              </intent-filter>
          </service>
      </application>
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/build.gradle GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/vending-app/build.gradle
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/build.gradle	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/vending-app/build.gradle	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/vending-app/build.gradle Rvmg/vending-app/build.gradle
+--- Microg/vending-app/build.gradle	2024-12-23 17:33:54.936073330 +0300
++++ Rvmg/vending-app/build.gradle	2024-12-23 17:32:59.726067830 +0300
 @@ -17,6 +17,10 @@
          versionCode vendingAppVersionCode
          minSdkVersion androidMinSdk
@@ -3199,9 +2610,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/build.gr
      }
  
      buildTypes {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/src/main/AndroidManifest.xml GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/vending-app/src/main/AndroidManifest.xml
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/src/main/AndroidManifest.xml	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/vending-app/src/main/AndroidManifest.xml	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/vending-app/src/main/AndroidManifest.xml Rvmg/vending-app/src/main/AndroidManifest.xml
+--- Microg/vending-app/src/main/AndroidManifest.xml	2024-12-23 17:33:54.936073330 +0300
++++ Rvmg/vending-app/src/main/AndroidManifest.xml	2024-12-23 17:32:59.762734500 +0300
 @@ -17,7 +17,7 @@
          android:maxSdkVersion="22" />
      <uses-permission android:name="org.microg.gms.permission.READ_SETTINGS" />
@@ -3209,9 +2620,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/src/main
 -    <uses-permission android:name="com.google.android.gms.permission.READ_SETTINGS" />
 +    <uses-permission android:name="${basePackageName}.android.gms.permission.READ_SETTINGS" />
      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     <uses-permission android:name="com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE"/>
  
-     <uses-permission
-@@ -58,11 +58,11 @@
+@@ -59,11 +59,11 @@
  
          <meta-data
              android:name="org.microg.gms.settings:source-package"
@@ -3225,7 +2636,7 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/src/main
  
          <activity
              android:name=".GrantFakeSignaturePermissionActivity"
-@@ -82,7 +82,7 @@
+@@ -83,7 +83,7 @@
              android:name="com.google.android.finsky.externalreferrer.GetInstallReferrerService"
              android:exported="true">
              <intent-filter>
@@ -3234,120 +2645,9 @@ diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/src/main
              </intent-filter>
          </service>
  
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/src/main/java/com/android/vending/licensing/LicensingService.java GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/vending-app/src/main/java/com/android/vending/licensing/LicensingService.java
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/src/main/java/com/android/vending/licensing/LicensingService.java	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/vending-app/src/main/java/com/android/vending/licensing/LicensingService.java	2024-04-05 05:27:32.000000000 +0300
-@@ -28,6 +28,7 @@
- import com.android.volley.RequestQueue;
- import com.android.volley.toolbox.Volley;
- 
-+import com.google.android.gms.base.BuildConfig;
- import org.microg.gms.auth.AuthConstants;
- import org.microg.gms.profile.ProfileManager;
- 
-@@ -48,9 +49,9 @@
- 
-     private static final String KEY_V2_RESULT_JWT = "LICENSE_DATA";
- 
--    private static final Uri PROFILE_PROVIDER = Uri.parse("content://com.google.android.gms.microg.profile");
-+    private static final Uri PROFILE_PROVIDER = Uri.parse("content://" + BuildConfig.BASE_PACKAGE_NAME + ".android.gms.microg.profile");
- 
--    private static final Uri CHECKIN_SETTINGS_PROVIDER = Uri.parse("content://com.google.android.gms.microg.settings/check-in");
-+    private static final Uri CHECKIN_SETTINGS_PROVIDER = Uri.parse("content://" + BuildConfig.BASE_PACKAGE_NAME + ".android.gms.microg.settings/check-in");
- 
-     private final ILicensingService.Stub mLicenseService = new ILicensingService.Stub() {
- 
-@@ -77,15 +78,15 @@
-         private void checkLicense(int callingUid, long nonce, String packageName, PackageManager packageManager,
-                                   ILicenseResultListener listener, Queue<Account> remainingAccounts) throws RemoteException {
-             new LicenseChecker.V1().checkLicense(
--                remainingAccounts.poll(), accountManager, androidId, packageName, callingUid, packageManager,
--                queue, nonce,
--                (responseCode, stringTuple) -> {
--                    if (responseCode != LICENSED && !remainingAccounts.isEmpty()) {
--                        checkLicense(callingUid, nonce, packageName, packageManager, listener, remainingAccounts);
--                    } else {
--                        listener.verifyLicense(responseCode, stringTuple != null ? stringTuple.a : null,  stringTuple != null ? stringTuple.b : null);
-+                    remainingAccounts.poll(), accountManager, androidId, packageName, callingUid, packageManager,
-+                    queue, nonce,
-+                    (responseCode, stringTuple) -> {
-+                        if (responseCode != LICENSED && !remainingAccounts.isEmpty()) {
-+                            checkLicense(callingUid, nonce, packageName, packageManager, listener, remainingAccounts);
-+                        } else {
-+                            listener.verifyLicense(responseCode, stringTuple != null ? stringTuple.a : null, stringTuple != null ? stringTuple.b : null);
-+                        }
-                     }
--                }
-             );
-         }
- 
-@@ -113,26 +114,26 @@
-                                     ILicenseV2ResultListener listener, Bundle extraParams,
-                                     Queue<Account> remainingAccounts) throws RemoteException {
-             new LicenseChecker.V2().checkLicense(
--                remainingAccounts.poll(), accountManager, androidId, packageName, callingUid, packageManager, queue, Unit.INSTANCE,
--                (responseCode, data) -> {
--                    /*
--                     * Suppress failures on V2. V2 is commonly used by free apps whose checker
--                     * will not throw users out of the app if it never receives a response.
--                     *
--                     * This means that users who are signed in to a Google account will not
--                     * get a worse experience in these apps than users that are not signed in.
--                     */
--                    if (responseCode == LICENSED) {
--                        Bundle bundle = new Bundle();
--                        bundle.putString(KEY_V2_RESULT_JWT, data);
--
--                        listener.verifyLicense(responseCode, bundle);
--                    } else if (!remainingAccounts.isEmpty()) {
--                        checkLicenseV2(callingUid, packageName, packageManager, listener, extraParams, remainingAccounts);
--                    } else {
--                        Log.i(TAG, "Suppressed negative license result for package " + packageName);
-+                    remainingAccounts.poll(), accountManager, androidId, packageName, callingUid, packageManager, queue, Unit.INSTANCE,
-+                    (responseCode, data) -> {
-+                        /*
-+                         * Suppress failures on V2. V2 is commonly used by free apps whose checker
-+                         * will not throw users out of the app if it never receives a response.
-+                         *
-+                         * This means that users who are signed in to a Google account will not
-+                         * get a worse experience in these apps than users that are not signed in.
-+                         */
-+                        if (responseCode == LICENSED) {
-+                            Bundle bundle = new Bundle();
-+                            bundle.putString(KEY_V2_RESULT_JWT, data);
-+
-+                            listener.verifyLicense(responseCode, bundle);
-+                        } else if (!remainingAccounts.isEmpty()) {
-+                            checkLicenseV2(callingUid, packageName, packageManager, listener, extraParams, remainingAccounts);
-+                        } else {
-+                            Log.i(TAG, "Suppressed negative license result for package " + packageName);
-+                        }
-                     }
--                }
-             );
- 
-         }
-@@ -161,7 +162,7 @@
-         Cursor cursor = null;
-         try {
-             cursor = getContentResolver().query(
--                PROFILE_PROVIDER, null, null, null, null
-+                    PROFILE_PROVIDER, null, null, null, null
-             );
- 
-             if (cursor == null || cursor.getColumnCount() != 2) {
-@@ -182,7 +183,7 @@
- 
-         try {
-             cursor = getContentResolver().query(
--                    CHECKIN_SETTINGS_PROVIDER, new String[] { "androidId" }, null, null, null
-+                    CHECKIN_SETTINGS_PROVIDER, new String[]{"androidId"}, null, null, null
-             );
- 
-             if (cursor != null) {
-diff -Naur GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/src/main/java/org/microg/vending/billing/Constants.kt GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/vending-app/src/main/java/org/microg/vending/billing/Constants.kt
---- GmsCore-9e2337a4edeb908921251b400e34796d85f3740c/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2024-03-25 12:15:31.000000000 +0300
-+++ GmsCore-9d3ef3f11f30223a2e09e2f5800c61aad05b7222/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2024-04-05 05:27:32.000000000 +0300
+diff -Naur Microg/vending-app/src/main/java/org/microg/vending/billing/Constants.kt Rvmg/vending-app/src/main/java/org/microg/vending/billing/Constants.kt
+--- Microg/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2024-12-23 17:33:54.942739997 +0300
++++ Rvmg/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2024-12-23 17:33:01.162734639 +0300
 @@ -5,6 +5,8 @@
  
  package org.microg.vending.billing
