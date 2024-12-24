@@ -1319,7 +1319,19 @@ diff -Naur mgog/play-services-core/build.gradle rvmg/play-services-core/build.gr
              abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
 diff -Naur mgog/play-services-core/src/main/AndroidManifest.xml rvmg/play-services-core/src/main/AndroidManifest.xml
 --- mgog/play-services-core/src/main/AndroidManifest.xml	2024-12-23 19:58:50.554986891 +0300
-+++ rvmg/play-services-core/src/main/AndroidManifest.xml	2024-12-23 19:58:17.642986904 +0300
++++ rvmg/play-services-core/src/main/AndroidManifest.xml	2024-12-24 15:24:03.176996402 +0300
+@@ -128,9 +128,9 @@
+         android:protectionLevel="dangerous" />
+ 
+     <permission
+-        android:name="com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE"
++        android:name="${basePackageName}.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE"
+         android:protectionLevel="signature"/>
+-    <uses-permission android:name="com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE" />
++    <uses-permission android:name="${basePackageName}.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE" />
+ 
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     <uses-permission android:name="android.permission.INTERNET" />
 @@ -153,12 +153,12 @@
      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
