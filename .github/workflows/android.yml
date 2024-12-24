@@ -29,7 +29,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         body: Revanced GmsCore
-        tag_name: github_run
+        tag_name: github_gmscore_release
         name: Revanced Gmscore Based on latest Microg Version
         files: |
            gmscore-huawei.apk
