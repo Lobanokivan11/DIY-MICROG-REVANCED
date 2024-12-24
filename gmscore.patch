@@ -1972,8 +1972,8 @@ diff -Naur mgog/play-services-core/src/main/kotlin/org/microg/gms/accountsetting
 +}
 diff -Naur mgog/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt rvmg/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt
 --- mgog/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2024-12-23 19:58:50.574986891 +0300
-+++ rvmg/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2024-12-23 19:58:17.658986904 +0300
-@@ -5,12 +5,13 @@
++++ rvmg/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2024-12-24 13:48:12.744998596 +0300
+@@ -5,12 +5,14 @@
  
  package org.microg.gms.accountsettings.ui
  
@@ -1990,10 +1990,11 @@ diff -Naur mgog/play-services-core/src/main/kotlin/org/microg/gms/accountsetting
 +const val ACTION_ACCOUNT_PREFERENCES_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.ACCOUNT_PREFERENCES_SETTINGS"
 +const val ACTION_PRIVACY_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.PRIVACY_SETTINGS"
 +const val ACTION_SECURITY_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.SECURITY_SETTINGS"
++const val ACTION_LOCATION_SHARING = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.location.settings.LOCATION_SHARING"
  
  const val EXTRA_CALLING_PACKAGE_NAME = "extra.callingPackageName"
  const val EXTRA_IGNORE_ACCOUNT = "extra.ignoreAccount"
-@@ -23,4 +24,4 @@
+@@ -23,4 +25,4 @@
  const val EXTRA_SCREEN_MY_ACTIVITY_PRODUCT = "extra.screen.myactivityProduct"
  const val EXTRA_SCREEN_KID_ONBOARDING_PARAMS = "extra.screen.kidOnboardingParams"
  
