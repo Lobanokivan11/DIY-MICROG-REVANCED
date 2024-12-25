@@ -23,15 +23,28 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Get next version code
+        id: next_ver_code
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG=$(gh release list -L 1 | awk -F '\t' '{print $3}')
+          if [ -z "$TAG" ]; then TAG=0; fi
+          echo "NEXT_VER_CODE=$((TAG + 1))" >> $GITHUB_OUTPUT
+
     - name: Execute build script
       run: bash ./build.sh
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: $GITHUB_REPOSITORY
+          NEXT_VER_CODE: ${{ steps.next_ver_code.outputs.NEXT_VER_CODE }}
 
     - name: Release Gmscore
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: ./prebuilt/*
-        tag: ${{ github.ref }}
+        tag: ${{ steps.next_ver_code.outputs.NEXT_VER_CODE }}
         overwrite: true
         body: "ReVanced GmsCore Release Synced With MicroG Services"
         file_glob: true
