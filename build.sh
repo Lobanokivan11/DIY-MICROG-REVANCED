@@ -17,5 +17,6 @@ zipalign -p 4 ../outputog/*.apk ../outputog/aligned.apk
 zipalign -p 4 ../outputhw/*.apk ../outputhw/aligned.apk
 apksigner sign --ks-key-alias lob --ks ../sign.keystore --ks-pass pass:369852 --key-pass pass:369852 ../outputog/aligned.apk
 apksigner sign --ks-key-alias lob --ks ../sign.keystore --ks-pass pass:369852 --key-pass pass:369852 ../outputhw/aligned.apk
-cp ../outputhw/aligned.apk ../gmscore-huawei.apk
-cp ../outputog/aligned.apk ../gmscore-original.apk
+mkdir ../prebuilt
+cp ../outputhw/aligned.apk ../prebuilt/gmscore-huawei.apk
+cp ../outputog/aligned.apk ../prebuilt/gmscore-original.apk

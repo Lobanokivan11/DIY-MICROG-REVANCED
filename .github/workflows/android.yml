@@ -27,11 +27,11 @@ jobs:
       run: bash ./build.sh
 
     - name: Release Gmscore
-      uses: softprops/action-gh-release@v1
+      uses: svenstaro/upload-release-action@v2
       with:
-        body: Revanced GmsCore
-        tag_name: github_gmscore_release
-        name: Revanced Gmscore Based on latest Microg Version
-        files: |
-           gmscore-huawei.apk
-           gmscore-original.apk
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ./prebuilt/*
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "ReVanced GmsCore Release Synced With MicroG Services"
+        file_glob: true
