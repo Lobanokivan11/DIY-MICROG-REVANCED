@@ -7,7 +7,7 @@ sudo git lfs install
 git clone https://github.com/microg/GmsCore.git input
 cd input
 patch -t -s -p1 < ../gmscore.patch
-export GRADLE_MICROG_VERSION_WITHOUT_GIT=1
+export GRADLE_MICROG_VERSION_WITHOUT_GIT=0
 gradle :play-services-core:assembleMapboxDefault :play-services-core:assembleMapboxHuawei
 mkdir ../outputog
 mkdir ../outputhw
