@@ -1,8 +1,5 @@
 sudo apt update
 sudo apt install git git-lfs zipalign apksigner
-curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk install gradle
 sudo git lfs install
 git clone https://github.com/microg/GmsCore.git input
 cd input
