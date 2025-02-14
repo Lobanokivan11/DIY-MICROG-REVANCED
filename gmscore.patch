@@ -237,12 +237,13 @@ diff -Naur GmsCore-master/firebase-auth/core/src/main/AndroidManifest.xml GmsCor
          <activity
 diff -Naur GmsCore-master/gradle.properties GmsCore-master-revanced/gradle.properties
 --- GmsCore-master/gradle.properties	2024-12-24 14:15:14.000000000 +0300
-+++ GmsCore-master-revanced/gradle.properties	2025-02-13 20:36:30.235985346 +0300
-@@ -2,3 +2,4 @@
++++ GmsCore-master-revanced/gradle.properties	2025-02-14 12:55:34.876995043 +0300
+@@ -2,3 +2,5 @@
  org.gradle.configuration-cache=true
  org.gradle.caching=true
  org.gradle.jvmargs=-Xmx4096m -XX:+UseParallelGC --add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
 +android.enableJetifier=true
++android.defaults.buildfeatures.buildconfig=true
 diff -Naur GmsCore-master/play-services-ads/core/build.gradle GmsCore-master-revanced/play-services-ads/core/build.gradle
 --- GmsCore-master/play-services-ads/core/build.gradle	2024-12-24 14:15:14.000000000 +0300
 +++ GmsCore-master-revanced/play-services-ads/core/build.gradle	2025-02-13 20:36:30.235985346 +0300
