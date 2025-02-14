@@ -8,7 +8,7 @@ git clone https://github.com/microg/GmsCore.git input
 cd input
 patch -t -s -p1 < ../gmscore.patch
 export GRADLE_MICROG_VERSION_WITHOUT_GIT=0
-gradle :play-services-core:assembleMapboxDefault :play-services-core:assembleMapboxHuawei :vending-app:assembledefault :vending-app:assemblehuawei
+gradle --stacktrace :play-services-core:assembleMapboxDefault :play-services-core:assembleMapboxHuawei :vending-app:assembledefault :vending-app:assemblehuawei
 mkdir ../outputog
 mkdir ../outputhw
 mkdir ../outputoggp
