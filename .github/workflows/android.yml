@@ -23,6 +23,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Cache Gradle
+      uses: burrunan/gradle-cache-action@v2
+
     - name: Get next version code
       id: next_ver_code
       env:
