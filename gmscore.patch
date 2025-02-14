@@ -3349,18 +3349,6 @@ diff -Naur GmsCore-master/play-services-safetynet/core/src/main/AndroidManifest.
              </intent-filter>
          </service>
          <activity
-diff -Naur GmsCore-master/play-services-safetynet/core/src/main/kotlin/org/microg/gms/safetynet/SafetyNetClientService.kt GmsCore-master-revanced/play-services-safetynet/core/src/main/kotlin/org/microg/gms/safetynet/SafetyNetClientService.kt
---- GmsCore-master/play-services-safetynet/core/src/main/kotlin/org/microg/gms/safetynet/SafetyNetClientService.kt	2024-12-24 14:15:14.000000000 +0300
-+++ GmsCore-master-revanced/play-services-safetynet/core/src/main/kotlin/org/microg/gms/safetynet/SafetyNetClientService.kt	2025-02-14 11:19:52.372997233 +0300
-@@ -223,7 +223,7 @@
-             Log.d(TAG, "Sig: $signature")
-             params.appendUrlEncodedParam("ac", signature)
-         }
--        params.appendUrlEncodedParam("ip", "com.android.vending")
-+        params.appendUrlEncodedParam("ip", BuildConfig.BASE_PACKAGE_NAME + ".vending")
-             .appendUrlEncodedParam("av", false.toString())
-             .appendUrlEncodedParam("si", null)
-         intent.putExtra("params", params.toString())
 diff -Naur GmsCore-master/play-services-tapandpay/core/build.gradle GmsCore-master-revanced/play-services-tapandpay/core/build.gradle
 --- GmsCore-master/play-services-tapandpay/core/build.gradle	2024-12-24 14:15:14.000000000 +0300
 +++ GmsCore-master-revanced/play-services-tapandpay/core/build.gradle	2025-02-13 20:36:30.455985346 +0300
