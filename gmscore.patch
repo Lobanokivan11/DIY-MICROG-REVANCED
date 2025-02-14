@@ -3377,12 +3377,12 @@ diff -Naur GmsCore-master/play-services-tapandpay/core/src/main/AndroidManifest.
      </application>
 diff -Naur GmsCore-master/vending-app/build.gradle GmsCore-master-revanced/vending-app/build.gradle
 --- GmsCore-master/vending-app/build.gradle	2024-12-24 14:15:14.000000000 +0300
-+++ GmsCore-master-revanced/vending-app/build.gradle	2025-02-13 20:36:30.459985346 +0300
++++ GmsCore-master-revanced/vending-app/build.gradle	2025-02-14 14:01:49.948993526 +0300
 @@ -17,6 +17,10 @@
          versionCode vendingAppVersionCode
          minSdkVersion androidMinSdk
          targetSdkVersion androidTargetSdk
-+
++        applicationId "${basePackageName}.vending"
 +        manifestPlaceholders = [
 +                basePackageName: "$basePackageName"
 +        ]
