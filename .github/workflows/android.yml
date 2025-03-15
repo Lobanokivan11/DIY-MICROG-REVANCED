@@ -55,7 +55,7 @@ jobs:
       run: |
         curl \
         -u ${{ secrets.NTFY_CRED }} \
-        -H "Title: Soundcloud Revanced Is Updated" \
+        -H "Title: Revanced GmsCore Is Updated" \
         -H "Content-Type: text/plain" \
         -d $'Repo: ${{ github.repository }}\nCommit: ${{ github.sha }}\nRef: ${{ github.ref }}\nStatus: ${{ job.status}}' \
         ${{ secrets.NTFY_URL }}
