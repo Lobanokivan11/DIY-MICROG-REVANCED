@@ -22,4 +22,4 @@
 
 ## Known Problems
 
-- ReVanced GmsCore Is conflicting With Official Microg Services.
+- ReVanced GmsCore Is conflicting With Official Microg Services(Not Google Play Services).
