@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toast_installed">L\'app microG Companion non può essere usata da sola. Sono state aperte le impostazioni di microG.</string>
+    <string name="toast_not_installed">L\'app microG Companion non può essere usata da sola. Installa l\'app microG Services per utilizzare microG.</string>
+    <string name="app_name">microG Companion</string>
+    <string name="pay_disabled">Al momento non è possibile effettuare pagamenti</string>
+    <string name="license_notification_channel_name">Notifiche di licenza</string>
+    <string name="license_notification_channel_description">Avvisa quando un\'applicazione cerca di convalidare la propria licenza, ma non sei connesso a nessun account Google.</string>
+    <string name="license_notification_title">%1$s non è riuscita a verificare la licenza</string>
+    <string name="license_notification_body">Se l\'app non funziona correttamente, accedi con un account Google con cui hai acquistato l\'app.</string>
+    <string name="license_notification_sign_in">Accedi</string>
+    <string name="license_notification_ignore">Ignora</string>
+    <string name="confirm_purchase">Conferma acquisto</string>
+    <string name="error_passwd">La password inserita è errata.</string>
+    <string name="error_unknown">Errore sconosciuto, esci e riprova.</string>
+    <string name="tips_forget_passwd">Password dimenticata?</string>
+    <string name="tips_input_passwd">Inserisci la password</string>
+    <string name="tips_more_details">Maggiori informazioni</string>
+    <string name="text_verify_button">Verifica</string>
+    <string name="tips_remember_login_info">Ricorda le mie credenziali su questo dispositivo</string>
+    <string name="error_network">Connessione a Internet assente. Verifica che la connessione Wi-Fi o alla rete cellulare sia attiva e riprova.</string>
+    <string name="download_notification_tips">Download in corso</string>
+    <string name="download_notification_attachment_file">File aggiuntivi per %s</string>
+</resources>

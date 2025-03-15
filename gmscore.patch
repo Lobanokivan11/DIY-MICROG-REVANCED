@@ -1,5 +1,5 @@
 diff -Naur backup/.github/dependabot.yml input/.github/dependabot.yml
---- backup/.github/dependabot.yml	2025-03-15 17:15:47.244990159 +0300
+--- backup/.github/dependabot.yml	2025-03-15 18:25:28.933999186 +0300
 +++ input/.github/dependabot.yml	1970-01-01 03:00:00.000000000 +0300
 @@ -1,7 +0,0 @@
 -version: 2
@@ -10,7 +10,7 @@ diff -Naur backup/.github/dependabot.yml input/.github/dependabot.yml
 -      interval: "daily"
 -    open-pull-requests-limit: 1
 diff -Naur backup/.github/matchers/gradle-build-kotlin-error-matcher.json input/.github/matchers/gradle-build-kotlin-error-matcher.json
---- backup/.github/matchers/gradle-build-kotlin-error-matcher.json	2025-03-15 17:15:47.244990159 +0300
+--- backup/.github/matchers/gradle-build-kotlin-error-matcher.json	2025-03-15 18:25:28.933999186 +0300
 +++ input/.github/matchers/gradle-build-kotlin-error-matcher.json	1970-01-01 03:00:00.000000000 +0300
 @@ -1,17 +0,0 @@
 -{
@@ -31,13 +31,13 @@ diff -Naur backup/.github/matchers/gradle-build-kotlin-error-matcher.json input/
 -  ]
 -}
 diff -Naur backup/.github/matchers/gradle-build-kotlin-error-matcher.json.license input/.github/matchers/gradle-build-kotlin-error-matcher.json.license
---- backup/.github/matchers/gradle-build-kotlin-error-matcher.json.license	2025-03-15 17:15:47.248990159 +0300
+--- backup/.github/matchers/gradle-build-kotlin-error-matcher.json.license	2025-03-15 18:25:28.933999186 +0300
 +++ input/.github/matchers/gradle-build-kotlin-error-matcher.json.license	1970-01-01 03:00:00.000000000 +0300
 @@ -1,2 +0,0 @@
 -SPDX-FileCopyrightText: none
 -SPDX-License-Identifier: CC0-1.0
 diff -Naur backup/.github/matchers/gradle-build-matcher.json input/.github/matchers/gradle-build-matcher.json
---- backup/.github/matchers/gradle-build-matcher.json	2025-03-15 17:15:47.248990159 +0300
+--- backup/.github/matchers/gradle-build-matcher.json	2025-03-15 18:25:28.933999186 +0300
 +++ input/.github/matchers/gradle-build-matcher.json	1970-01-01 03:00:00.000000000 +0300
 @@ -1,16 +0,0 @@
 -{
@@ -57,13 +57,13 @@ diff -Naur backup/.github/matchers/gradle-build-matcher.json input/.github/match
 -  ]
 -}
 diff -Naur backup/.github/matchers/gradle-build-matcher.json.license input/.github/matchers/gradle-build-matcher.json.license
---- backup/.github/matchers/gradle-build-matcher.json.license	2025-03-15 17:15:47.248990159 +0300
+--- backup/.github/matchers/gradle-build-matcher.json.license	2025-03-15 18:25:28.933999186 +0300
 +++ input/.github/matchers/gradle-build-matcher.json.license	1970-01-01 03:00:00.000000000 +0300
 @@ -1,2 +0,0 @@
 -SPDX-FileCopyrightText: none
 -SPDX-License-Identifier: CC0-1.0
 diff -Naur backup/.github/workflows/build.yml input/.github/workflows/build.yml
---- backup/.github/workflows/build.yml	2025-03-15 17:15:47.248990159 +0300
+--- backup/.github/workflows/build.yml	2025-03-15 18:25:28.933999186 +0300
 +++ input/.github/workflows/build.yml	1970-01-01 03:00:00.000000000 +0300
 @@ -1,52 +0,0 @@
 -name: "Gradle build"
@@ -119,7 +119,7 @@ diff -Naur backup/.github/workflows/build.yml input/.github/workflows/build.yml
 -      - name: "Execute Gradle check"
 -        run: "./gradlew check"
 diff -Naur backup/.github/workflows/dependency-submission.yml input/.github/workflows/dependency-submission.yml
---- backup/.github/workflows/dependency-submission.yml	2025-03-15 17:15:47.248990159 +0300
+--- backup/.github/workflows/dependency-submission.yml	2025-03-15 18:25:28.933999186 +0300
 +++ input/.github/workflows/dependency-submission.yml	1970-01-01 03:00:00.000000000 +0300
 @@ -1,31 +0,0 @@
 -name: Dependency Submission
@@ -154,7 +154,7 @@ diff -Naur backup/.github/workflows/dependency-submission.yml input/.github/work
 -          build-scan-terms-of-use-url: "https://gradle.com/help/legal-terms-of-use"
 -          build-scan-terms-of-use-agree: "yes"
 diff -Naur backup/.gitignore input/.gitignore
---- backup/.gitignore	2025-03-15 17:15:47.248990159 +0300
+--- backup/.gitignore	2025-03-15 18:25:28.933999186 +0300
 +++ input/.gitignore	1970-01-01 03:00:00.000000000 +0300
 @@ -1,13 +0,0 @@
 -*.iml
@@ -171,8 +171,8 @@ diff -Naur backup/.gitignore input/.gitignore
 -.classpath
 -.project
 diff -Naur backup/README.md input/README.md
---- backup/README.md	2025-03-15 17:15:47.252990159 +0300
-+++ input/README.md	2025-03-15 17:24:07.968989968 +0300
+--- backup/README.md	2025-03-15 18:25:28.933999186 +0300
++++ input/README.md	2025-03-15 18:25:57.417999175 +0300
 @@ -13,6 +13,22 @@
  
  If you'd like to help translate microG, take a look at [TRANSLATION](TRANSLATION.md).
@@ -197,8 +197,8 @@ diff -Naur backup/README.md input/README.md
  License
  -------
 diff -Naur backup/build.gradle input/build.gradle
---- backup/build.gradle	2025-03-15 17:15:47.324990159 +0300
-+++ input/build.gradle	2025-03-15 17:24:07.968989968 +0300
+--- backup/build.gradle	2025-03-15 18:25:28.949999186 +0300
++++ input/build.gradle	2025-03-15 18:25:57.417999175 +0300
 @@ -4,6 +4,9 @@
   */
  
@@ -210,8 +210,8 @@ diff -Naur backup/build.gradle input/build.gradle
      ext.wearableVersion = '0.1.1'
  
 diff -Naur backup/firebase-auth/core/build.gradle input/firebase-auth/core/build.gradle
---- backup/firebase-auth/core/build.gradle	2025-03-15 17:15:47.348990159 +0300
-+++ input/firebase-auth/core/build.gradle	2025-03-15 17:24:07.968989968 +0300
+--- backup/firebase-auth/core/build.gradle	2025-03-15 18:25:28.953999186 +0300
++++ input/firebase-auth/core/build.gradle	2025-03-15 18:25:57.421999175 +0300
 @@ -33,6 +33,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -224,8 +224,8 @@ diff -Naur backup/firebase-auth/core/build.gradle input/firebase-auth/core/build
  
      sourceSets {
 diff -Naur backup/firebase-auth/core/src/main/AndroidManifest.xml input/firebase-auth/core/src/main/AndroidManifest.xml
---- backup/firebase-auth/core/src/main/AndroidManifest.xml	2025-03-15 17:15:47.352990159 +0300
-+++ input/firebase-auth/core/src/main/AndroidManifest.xml	2025-03-15 17:24:07.968989968 +0300
+--- backup/firebase-auth/core/src/main/AndroidManifest.xml	2025-03-15 18:25:28.953999186 +0300
++++ input/firebase-auth/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.421999175 +0300
 @@ -12,7 +12,7 @@
      <application>
          <service android:name="org.microg.gms.firebase.auth.FirebaseAuthService">
@@ -236,16 +236,16 @@ diff -Naur backup/firebase-auth/core/src/main/AndroidManifest.xml input/firebase
          </service>
          <activity
 diff -Naur backup/gradle.properties input/gradle.properties
---- backup/gradle.properties	2025-03-15 17:15:47.444990159 +0300
-+++ input/gradle.properties	2025-03-15 17:24:07.968989968 +0300
+--- backup/gradle.properties	2025-03-15 18:25:28.977999186 +0300
++++ input/gradle.properties	2025-03-15 18:25:57.425999175 +0300
 @@ -2,3 +2,4 @@
  org.gradle.configuration-cache=true
  org.gradle.caching=true
  org.gradle.jvmargs=-Xmx4096m -XX:+UseParallelGC --add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
 +android.enableJetifier=true
 diff -Naur backup/play-services-ads/core/build.gradle input/play-services-ads/core/build.gradle
---- backup/play-services-ads/core/build.gradle	2025-03-15 17:15:47.620990158 +0300
-+++ input/play-services-ads/core/build.gradle	2025-03-15 17:24:07.968989968 +0300
+--- backup/play-services-ads/core/build.gradle	2025-03-15 18:25:29.005999186 +0300
++++ input/play-services-ads/core/build.gradle	2025-03-15 18:25:57.425999175 +0300
 @@ -23,6 +23,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -258,8 +258,8 @@ diff -Naur backup/play-services-ads/core/build.gradle input/play-services-ads/co
  
      sourceSets {
 diff -Naur backup/play-services-ads/core/src/main/AndroidManifest.xml input/play-services-ads/core/src/main/AndroidManifest.xml
---- backup/play-services-ads/core/src/main/AndroidManifest.xml	2025-03-15 17:15:47.620990158 +0300
-+++ input/play-services-ads/core/src/main/AndroidManifest.xml	2025-03-15 17:24:07.968989968 +0300
+--- backup/play-services-ads/core/src/main/AndroidManifest.xml	2025-03-15 18:25:29.005999186 +0300
++++ input/play-services-ads/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.425999175 +0300
 @@ -7,7 +7,7 @@
      <application>
          <service android:name="org.microg.gms.ads.AdRequestService">
@@ -270,8 +270,8 @@ diff -Naur backup/play-services-ads/core/src/main/AndroidManifest.xml input/play
              </intent-filter>
          </service>
 diff -Naur backup/play-services-ads-identifier/core/build.gradle input/play-services-ads-identifier/core/build.gradle
---- backup/play-services-ads-identifier/core/build.gradle	2025-03-15 17:15:47.460990159 +0300
-+++ input/play-services-ads-identifier/core/build.gradle	2025-03-15 17:24:07.972989968 +0300
+--- backup/play-services-ads-identifier/core/build.gradle	2025-03-15 18:25:28.977999186 +0300
++++ input/play-services-ads-identifier/core/build.gradle	2025-03-15 18:25:57.425999175 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -284,8 +284,8 @@ diff -Naur backup/play-services-ads-identifier/core/build.gradle input/play-serv
  
      sourceSets {
 diff -Naur backup/play-services-ads-identifier/core/src/main/AndroidManifest.xml input/play-services-ads-identifier/core/src/main/AndroidManifest.xml
---- backup/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2025-03-15 17:15:47.464990159 +0300
-+++ input/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2025-03-15 17:24:07.972989968 +0300
+--- backup/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2025-03-15 18:25:28.977999186 +0300
++++ input/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.429999175 +0300
 @@ -8,7 +8,7 @@
      <application>
          <service android:name=".AdvertisingIdService">
@@ -296,8 +296,8 @@ diff -Naur backup/play-services-ads-identifier/core/src/main/AndroidManifest.xml
              </intent-filter>
          </service>
 diff -Naur backup/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt input/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt
---- backup/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2025-03-15 17:15:47.468990159 +0300
-+++ input/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2025-03-15 17:24:07.972989968 +0300
+--- backup/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2025-03-15 18:25:28.981999186 +0300
++++ input/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2025-03-15 18:25:57.429999175 +0300
 @@ -14,6 +14,7 @@
  import android.util.Log
  import androidx.core.os.bundleOf
@@ -316,8 +316,8 @@ diff -Naur backup/play-services-ads-identifier/core/src/main/kotlin/org/microg/g
                      }
                  }
 diff -Naur backup/play-services-ads-lite/build.gradle input/play-services-ads-lite/build.gradle
---- backup/play-services-ads-lite/build.gradle	2025-03-15 17:15:47.544990159 +0300
-+++ input/play-services-ads-lite/build.gradle	2025-03-15 17:24:07.972989968 +0300
+--- backup/play-services-ads-lite/build.gradle	2025-03-15 18:25:28.989999186 +0300
++++ input/play-services-ads-lite/build.gradle	2025-03-15 18:25:57.429999175 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -330,8 +330,8 @@ diff -Naur backup/play-services-ads-lite/build.gradle input/play-services-ads-li
  
      compileOptions {
 diff -Naur backup/play-services-ads-lite/src/main/AndroidManifest.xml input/play-services-ads-lite/src/main/AndroidManifest.xml
---- backup/play-services-ads-lite/src/main/AndroidManifest.xml	2025-03-15 17:15:47.560990158 +0300
-+++ input/play-services-ads-lite/src/main/AndroidManifest.xml	2025-03-15 17:24:07.972989968 +0300
+--- backup/play-services-ads-lite/src/main/AndroidManifest.xml	2025-03-15 18:25:28.993999186 +0300
++++ input/play-services-ads-lite/src/main/AndroidManifest.xml	2025-03-15 18:25:57.429999175 +0300
 @@ -6,7 +6,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
      <uses-permission android:name="android.permission.INTERNET" />
@@ -342,8 +342,8 @@ diff -Naur backup/play-services-ads-lite/src/main/AndroidManifest.xml input/play
      <queries>
          <!-- Website links -->
 diff -Naur backup/play-services-appinvite/core/build.gradle input/play-services-appinvite/core/build.gradle
---- backup/play-services-appinvite/core/build.gradle	2025-03-15 17:15:47.912990158 +0300
-+++ input/play-services-appinvite/core/build.gradle	2025-03-15 17:24:07.972989968 +0300
+--- backup/play-services-appinvite/core/build.gradle	2025-03-15 18:25:29.065999186 +0300
++++ input/play-services-appinvite/core/build.gradle	2025-03-15 18:25:57.433999175 +0300
 @@ -27,6 +27,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -356,8 +356,8 @@ diff -Naur backup/play-services-appinvite/core/build.gradle input/play-services-
  
      sourceSets {
 diff -Naur backup/play-services-appinvite/core/src/main/AndroidManifest.xml input/play-services-appinvite/core/src/main/AndroidManifest.xml
---- backup/play-services-appinvite/core/src/main/AndroidManifest.xml	2025-03-15 17:15:47.916990158 +0300
-+++ input/play-services-appinvite/core/src/main/AndroidManifest.xml	2025-03-15 17:24:07.972989968 +0300
+--- backup/play-services-appinvite/core/src/main/AndroidManifest.xml	2025-03-15 18:25:29.065999186 +0300
++++ input/play-services-appinvite/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.433999175 +0300
 @@ -11,7 +11,7 @@
              android:name="org.microg.gms.appinivite.AppInviteService"
              android:exported="true">
@@ -377,8 +377,8 @@ diff -Naur backup/play-services-appinvite/core/src/main/AndroidManifest.xml inpu
                  <category android:name="android.intent.category.BROWSABLE" />
                  <category android:name="android.intent.category.DEFAULT" />
 diff -Naur backup/play-services-appset/core/build.gradle input/play-services-appset/core/build.gradle
---- backup/play-services-appset/core/build.gradle	2025-03-15 17:15:47.932990158 +0300
-+++ input/play-services-appset/core/build.gradle	2025-03-15 17:24:07.972989968 +0300
+--- backup/play-services-appset/core/build.gradle	2025-03-15 18:25:29.069999186 +0300
++++ input/play-services-appset/core/build.gradle	2025-03-15 18:25:57.433999175 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -391,8 +391,8 @@ diff -Naur backup/play-services-appset/core/build.gradle input/play-services-app
  
      sourceSets {
 diff -Naur backup/play-services-appset/core/src/main/AndroidManifest.xml input/play-services-appset/core/src/main/AndroidManifest.xml
---- backup/play-services-appset/core/src/main/AndroidManifest.xml	2025-03-15 17:15:47.932990158 +0300
-+++ input/play-services-appset/core/src/main/AndroidManifest.xml	2025-03-15 17:24:07.976989968 +0300
+--- backup/play-services-appset/core/src/main/AndroidManifest.xml	2025-03-15 18:25:29.069999186 +0300
++++ input/play-services-appset/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.433999175 +0300
 @@ -9,7 +9,7 @@
  
          <service android:name="org.microg.gms.appset.AppSetService">
@@ -403,8 +403,8 @@ diff -Naur backup/play-services-appset/core/src/main/AndroidManifest.xml input/p
          </service>
      </application>
 diff -Naur backup/play-services-auth-api-phone/core/build.gradle input/play-services-auth-api-phone/core/build.gradle
---- backup/play-services-auth-api-phone/core/build.gradle	2025-03-15 17:15:47.956990158 +0300
-+++ input/play-services-auth-api-phone/core/build.gradle	2025-03-15 17:24:07.976989968 +0300
+--- backup/play-services-auth-api-phone/core/build.gradle	2025-03-15 18:25:29.073999186 +0300
++++ input/play-services-auth-api-phone/core/build.gradle	2025-03-15 18:25:57.433999175 +0300
 @@ -23,6 +23,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -417,8 +417,8 @@ diff -Naur backup/play-services-auth-api-phone/core/build.gradle input/play-serv
  
      sourceSets {
 diff -Naur backup/play-services-auth-api-phone/core/src/main/AndroidManifest.xml input/play-services-auth-api-phone/core/src/main/AndroidManifest.xml
---- backup/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2025-03-15 17:15:47.956990158 +0300
-+++ input/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2025-03-15 17:24:07.976989968 +0300
+--- backup/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2025-03-15 18:25:29.073999186 +0300
++++ input/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.437999175 +0300
 @@ -27,7 +27,7 @@
              android:name="org.microg.gms.auth.phone.SmsRetrieverService"
              android:exported="true">
@@ -429,8 +429,8 @@ diff -Naur backup/play-services-auth-api-phone/core/src/main/AndroidManifest.xml
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
 diff -Naur backup/play-services-base/build.gradle input/play-services-base/build.gradle
---- backup/play-services-base/build.gradle	2025-03-15 17:15:48.132990158 +0300
-+++ input/play-services-base/build.gradle	2025-03-15 17:24:07.976989968 +0300
+--- backup/play-services-base/build.gradle	2025-03-15 18:25:29.109999186 +0300
++++ input/play-services-base/build.gradle	2025-03-15 18:25:57.437999175 +0300
 @@ -30,12 +30,15 @@
  
      buildFeatures {
@@ -448,8 +448,8 @@ diff -Naur backup/play-services-base/build.gradle input/play-services-base/build
  
      compileOptions {
 diff -Naur backup/play-services-base/core/package/build.gradle input/play-services-base/core/package/build.gradle
---- backup/play-services-base/core/package/build.gradle	2025-03-15 17:15:48.136990158 +0300
-+++ input/play-services-base/core/package/build.gradle	2025-03-15 17:24:07.976989968 +0300
+--- backup/play-services-base/core/package/build.gradle	2025-03-15 18:25:29.109999186 +0300
++++ input/play-services-base/core/package/build.gradle	2025-03-15 18:25:57.437999175 +0300
 @@ -22,6 +22,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -462,8 +462,8 @@ diff -Naur backup/play-services-base/core/package/build.gradle input/play-servic
  
      sourceSets {
 diff -Naur backup/play-services-base/core/package/src/main/AndroidManifest.xml input/play-services-base/core/package/src/main/AndroidManifest.xml
---- backup/play-services-base/core/package/src/main/AndroidManifest.xml	2025-03-15 17:15:48.136990158 +0300
-+++ input/play-services-base/core/package/src/main/AndroidManifest.xml	2025-03-15 17:24:07.976989968 +0300
+--- backup/play-services-base/core/package/src/main/AndroidManifest.xml	2025-03-15 18:25:29.113999186 +0300
++++ input/play-services-base/core/package/src/main/AndroidManifest.xml	2025-03-15 18:25:57.437999175 +0300
 @@ -15,7 +15,7 @@
              android:name="org.microg.gms.moduleinstall.ModuleInstallService"
              android:exported="true">
@@ -474,8 +474,8 @@ diff -Naur backup/play-services-base/core/package/src/main/AndroidManifest.xml i
              </intent-filter>
          </service>
 diff -Naur backup/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java input/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java
---- backup/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2025-03-15 17:15:48.144990158 +0300
-+++ input/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2025-03-15 17:24:07.976989968 +0300
+--- backup/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2025-03-15 18:25:29.113999186 +0300
++++ input/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2025-03-15 18:25:57.441999175 +0300
 @@ -23,6 +23,7 @@
  import android.os.RemoteException;
  import android.util.Log;
@@ -494,8 +494,8 @@ diff -Naur backup/play-services-base/core/src/main/java/org/microg/gms/AbstractG
          getService(callback, request);
      }
 diff -Naur backup/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java input/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java
---- backup/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2025-03-15 17:15:48.152990158 +0300
-+++ input/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2025-03-15 17:24:08.016989968 +0300
+--- backup/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2025-03-15 18:25:29.117999186 +0300
++++ input/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2025-03-15 18:25:57.441999175 +0300
 @@ -27,6 +27,7 @@
  import android.util.Log;
  
@@ -569,8 +569,8 @@ diff -Naur backup/play-services-base/core/src/main/java/org/microg/gms/common/Pa
  
      public static String[] getCallingPackageCandidates(Context context) {
 diff -Naur backup/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt input/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt
---- backup/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2025-03-15 17:15:48.156990158 +0300
-+++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2025-03-15 17:24:08.016989968 +0300
+--- backup/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2025-03-15 18:25:29.117999186 +0300
++++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2025-03-15 18:25:57.445999175 +0300
 @@ -90,6 +90,10 @@
          PERMISSIONS_PRIVILEGED
      ),
@@ -584,7 +584,7 @@ diff -Naur backup/play-services-base/core/src/main/kotlin/org/microg/gms/common/
      ),
 diff -Naur backup/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt input/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt
 --- backup/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	2025-03-15 17:24:08.016989968 +0300
++++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	2025-03-15 18:25:57.445999175 +0300
 @@ -0,0 +1,157 @@
 +package org.microg.gms.common
 +
@@ -745,8 +745,8 @@ diff -Naur backup/play-services-base/core/src/main/kotlin/org/microg/gms/common/
 +}
 \ No newline at end of file
 diff -Naur backup/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java
---- backup/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2025-03-15 17:15:48.356990158 +0300
-+++ input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2025-03-15 17:24:08.020989968 +0300
+--- backup/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2025-03-15 18:25:29.157999186 +0300
++++ input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2025-03-15 18:25:57.445999175 +0300
 @@ -29,6 +29,7 @@
  import android.content.pm.Signature;
  import android.os.IBinder;
@@ -765,8 +765,8 @@ diff -Naur backup/play-services-base/src/main/java/org/microg/gms/common/MultiCo
              } catch (PackageManager.NameNotFoundException e) {
                  return false;
 diff -Naur backup/play-services-basement/build.gradle input/play-services-basement/build.gradle
---- backup/play-services-basement/build.gradle	2025-03-15 17:15:48.372990158 +0300
-+++ input/play-services-basement/build.gradle	2025-03-15 17:24:08.020989968 +0300
+--- backup/play-services-basement/build.gradle	2025-03-15 18:25:29.161999186 +0300
++++ input/play-services-basement/build.gradle	2025-03-15 18:25:57.445999175 +0300
 @@ -50,7 +50,12 @@
          minSdkVersion androidMinSdk
          targetSdkVersion androidTargetSdk
@@ -781,8 +781,8 @@ diff -Naur backup/play-services-basement/build.gradle input/play-services-baseme
  
      compileOptions {
 diff -Naur backup/play-services-basement/src/main/AndroidManifest.xml input/play-services-basement/src/main/AndroidManifest.xml
---- backup/play-services-basement/src/main/AndroidManifest.xml	2025-03-15 17:15:48.384990158 +0300
-+++ input/play-services-basement/src/main/AndroidManifest.xml	2025-03-15 17:24:08.020989968 +0300
+--- backup/play-services-basement/src/main/AndroidManifest.xml	2025-03-15 18:25:29.161999186 +0300
++++ input/play-services-basement/src/main/AndroidManifest.xml	2025-03-15 18:25:57.449999175 +0300
 @@ -7,7 +7,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
      <application>
@@ -793,8 +793,8 @@ diff -Naur backup/play-services-basement/src/main/AndroidManifest.xml input/play
      </application>
  </manifest>
 diff -Naur backup/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java input/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java
---- backup/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2025-03-15 17:15:48.436990158 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2025-03-15 17:24:08.020989968 +0300
+--- backup/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2025-03-15 18:25:29.177999186 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2025-03-15 18:25:57.449999175 +0300
 @@ -16,6 +16,8 @@
  
  package org.microg.gms.auth;
@@ -814,8 +814,8 @@ diff -Naur backup/play-services-basement/src/main/java/org/microg/gms/auth/AuthC
      public static final String GOOGLE_SIGN_IN_STATUS = "googleSignInStatus";
      public static final String GOOGLE_SIGN_IN_ACCOUNT = "googleSignInAccount";
 diff -Naur backup/play-services-basement/src/main/java/org/microg/gms/common/Constants.java input/play-services-basement/src/main/java/org/microg/gms/common/Constants.java
---- backup/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2025-03-15 17:15:48.436990158 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2025-03-15 17:24:08.024989968 +0300
+--- backup/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2025-03-15 18:25:29.177999186 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2025-03-15 18:25:57.449999175 +0300
 @@ -20,7 +20,8 @@
  
  public class Constants {
@@ -827,9 +827,14 @@ diff -Naur backup/play-services-basement/src/main/java/org/microg/gms/common/Con
      public static final String GSF_PACKAGE_NAME = "com.google.android.gsf";
      public static final String GMS_PACKAGE_SIGNATURE_SHA1 = "38918a453d07199354f8b19af05ec6562ced5788";
 diff -Naur backup/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java input/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java
---- backup/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2025-03-15 17:15:48.436990158 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2025-03-15 17:31:20.168989803 +0300
-@@ -19,161 +19,161 @@
+--- backup/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2025-03-15 18:25:29.177999186 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2025-03-15 18:27:19.781999144 +0300
+@@ -16,164 +16,166 @@
+ 
+ package org.microg.gms.common;
+ 
++import com.google.android.gms.common.BuildConfig;
++
  public enum GmsService {
      UNKNOWN(-2),
      ANY(-1),
@@ -1137,7 +1142,7 @@ diff -Naur backup/play-services-basement/src/main/java/org/microg/gms/common/Gms
      ;
  
      public int SERVICE_ID;
-@@ -188,7 +188,7 @@
+@@ -188,7 +190,7 @@
  
      public interface ADVERTISING_ID {
          // Has no service id
@@ -1147,8 +1152,8 @@ diff -Naur backup/play-services-basement/src/main/java/org/microg/gms/common/Gms
  
      public static GmsService byServiceId(int serviceId) {
 diff -Naur backup/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java
---- backup/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2025-03-15 17:15:48.440990158 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2025-03-15 17:24:08.028989968 +0300
+--- backup/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2025-03-15 18:25:29.177999186 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2025-03-15 18:25:57.457999175 +0300
 @@ -16,18 +16,20 @@
  
  package org.microg.gms.gcm;
@@ -1206,8 +1211,8 @@ diff -Naur backup/play-services-basement/src/main/java/org/microg/gms/gcm/GcmCon
      public static final String ERROR_SERVICE_NOT_AVAILABLE = "SERVICE_NOT_AVAILABLE";
  
 diff -Naur backup/play-services-cast/core/build.gradle input/play-services-cast/core/build.gradle
---- backup/play-services-cast/core/build.gradle	2025-03-15 17:15:48.512990158 +0300
-+++ input/play-services-cast/core/build.gradle	2025-03-15 17:24:08.028989968 +0300
+--- backup/play-services-cast/core/build.gradle	2025-03-15 18:25:29.193999186 +0300
++++ input/play-services-cast/core/build.gradle	2025-03-15 18:25:57.457999175 +0300
 @@ -32,6 +32,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -1220,8 +1225,8 @@ diff -Naur backup/play-services-cast/core/build.gradle input/play-services-cast/
  
      buildFeatures {
 diff -Naur backup/play-services-cast/core/src/main/AndroidManifest.xml input/play-services-cast/core/src/main/AndroidManifest.xml
---- backup/play-services-cast/core/src/main/AndroidManifest.xml	2025-03-15 17:15:48.512990158 +0300
-+++ input/play-services-cast/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.032989968 +0300
+--- backup/play-services-cast/core/src/main/AndroidManifest.xml	2025-03-15 18:25:29.193999186 +0300
++++ input/play-services-cast/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.461999175 +0300
 @@ -15,7 +15,7 @@
  
          <service android:name="org.microg.gms.cast.CastDeviceControllerService">
@@ -1232,8 +1237,8 @@ diff -Naur backup/play-services-cast/core/src/main/AndroidManifest.xml input/pla
          </service>
      </application>
 diff -Naur backup/play-services-cast-framework/build.gradle input/play-services-cast-framework/build.gradle
---- backup/play-services-cast-framework/build.gradle	2025-03-15 17:15:48.448990158 +0300
-+++ input/play-services-cast-framework/build.gradle	2025-03-15 17:24:08.032989968 +0300
+--- backup/play-services-cast-framework/build.gradle	2025-03-15 18:25:29.181999186 +0300
++++ input/play-services-cast-framework/build.gradle	2025-03-15 18:25:57.461999175 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -1246,8 +1251,8 @@ diff -Naur backup/play-services-cast-framework/build.gradle input/play-services-
  
      compileOptions {
 diff -Naur backup/play-services-cast-framework/src/main/AndroidManifest.xml input/play-services-cast-framework/src/main/AndroidManifest.xml
---- backup/play-services-cast-framework/src/main/AndroidManifest.xml	2025-03-15 17:15:48.464990158 +0300
-+++ input/play-services-cast-framework/src/main/AndroidManifest.xml	2025-03-15 17:24:08.032989968 +0300
+--- backup/play-services-cast-framework/src/main/AndroidManifest.xml	2025-03-15 18:25:29.181999186 +0300
++++ input/play-services-cast-framework/src/main/AndroidManifest.xml	2025-03-15 18:25:57.461999175 +0300
 @@ -9,21 +9,21 @@
      <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
  
@@ -1275,8 +1280,8 @@ diff -Naur backup/play-services-cast-framework/src/main/AndroidManifest.xml inpu
      </application>
  
 diff -Naur backup/play-services-core/build.gradle input/play-services-core/build.gradle
---- backup/play-services-core/build.gradle	2025-03-15 17:15:48.604990158 +0300
-+++ input/play-services-core/build.gradle	2025-03-15 17:24:08.036989968 +0300
+--- backup/play-services-core/build.gradle	2025-03-15 18:25:29.213999186 +0300
++++ input/play-services-core/build.gradle	2025-03-15 18:25:57.465999175 +0300
 @@ -115,6 +115,8 @@
      }
  
@@ -1316,7 +1321,7 @@ diff -Naur backup/play-services-core/build.gradle input/play-services-core/build
              abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
 diff -Naur backup/play-services-core/build.gradle.orig input/play-services-core/build.gradle.orig
 --- backup/play-services-core/build.gradle.orig	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-core/build.gradle.orig	2025-03-15 17:23:45.944989976 +0300
++++ input/play-services-core/build.gradle.orig	2025-03-15 18:25:57.465999175 +0300
 @@ -0,0 +1,222 @@
 +/*
 + * SPDX-FileCopyrightText: 2013 microG Project Team
@@ -1541,8 +1546,8 @@ diff -Naur backup/play-services-core/build.gradle.orig input/play-services-core/
 +    }
 +}
 diff -Naur backup/play-services-core/src/main/AndroidManifest.xml input/play-services-core/src/main/AndroidManifest.xml
---- backup/play-services-core/src/main/AndroidManifest.xml	2025-03-15 17:15:48.648990158 +0300
-+++ input/play-services-core/src/main/AndroidManifest.xml	2025-03-15 17:25:38.792989933 +0300
+--- backup/play-services-core/src/main/AndroidManifest.xml	2025-03-15 18:25:29.229999186 +0300
++++ input/play-services-core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.477999175 +0300
 @@ -17,70 +17,70 @@
      xmlns:tools="http://schemas.android.com/tools">
  
@@ -2619,8 +2624,8 @@ diff -Naur backup/play-services-core/src/main/AndroidManifest.xml input/play-ser
              </intent-filter>
          </service>
 diff -Naur backup/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java
---- backup/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2025-03-15 17:15:48.680990158 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2025-03-15 17:24:08.044989968 +0300
+--- backup/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2025-03-15 18:25:29.237999186 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2025-03-15 18:25:57.477999175 +0300
 @@ -17,6 +17,8 @@
  import org.microg.gms.accountaction.ErrorResolverKt;
  import org.microg.gms.accountaction.Resolution;
@@ -2652,8 +2657,8 @@ diff -Naur backup/play-services-core/src/main/java/org/microg/gms/auth/AuthManag
                  .token(getAccountManager().getPassword(account))
                  .service(service)
 diff -Naur backup/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java input/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java
---- backup/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2025-03-15 17:15:48.680990158 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2025-03-15 17:24:08.044989968 +0300
+--- backup/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2025-03-15 18:25:29.241999186 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2025-03-15 18:25:57.481999175 +0300
 @@ -76,8 +76,7 @@
  import static android.view.View.VISIBLE;
  import static android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT;
@@ -2674,8 +2679,8 @@ diff -Naur backup/play-services-core/src/main/java/org/microg/gms/auth/login/Log
          new AuthRequest().fromContext(this)
                  .appIsGms()
 diff -Naur backup/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java input/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java
---- backup/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2025-03-15 17:15:48.684990158 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2025-03-15 17:24:08.044989968 +0300
+--- backup/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2025-03-15 18:25:29.241999186 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2025-03-15 18:25:57.485999175 +0300
 @@ -32,6 +32,7 @@
  import com.google.android.gms.common.internal.CertData;
  import org.microg.gms.auth.*;
@@ -2694,8 +2699,8 @@ diff -Naur backup/play-services-core/src/main/java/org/microg/gms/auth/loginserv
                  i.putExtra(KEY_ACCOUNT_NAME, account.name);
                  i.putExtra(KEY_AUTHTOKEN, authTokenType);
 diff -Naur backup/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java input/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java
---- backup/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2025-03-15 17:15:48.704990158 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2025-03-15 17:24:08.044989968 +0300
+--- backup/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2025-03-15 18:25:29.245999186 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2025-03-15 18:25:57.485999175 +0300
 @@ -20,11 +20,12 @@
  import android.content.ContentValues;
  import android.database.Cursor;
@@ -2713,8 +2718,8 @@ diff -Naur backup/play-services-core/src/main/java/org/microg/gms/gservices/GSer
      public static int setString(ContentResolver resolver, String key, String value) {
          ContentValues values = new ContentValues();
 diff -Naur backup/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java input/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java
---- backup/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2025-03-15 17:15:48.704990158 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2025-03-15 17:24:08.064989968 +0300
+--- backup/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2025-03-15 18:25:29.245999186 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2025-03-15 18:25:57.485999175 +0300
 @@ -22,6 +22,7 @@
  import android.database.MatrixCursor;
  import android.net.Uri;
@@ -2733,8 +2738,8 @@ diff -Naur backup/play-services-core/src/main/java/org/microg/gms/gservices/GSer
      public static final Uri OVERRIDE_URI = Uri.withAppendedPath(CONTENT_URI, "override");
      public static final Uri PREFIX_URI = Uri.withAppendedPath(CONTENT_URI, "prefix");
 diff -Naur backup/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java input/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java
---- backup/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2025-03-15 17:15:48.712990158 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2025-03-15 17:24:08.064989968 +0300
+--- backup/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2025-03-15 18:25:29.249999186 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2025-03-15 18:25:57.489999175 +0300
 @@ -143,7 +143,7 @@
      }
  
@@ -2745,8 +2750,8 @@ diff -Naur backup/play-services-core/src/main/java/org/microg/gms/people/PeopleM
          String result = authManager.getAuthToken();
          if (result == null) {
 diff -Naur backup/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt
---- backup/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2025-03-15 17:15:48.780990158 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2025-03-15 17:24:08.064989968 +0300
+--- backup/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2025-03-15 18:25:29.257999186 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2025-03-15 18:25:57.489999175 +0300
 @@ -22,6 +22,7 @@
  import kotlinx.coroutines.withContext
  import org.microg.gms.auth.AuthManager
@@ -2772,8 +2777,8 @@ diff -Naur backup/play-services-core/src/main/kotlin/org/microg/gms/accountsetti
 \ No newline at end of file
 +}
 diff -Naur backup/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt
---- backup/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2025-03-15 17:15:48.780990158 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2025-03-15 17:24:08.068989968 +0300
+--- backup/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2025-03-15 18:25:29.257999186 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2025-03-15 18:25:57.493999175 +0300
 @@ -5,12 +5,14 @@
  
  package org.microg.gms.accountsettings.ui
@@ -2803,8 +2808,8 @@ diff -Naur backup/play-services-core/src/main/kotlin/org/microg/gms/accountsetti
 \ No newline at end of file
 +const val OPTION_SCREEN_FLAVOR = "screenFlavor"
 diff -Naur backup/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt input/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt
---- backup/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2025-03-15 17:15:48.804990158 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2025-03-15 17:24:08.068989968 +0300
+--- backup/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2025-03-15 18:25:29.265999186 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2025-03-15 18:25:57.497999175 +0300
 @@ -15,6 +15,7 @@
  import android.os.Bundle
  import android.util.Log
@@ -2823,8 +2828,8 @@ diff -Naur backup/play-services-core/src/main/kotlin/org/microg/gms/chimera/Serv
  
      companion object {
 diff -Naur backup/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt input/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt
---- backup/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2025-03-15 17:15:48.820990158 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2025-03-15 17:24:08.068989968 +0300
+--- backup/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2025-03-15 18:25:29.269999186 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2025-03-15 18:25:57.497999175 +0300
 @@ -207,7 +207,7 @@
  }
  
@@ -2835,8 +2840,8 @@ diff -Naur backup/play-services-core/src/main/kotlin/org/microg/gms/games/extens
      val authToken = withContext(Dispatchers.IO) { authManager.requestAuthWithBackgroundResolution(false).auth }
      val androidId = getSettings(context, CheckIn.getContentUri(context), arrayOf(CheckIn.ANDROID_ID)) { cursor: Cursor -> cursor.getLong(0) }
 diff -Naur backup/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt input/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt
---- backup/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt	2025-03-15 17:15:48.840990158 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt	2025-03-15 17:24:08.068989968 +0300
+--- backup/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt	2025-03-15 18:25:29.273999186 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoTokensService.kt	2025-03-15 18:25:57.497999175 +0300
 @@ -32,7 +32,7 @@
          callback.onPostInitCompleteWithConnectionInfo(
              CommonStatusCodes.SUCCESS,
@@ -2847,8 +2852,8 @@ diff -Naur backup/play-services-core/src/main/kotlin/org/microg/gms/potokens/PoT
              ConnectionInfo().apply { features = FEATURES }
          )
 diff -Naur backup/play-services-core/src/main/res/xml/authenticator.xml input/play-services-core/src/main/res/xml/authenticator.xml
---- backup/play-services-core/src/main/res/xml/authenticator.xml	2025-03-15 17:15:49.128990158 +0300
-+++ input/play-services-core/src/main/res/xml/authenticator.xml	2025-03-15 17:24:08.072989968 +0300
+--- backup/play-services-core/src/main/res/xml/authenticator.xml	2025-03-15 18:25:29.325999186 +0300
++++ input/play-services-core/src/main/res/xml/authenticator.xml	2025-03-15 18:25:57.501999175 +0300
 @@ -16,7 +16,7 @@
  
  <account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
@@ -2859,8 +2864,8 @@ diff -Naur backup/play-services-core/src/main/res/xml/authenticator.xml input/pl
      android:icon="@drawable/proprietary_auth_gls_ic_google_selected"
      android:smallIcon="@drawable/proprietary_auth_gls_ic_google_minitab_selected"
 diff -Naur backup/play-services-core/src/main/res/xml/contact_syncadapter.xml input/play-services-core/src/main/res/xml/contact_syncadapter.xml
---- backup/play-services-core/src/main/res/xml/contact_syncadapter.xml	2025-03-15 17:15:49.128990158 +0300
-+++ input/play-services-core/src/main/res/xml/contact_syncadapter.xml	2025-03-15 17:24:08.072989968 +0300
+--- backup/play-services-core/src/main/res/xml/contact_syncadapter.xml	2025-03-15 18:25:29.325999186 +0300
++++ input/play-services-core/src/main/res/xml/contact_syncadapter.xml	2025-03-15 18:25:57.501999175 +0300
 @@ -16,6 +16,6 @@
    -->
  
@@ -2871,8 +2876,8 @@ diff -Naur backup/play-services-core/src/main/res/xml/contact_syncadapter.xml in
                android:userVisible="false"/>
 \ No newline at end of file
 diff -Naur backup/play-services-core/src/main/res/xml/preferences_accounts.xml input/play-services-core/src/main/res/xml/preferences_accounts.xml
---- backup/play-services-core/src/main/res/xml/preferences_accounts.xml	2025-03-15 17:15:49.128990158 +0300
-+++ input/play-services-core/src/main/res/xml/preferences_accounts.xml	2025-03-15 17:24:08.072989968 +0300
+--- backup/play-services-core/src/main/res/xml/preferences_accounts.xml	2025-03-15 18:25:29.325999186 +0300
++++ input/play-services-core/src/main/res/xml/preferences_accounts.xml	2025-03-15 18:25:57.501999175 +0300
 @@ -17,7 +17,7 @@
              android:title="@string/pref_add_account_summary">
              <intent
@@ -2883,8 +2888,8 @@ diff -Naur backup/play-services-core/src/main/res/xml/preferences_accounts.xml i
      </PreferenceCategory>
      <PreferenceCategory
 diff -Naur backup/play-services-core/src/main/res/xml/preferences_auth.xml input/play-services-core/src/main/res/xml/preferences_auth.xml
---- backup/play-services-core/src/main/res/xml/preferences_auth.xml	2025-03-15 17:15:49.128990158 +0300
-+++ input/play-services-core/src/main/res/xml/preferences_auth.xml	2025-03-15 17:24:08.076989968 +0300
+--- backup/play-services-core/src/main/res/xml/preferences_auth.xml	2025-03-15 18:25:29.325999186 +0300
++++ input/play-services-core/src/main/res/xml/preferences_auth.xml	2025-03-15 18:25:57.501999175 +0300
 @@ -19,21 +19,21 @@
          android:key="k2"
          android:title="@string/prefs_account_security">
@@ -2914,8 +2919,8 @@ diff -Naur backup/play-services-core/src/main/res/xml/preferences_auth.xml input
      </PreferenceScreen>
  </PreferenceScreen>
 diff -Naur backup/play-services-core/src/main/res/xml/preferences_start.xml input/play-services-core/src/main/res/xml/preferences_start.xml
---- backup/play-services-core/src/main/res/xml/preferences_start.xml	2025-03-15 17:15:49.136990158 +0300
-+++ input/play-services-core/src/main/res/xml/preferences_start.xml	2025-03-15 17:24:08.076989968 +0300
+--- backup/play-services-core/src/main/res/xml/preferences_start.xml	2025-03-15 18:25:29.329999186 +0300
++++ input/play-services-core/src/main/res/xml/preferences_start.xml	2025-03-15 18:25:57.505999175 +0300
 @@ -23,7 +23,7 @@
              android:title="@string/self_check_title">
              <intent
@@ -2935,8 +2940,8 @@ diff -Naur backup/play-services-core/src/main/res/xml/preferences_start.xml inpu
      </PreferenceCategory>
      <PreferenceCategory android:layout="@layout/preference_category_no_label" android:key="prefcat_other_services">
 diff -Naur backup/play-services-droidguard/build.gradle input/play-services-droidguard/build.gradle
---- backup/play-services-droidguard/build.gradle	2025-03-15 17:15:49.252990158 +0300
-+++ input/play-services-droidguard/build.gradle	2025-03-15 17:24:08.076989968 +0300
+--- backup/play-services-droidguard/build.gradle	2025-03-15 18:25:29.353999186 +0300
++++ input/play-services-droidguard/build.gradle	2025-03-15 18:25:57.505999175 +0300
 @@ -22,6 +22,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2949,8 +2954,8 @@ diff -Naur backup/play-services-droidguard/build.gradle input/play-services-droi
  
      sourceSets {
 diff -Naur backup/play-services-droidguard/core/src/main/AndroidManifest.xml input/play-services-droidguard/core/src/main/AndroidManifest.xml
---- backup/play-services-droidguard/core/src/main/AndroidManifest.xml	2025-03-15 17:15:49.256990158 +0300
-+++ input/play-services-droidguard/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.076989968 +0300
+--- backup/play-services-droidguard/core/src/main/AndroidManifest.xml	2025-03-15 18:25:29.353999186 +0300
++++ input/play-services-droidguard/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.505999175 +0300
 @@ -15,9 +15,9 @@
              android:exported="true"
              android:process="com.google.android.gms.unstable">
@@ -2965,8 +2970,8 @@ diff -Naur backup/play-services-droidguard/core/src/main/AndroidManifest.xml inp
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
 diff -Naur backup/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java input/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java
---- backup/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2025-03-15 17:15:49.260990158 +0300
-+++ input/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2025-03-15 17:24:08.080989968 +0300
+--- backup/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2025-03-15 18:25:29.353999186 +0300
++++ input/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2025-03-15 18:25:57.505999175 +0300
 @@ -13,6 +13,7 @@
  
  import androidx.annotation.Nullable;
@@ -2985,8 +2990,8 @@ diff -Naur backup/play-services-droidguard/core/src/main/java/com/google/android
          }
          return null;
 diff -Naur backup/play-services-fido/core/build.gradle input/play-services-fido/core/build.gradle
---- backup/play-services-fido/core/build.gradle	2025-03-15 17:15:49.320990158 +0300
-+++ input/play-services-fido/core/build.gradle	2025-03-15 17:24:08.080989968 +0300
+--- backup/play-services-fido/core/build.gradle	2025-03-15 18:25:29.381999186 +0300
++++ input/play-services-fido/core/build.gradle	2025-03-15 18:25:57.509999175 +0300
 @@ -44,6 +44,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2999,8 +3004,8 @@ diff -Naur backup/play-services-fido/core/build.gradle input/play-services-fido/
  
      buildFeatures {
 diff -Naur backup/play-services-fido/core/src/main/AndroidManifest.xml input/play-services-fido/core/src/main/AndroidManifest.xml
---- backup/play-services-fido/core/src/main/AndroidManifest.xml	2025-03-15 17:15:49.320990158 +0300
-+++ input/play-services-fido/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.080989968 +0300
+--- backup/play-services-fido/core/src/main/AndroidManifest.xml	2025-03-15 18:25:29.381999186 +0300
++++ input/play-services-fido/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.509999175 +0300
 @@ -21,7 +21,7 @@
              android:name=".privileged.Fido2PrivilegedService"
              android:exported="true">
@@ -3011,8 +3016,8 @@ diff -Naur backup/play-services-fido/core/src/main/AndroidManifest.xml input/pla
              </intent-filter>
          </service>
 diff -Naur backup/play-services-gcm/build.gradle input/play-services-gcm/build.gradle
---- backup/play-services-gcm/build.gradle	2025-03-15 17:15:49.548990158 +0300
-+++ input/play-services-gcm/build.gradle	2025-03-15 17:24:08.080989968 +0300
+--- backup/play-services-gcm/build.gradle	2025-03-15 18:25:29.453999186 +0300
++++ input/play-services-gcm/build.gradle	2025-03-15 18:25:57.509999175 +0300
 @@ -15,6 +15,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3025,8 +3030,8 @@ diff -Naur backup/play-services-gcm/build.gradle input/play-services-gcm/build.g
  
      compileOptions {
 diff -Naur backup/play-services-gcm/src/main/AndroidManifest.xml input/play-services-gcm/src/main/AndroidManifest.xml
---- backup/play-services-gcm/src/main/AndroidManifest.xml	2025-03-15 17:15:49.552990158 +0300
-+++ input/play-services-gcm/src/main/AndroidManifest.xml	2025-03-15 17:24:08.080989968 +0300
+--- backup/play-services-gcm/src/main/AndroidManifest.xml	2025-03-15 18:25:29.453999186 +0300
++++ input/play-services-gcm/src/main/AndroidManifest.xml	2025-03-15 18:25:57.509999175 +0300
 @@ -18,7 +18,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -3037,8 +3042,8 @@ diff -Naur backup/play-services-gcm/src/main/AndroidManifest.xml input/play-serv
  
      <!-- Move to play-services-measurement -->
 diff -Naur backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java
---- backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2025-03-15 17:15:49.556990158 +0300
-+++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2025-03-15 17:24:08.084989968 +0300
+--- backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2025-03-15 18:25:29.453999186 +0300
++++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2025-03-15 18:25:57.513999175 +0300
 @@ -53,7 +53,7 @@
   *     android:name=".YourGcmListenerService"
   *     android:exported="false" >
@@ -3049,8 +3054,8 @@ diff -Naur backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/Gcm
   * </service></pre>
   */
 diff -Naur backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java
---- backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2025-03-15 17:15:49.556990158 +0300
-+++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2025-03-15 17:24:08.084989968 +0300
+--- backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2025-03-15 18:25:29.453999186 +0300
++++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2025-03-15 18:25:57.513999175 +0300
 @@ -67,9 +67,9 @@
   * <pre>
   * <service android:name=".MyUploadService"
@@ -3064,8 +3069,8 @@ diff -Naur backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/Gcm
   * </service>
   * </pre>
 diff -Naur backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java
---- backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2025-03-15 17:15:49.560990158 +0300
-+++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2025-03-15 17:24:08.084989968 +0300
+--- backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2025-03-15 18:25:29.453999186 +0300
++++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2025-03-15 18:25:57.513999175 +0300
 @@ -44,12 +44,12 @@
   * <p/>
   * <pre>
@@ -3084,8 +3089,8 @@ diff -Naur backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/Gcm
   *     </intent-filter>
   * </receiver></pre>
 diff -Naur backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java
---- backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2025-03-15 17:15:49.560990158 +0300
-+++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2025-03-15 17:24:08.084989968 +0300
+--- backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2025-03-15 18:25:29.453999186 +0300
++++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2025-03-15 18:25:57.517999175 +0300
 @@ -38,10 +38,10 @@
   * {@link com.google.android.gms.gcm.GcmTaskService#SERVICE_ACTION_EXECUTE_TASK}. Here's an example:
   * <pre>
@@ -3100,8 +3105,8 @@ diff -Naur backup/play-services-gcm/src/main/java/com/google/android/gms/gcm/Gcm
   *     </service>
   * </pre>
 diff -Naur backup/play-services-gmscompliance/core/build.gradle input/play-services-gmscompliance/core/build.gradle
---- backup/play-services-gmscompliance/core/build.gradle	2025-03-15 17:15:49.568990158 +0300
-+++ input/play-services-gmscompliance/core/build.gradle	2025-03-15 17:24:08.084989968 +0300
+--- backup/play-services-gmscompliance/core/build.gradle	2025-03-15 18:25:29.457999186 +0300
++++ input/play-services-gmscompliance/core/build.gradle	2025-03-15 18:25:57.517999175 +0300
 @@ -35,6 +35,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3114,8 +3119,8 @@ diff -Naur backup/play-services-gmscompliance/core/build.gradle input/play-servi
  
      sourceSets {
 diff -Naur backup/play-services-gmscompliance/core/src/main/AndroidManifest.xml input/play-services-gmscompliance/core/src/main/AndroidManifest.xml
---- backup/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2025-03-15 17:15:49.568990158 +0300
-+++ input/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.084989968 +0300
+--- backup/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2025-03-15 18:25:29.457999186 +0300
++++ input/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.517999175 +0300
 @@ -9,7 +9,7 @@
      <application>
          <service android:name="org.microg.gms.gmscompliance.GmsDeviceComplianceService">
@@ -3126,8 +3131,8 @@ diff -Naur backup/play-services-gmscompliance/core/src/main/AndroidManifest.xml 
          </service>
      </application>
 diff -Naur backup/play-services-iid/build.gradle input/play-services-iid/build.gradle
---- backup/play-services-iid/build.gradle	2025-03-15 17:15:49.576990158 +0300
-+++ input/play-services-iid/build.gradle	2025-03-15 17:24:08.084989968 +0300
+--- backup/play-services-iid/build.gradle	2025-03-15 18:25:29.461999186 +0300
++++ input/play-services-iid/build.gradle	2025-03-15 18:25:57.521999175 +0300
 @@ -19,6 +19,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3140,8 +3145,8 @@ diff -Naur backup/play-services-iid/build.gradle input/play-services-iid/build.g
  
      compileOptions {
 diff -Naur backup/play-services-iid/src/main/AndroidManifest.xml input/play-services-iid/src/main/AndroidManifest.xml
---- backup/play-services-iid/src/main/AndroidManifest.xml	2025-03-15 17:15:49.580990158 +0300
-+++ input/play-services-iid/src/main/AndroidManifest.xml	2025-03-15 17:24:08.084989968 +0300
+--- backup/play-services-iid/src/main/AndroidManifest.xml	2025-03-15 18:25:29.461999186 +0300
++++ input/play-services-iid/src/main/AndroidManifest.xml	2025-03-15 18:25:57.521999175 +0300
 @@ -7,6 +7,6 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -3151,8 +3156,8 @@ diff -Naur backup/play-services-iid/src/main/AndroidManifest.xml input/play-serv
      <uses-permission android:name="android.permission.INTERNET"/>
  </manifest>
 diff -Naur backup/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java input/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java
---- backup/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2025-03-15 17:15:49.588990158 +0300
-+++ input/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2025-03-15 17:24:08.084989968 +0300
+--- backup/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2025-03-15 18:25:29.461999186 +0300
++++ input/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2025-03-15 18:25:57.521999175 +0300
 @@ -43,7 +43,7 @@
   * <pre>
   * <service android:name=".YourInstanceIDListenerService" android:exported="false">
@@ -3163,8 +3168,8 @@ diff -Naur backup/play-services-iid/src/main/java/com/google/android/gms/iid/Ins
   * </service></pre>
   * Do not export this service. Instead, keep it private to prevent other apps
 diff -Naur backup/play-services-location/core/build.gradle input/play-services-location/core/build.gradle
---- backup/play-services-location/core/build.gradle	2025-03-15 17:15:49.604990158 +0300
-+++ input/play-services-location/core/build.gradle	2025-03-15 17:24:08.088989968 +0300
+--- backup/play-services-location/core/build.gradle	2025-03-15 18:25:29.465999186 +0300
++++ input/play-services-location/core/build.gradle	2025-03-15 18:25:57.525999175 +0300
 @@ -43,6 +43,10 @@
          targetSdkVersion androidTargetSdk
          buildConfigField "String", "FORCE_SHOW_BACKGROUND_PERMISSION", "\"\""
@@ -3177,8 +3182,8 @@ diff -Naur backup/play-services-location/core/build.gradle input/play-services-l
  
      lintOptions {
 diff -Naur backup/play-services-location/core/provider/build.gradle input/play-services-location/core/provider/build.gradle
---- backup/play-services-location/core/provider/build.gradle	2025-03-15 17:15:49.604990158 +0300
-+++ input/play-services-location/core/provider/build.gradle	2025-03-15 17:24:08.088989968 +0300
+--- backup/play-services-location/core/provider/build.gradle	2025-03-15 18:25:29.465999186 +0300
++++ input/play-services-location/core/provider/build.gradle	2025-03-15 18:25:57.525999175 +0300
 @@ -41,6 +41,10 @@
          minSdkVersion androidMinSdk
          targetSdkVersion androidTargetSdk
@@ -3191,8 +3196,8 @@ diff -Naur backup/play-services-location/core/provider/build.gradle input/play-s
  
      sourceSets {
 diff -Naur backup/play-services-location/core/provider/src/main/AndroidManifest.xml input/play-services-location/core/provider/src/main/AndroidManifest.xml
---- backup/play-services-location/core/provider/src/main/AndroidManifest.xml	2025-03-15 17:15:49.604990158 +0300
-+++ input/play-services-location/core/provider/src/main/AndroidManifest.xml	2025-03-15 17:24:08.088989968 +0300
+--- backup/play-services-location/core/provider/src/main/AndroidManifest.xml	2025-03-15 18:25:29.465999186 +0300
++++ input/play-services-location/core/provider/src/main/AndroidManifest.xml	2025-03-15 18:25:57.525999175 +0300
 @@ -78,7 +78,7 @@
              android:permission="android.permission.WRITE_SECURE_SETTINGS">
              <intent-filter>
@@ -3203,8 +3208,8 @@ diff -Naur backup/play-services-location/core/provider/src/main/AndroidManifest.
              <meta-data
                  android:name="serviceVersion"
 diff -Naur backup/play-services-location/core/src/huawei/AndroidManifest.xml input/play-services-location/core/src/huawei/AndroidManifest.xml
---- backup/play-services-location/core/src/huawei/AndroidManifest.xml	2025-03-15 17:15:49.640990158 +0300
-+++ input/play-services-location/core/src/huawei/AndroidManifest.xml	2025-03-15 17:24:08.088989968 +0300
+--- backup/play-services-location/core/src/huawei/AndroidManifest.xml	2025-03-15 18:25:29.477999186 +0300
++++ input/play-services-location/core/src/huawei/AndroidManifest.xml	2025-03-15 18:25:57.525999175 +0300
 @@ -17,15 +17,15 @@
              android:name="org.microg.gms.location.manager.LocationManagerService"
              android:exported="true">
@@ -3225,8 +3230,8 @@ diff -Naur backup/play-services-location/core/src/huawei/AndroidManifest.xml inp
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
 diff -Naur backup/play-services-location/core/src/main/AndroidManifest.xml input/play-services-location/core/src/main/AndroidManifest.xml
---- backup/play-services-location/core/src/main/AndroidManifest.xml	2025-03-15 17:15:49.656990158 +0300
-+++ input/play-services-location/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.088989968 +0300
+--- backup/play-services-location/core/src/main/AndroidManifest.xml	2025-03-15 18:25:29.481999186 +0300
++++ input/play-services-location/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.529999175 +0300
 @@ -31,7 +31,7 @@
              android:launchMode="singleTask"
              android:theme="@style/Theme.App.Translucent">
@@ -3257,8 +3262,8 @@ diff -Naur backup/play-services-location/core/src/main/AndroidManifest.xml input
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
 diff -Naur backup/play-services-maps/build.gradle input/play-services-maps/build.gradle
---- backup/play-services-maps/build.gradle	2025-03-15 17:15:49.800990158 +0300
-+++ input/play-services-maps/build.gradle	2025-03-15 17:24:08.088989968 +0300
+--- backup/play-services-maps/build.gradle	2025-03-15 18:25:29.525999186 +0300
++++ input/play-services-maps/build.gradle	2025-03-15 18:25:57.529999175 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3271,8 +3276,8 @@ diff -Naur backup/play-services-maps/build.gradle input/play-services-maps/build
  
      compileOptions {
 diff -Naur backup/play-services-maps/src/main/AndroidManifest.xml input/play-services-maps/src/main/AndroidManifest.xml
---- backup/play-services-maps/src/main/AndroidManifest.xml	2025-03-15 17:15:50.400990157 +0300
-+++ input/play-services-maps/src/main/AndroidManifest.xml	2025-03-15 17:24:08.088989968 +0300
+--- backup/play-services-maps/src/main/AndroidManifest.xml	2025-03-15 18:25:29.701999186 +0300
++++ input/play-services-maps/src/main/AndroidManifest.xml	2025-03-15 18:25:57.529999175 +0300
 @@ -12,7 +12,7 @@
      <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
  
@@ -3283,8 +3288,8 @@ diff -Naur backup/play-services-maps/src/main/AndroidManifest.xml input/play-ser
  
      <application>
 diff -Naur backup/play-services-nearby/build.gradle input/play-services-nearby/build.gradle
---- backup/play-services-nearby/build.gradle	2025-03-15 17:15:50.532990157 +0300
-+++ input/play-services-nearby/build.gradle	2025-03-15 17:24:08.088989968 +0300
+--- backup/play-services-nearby/build.gradle	2025-03-15 18:25:29.737999186 +0300
++++ input/play-services-nearby/build.gradle	2025-03-15 18:25:57.529999175 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3297,8 +3302,8 @@ diff -Naur backup/play-services-nearby/build.gradle input/play-services-nearby/b
  
      compileOptions {
 diff -Naur backup/play-services-nearby/core/build.gradle input/play-services-nearby/core/build.gradle
---- backup/play-services-nearby/core/build.gradle	2025-03-15 17:15:50.532990157 +0300
-+++ input/play-services-nearby/core/build.gradle	2025-03-15 17:24:08.092989968 +0300
+--- backup/play-services-nearby/core/build.gradle	2025-03-15 18:25:29.737999186 +0300
++++ input/play-services-nearby/core/build.gradle	2025-03-15 18:25:57.533999175 +0300
 @@ -40,6 +40,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3311,8 +3316,8 @@ diff -Naur backup/play-services-nearby/core/build.gradle input/play-services-nea
  
      buildFeatures {
 diff -Naur backup/play-services-nearby/core/package/build.gradle input/play-services-nearby/core/package/build.gradle
---- backup/play-services-nearby/core/package/build.gradle	2025-03-15 17:15:50.536990157 +0300
-+++ input/play-services-nearby/core/package/build.gradle	2025-03-15 17:24:08.092989968 +0300
+--- backup/play-services-nearby/core/package/build.gradle	2025-03-15 18:25:29.737999186 +0300
++++ input/play-services-nearby/core/package/build.gradle	2025-03-15 18:25:57.533999175 +0300
 @@ -24,6 +24,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3325,8 +3330,8 @@ diff -Naur backup/play-services-nearby/core/package/build.gradle input/play-serv
  
      sourceSets {
 diff -Naur backup/play-services-nearby/core/package/src/main/AndroidManifest.xml input/play-services-nearby/core/package/src/main/AndroidManifest.xml
---- backup/play-services-nearby/core/package/src/main/AndroidManifest.xml	2025-03-15 17:15:50.536990157 +0300
-+++ input/play-services-nearby/core/package/src/main/AndroidManifest.xml	2025-03-15 17:24:08.092989968 +0300
+--- backup/play-services-nearby/core/package/src/main/AndroidManifest.xml	2025-03-15 18:25:29.737999186 +0300
++++ input/play-services-nearby/core/package/src/main/AndroidManifest.xml	2025-03-15 18:25:57.533999175 +0300
 @@ -15,7 +15,7 @@
      <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
  
@@ -3337,8 +3342,8 @@ diff -Naur backup/play-services-nearby/core/package/src/main/AndroidManifest.xml
  
      <application>
 diff -Naur backup/play-services-nearby/core/src/main/AndroidManifest.xml input/play-services-nearby/core/src/main/AndroidManifest.xml
---- backup/play-services-nearby/core/src/main/AndroidManifest.xml	2025-03-15 17:15:50.544990157 +0300
-+++ input/play-services-nearby/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.092989968 +0300
+--- backup/play-services-nearby/core/src/main/AndroidManifest.xml	2025-03-15 18:25:29.741999186 +0300
++++ input/play-services-nearby/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.533999175 +0300
 @@ -5,7 +5,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -3367,8 +3372,8 @@ diff -Naur backup/play-services-nearby/core/src/main/AndroidManifest.xml input/p
              </intent-filter>
          </activity>
 diff -Naur backup/play-services-nearby/src/main/AndroidManifest.xml input/play-services-nearby/src/main/AndroidManifest.xml
---- backup/play-services-nearby/src/main/AndroidManifest.xml	2025-03-15 17:15:50.604990157 +0300
-+++ input/play-services-nearby/src/main/AndroidManifest.xml	2025-03-15 17:24:08.092989968 +0300
+--- backup/play-services-nearby/src/main/AndroidManifest.xml	2025-03-15 18:25:29.769999186 +0300
++++ input/play-services-nearby/src/main/AndroidManifest.xml	2025-03-15 18:25:57.537999175 +0300
 @@ -6,8 +6,8 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
      <application>
@@ -3381,8 +3386,8 @@ diff -Naur backup/play-services-nearby/src/main/AndroidManifest.xml input/play-s
      </application>
  </manifest>
 diff -Naur backup/play-services-oss-licenses/build.gradle input/play-services-oss-licenses/build.gradle
---- backup/play-services-oss-licenses/build.gradle	2025-03-15 17:15:50.668990157 +0300
-+++ input/play-services-oss-licenses/build.gradle	2025-03-15 17:24:08.092989968 +0300
+--- backup/play-services-oss-licenses/build.gradle	2025-03-15 18:25:30.573999186 +0300
++++ input/play-services-oss-licenses/build.gradle	2025-03-15 18:25:57.537999175 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3395,8 +3400,8 @@ diff -Naur backup/play-services-oss-licenses/build.gradle input/play-services-os
  
      lintOptions {
 diff -Naur backup/play-services-oss-licenses/core/build.gradle input/play-services-oss-licenses/core/build.gradle
---- backup/play-services-oss-licenses/core/build.gradle	2025-03-15 17:15:50.668990157 +0300
-+++ input/play-services-oss-licenses/core/build.gradle	2025-03-15 17:24:08.092989968 +0300
+--- backup/play-services-oss-licenses/core/build.gradle	2025-03-15 18:25:30.573999186 +0300
++++ input/play-services-oss-licenses/core/build.gradle	2025-03-15 18:25:57.537999175 +0300
 @@ -23,6 +23,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3409,8 +3414,8 @@ diff -Naur backup/play-services-oss-licenses/core/build.gradle input/play-servic
  
      sourceSets {
 diff -Naur backup/play-services-oss-licenses/core/src/main/AndroidManifest.xml input/play-services-oss-licenses/core/src/main/AndroidManifest.xml
---- backup/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2025-03-15 17:15:50.668990157 +0300
-+++ input/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.092989968 +0300
+--- backup/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2025-03-15 18:25:30.573999186 +0300
++++ input/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.537999175 +0300
 @@ -10,7 +10,7 @@
              android:name=".OssLicensesService"
              android:exported="true">
@@ -3421,8 +3426,8 @@ diff -Naur backup/play-services-oss-licenses/core/src/main/AndroidManifest.xml i
          </service>
      </application>
 diff -Naur backup/play-services-oss-licenses/src/main/AndroidManifest.xml input/play-services-oss-licenses/src/main/AndroidManifest.xml
---- backup/play-services-oss-licenses/src/main/AndroidManifest.xml	2025-03-15 17:15:50.672990157 +0300
-+++ input/play-services-oss-licenses/src/main/AndroidManifest.xml	2025-03-15 17:24:08.092989968 +0300
+--- backup/play-services-oss-licenses/src/main/AndroidManifest.xml	2025-03-15 18:25:30.573999186 +0300
++++ input/play-services-oss-licenses/src/main/AndroidManifest.xml	2025-03-15 18:25:57.541999175 +0300
 @@ -7,8 +7,8 @@
  
      <application>
@@ -3435,8 +3440,8 @@ diff -Naur backup/play-services-oss-licenses/src/main/AndroidManifest.xml input/
      </application>
  </manifest>
 diff -Naur backup/play-services-panorama/core/build.gradle input/play-services-panorama/core/build.gradle
---- backup/play-services-panorama/core/build.gradle	2025-03-15 17:15:50.716990157 +0300
-+++ input/play-services-panorama/core/build.gradle	2025-03-15 17:24:08.092989968 +0300
+--- backup/play-services-panorama/core/build.gradle	2025-03-15 18:25:30.589999186 +0300
++++ input/play-services-panorama/core/build.gradle	2025-03-15 18:25:57.549999175 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3449,8 +3454,8 @@ diff -Naur backup/play-services-panorama/core/build.gradle input/play-services-p
  
      sourceSets {
 diff -Naur backup/play-services-panorama/core/src/main/AndroidManifest.xml input/play-services-panorama/core/src/main/AndroidManifest.xml
---- backup/play-services-panorama/core/src/main/AndroidManifest.xml	2025-03-15 17:15:50.716990157 +0300
-+++ input/play-services-panorama/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.096989968 +0300
+--- backup/play-services-panorama/core/src/main/AndroidManifest.xml	2025-03-15 18:25:30.589999186 +0300
++++ input/play-services-panorama/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.549999175 +0300
 @@ -8,7 +8,7 @@
      <application>
          <service android:name="org.microg.gms.panorama.PanoramaService">
@@ -3461,8 +3466,8 @@ diff -Naur backup/play-services-panorama/core/src/main/AndroidManifest.xml input
          </service>
      </application>
 diff -Naur backup/play-services-pay/core/build.gradle input/play-services-pay/core/build.gradle
---- backup/play-services-pay/core/build.gradle	2025-03-15 17:15:50.732990157 +0300
-+++ input/play-services-pay/core/build.gradle	2025-03-15 17:24:08.096989968 +0300
+--- backup/play-services-pay/core/build.gradle	2025-03-15 18:25:30.589999186 +0300
++++ input/play-services-pay/core/build.gradle	2025-03-15 18:25:57.553999175 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3475,8 +3480,8 @@ diff -Naur backup/play-services-pay/core/build.gradle input/play-services-pay/co
  
      sourceSets {
 diff -Naur backup/play-services-pay/core/src/main/AndroidManifest.xml input/play-services-pay/core/src/main/AndroidManifest.xml
---- backup/play-services-pay/core/src/main/AndroidManifest.xml	2025-03-15 17:15:50.736990157 +0300
-+++ input/play-services-pay/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.096989968 +0300
+--- backup/play-services-pay/core/src/main/AndroidManifest.xml	2025-03-15 18:25:30.593999186 +0300
++++ input/play-services-pay/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.553999175 +0300
 @@ -6,13 +6,13 @@
  
      <application>
@@ -3504,8 +3509,8 @@ diff -Naur backup/play-services-pay/core/src/main/AndroidManifest.xml input/play
          </service>
          <service
 diff -Naur backup/play-services-recaptcha/core/build.gradle input/play-services-recaptcha/core/build.gradle
---- backup/play-services-recaptcha/core/build.gradle	2025-03-15 17:15:50.888990157 +0300
-+++ input/play-services-recaptcha/core/build.gradle	2025-03-15 17:24:08.096989968 +0300
+--- backup/play-services-recaptcha/core/build.gradle	2025-03-15 18:25:30.609999186 +0300
++++ input/play-services-recaptcha/core/build.gradle	2025-03-15 18:25:57.553999175 +0300
 @@ -42,6 +42,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3518,8 +3523,8 @@ diff -Naur backup/play-services-recaptcha/core/build.gradle input/play-services-
  
      sourceSets {
 diff -Naur backup/play-services-recaptcha/core/src/main/AndroidManifest.xml input/play-services-recaptcha/core/src/main/AndroidManifest.xml
---- backup/play-services-recaptcha/core/src/main/AndroidManifest.xml	2025-03-15 17:15:50.888990157 +0300
-+++ input/play-services-recaptcha/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.096989968 +0300
+--- backup/play-services-recaptcha/core/src/main/AndroidManifest.xml	2025-03-15 18:25:30.609999186 +0300
++++ input/play-services-recaptcha/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.553999175 +0300
 @@ -11,7 +11,7 @@
          <service android:name="org.microg.gms.recaptcha.RecaptchaService"
                   android:process=":ui">
@@ -3530,8 +3535,8 @@ diff -Naur backup/play-services-recaptcha/core/src/main/AndroidManifest.xml inpu
          </service>
      </application>
 diff -Naur backup/play-services-safetynet/core/build.gradle input/play-services-safetynet/core/build.gradle
---- backup/play-services-safetynet/core/build.gradle	2025-03-15 17:15:50.964990157 +0300
-+++ input/play-services-safetynet/core/build.gradle	2025-03-15 17:24:08.096989968 +0300
+--- backup/play-services-safetynet/core/build.gradle	2025-03-15 18:25:30.617999186 +0300
++++ input/play-services-safetynet/core/build.gradle	2025-03-15 18:25:57.557999175 +0300
 @@ -46,6 +46,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3544,8 +3549,8 @@ diff -Naur backup/play-services-safetynet/core/build.gradle input/play-services-
  
      sourceSets {
 diff -Naur backup/play-services-safetynet/core/src/main/AndroidManifest.xml input/play-services-safetynet/core/src/main/AndroidManifest.xml
---- backup/play-services-safetynet/core/src/main/AndroidManifest.xml	2025-03-15 17:15:50.968990157 +0300
-+++ input/play-services-safetynet/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.100989968 +0300
+--- backup/play-services-safetynet/core/src/main/AndroidManifest.xml	2025-03-15 18:25:30.621999186 +0300
++++ input/play-services-safetynet/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.557999175 +0300
 @@ -9,7 +9,7 @@
      <application>
          <service android:name="org.microg.gms.safetynet.SafetyNetClientService">
@@ -3556,8 +3561,8 @@ diff -Naur backup/play-services-safetynet/core/src/main/AndroidManifest.xml inpu
          </service>
          <activity
 diff -Naur backup/play-services-tapandpay/core/build.gradle input/play-services-tapandpay/core/build.gradle
---- backup/play-services-tapandpay/core/build.gradle	2025-03-15 17:15:50.992990157 +0300
-+++ input/play-services-tapandpay/core/build.gradle	2025-03-15 17:24:08.100989968 +0300
+--- backup/play-services-tapandpay/core/build.gradle	2025-03-15 18:25:30.629999186 +0300
++++ input/play-services-tapandpay/core/build.gradle	2025-03-15 18:25:57.557999175 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -3570,8 +3575,8 @@ diff -Naur backup/play-services-tapandpay/core/build.gradle input/play-services-
  
      sourceSets {
 diff -Naur backup/play-services-tapandpay/core/src/main/AndroidManifest.xml input/play-services-tapandpay/core/src/main/AndroidManifest.xml
---- backup/play-services-tapandpay/core/src/main/AndroidManifest.xml	2025-03-15 17:15:50.996990157 +0300
-+++ input/play-services-tapandpay/core/src/main/AndroidManifest.xml	2025-03-15 17:24:08.100989968 +0300
+--- backup/play-services-tapandpay/core/src/main/AndroidManifest.xml	2025-03-15 18:25:30.629999186 +0300
++++ input/play-services-tapandpay/core/src/main/AndroidManifest.xml	2025-03-15 18:25:57.557999175 +0300
 @@ -9,7 +9,7 @@
          <service android:name="org.microg.gms.tapandpay.TapAndPayService"
                   android:exported="true">
@@ -3582,8 +3587,8 @@ diff -Naur backup/play-services-tapandpay/core/src/main/AndroidManifest.xml inpu
          </service>
      </application>
 diff -Naur backup/vending-app/build.gradle input/vending-app/build.gradle
---- backup/vending-app/build.gradle	2025-03-15 17:15:51.220990157 +0300
-+++ input/vending-app/build.gradle	2025-03-15 17:24:08.100989968 +0300
+--- backup/vending-app/build.gradle	2025-03-15 18:25:30.689999186 +0300
++++ input/vending-app/build.gradle	2025-03-15 18:25:57.557999175 +0300
 @@ -17,6 +17,10 @@
          versionCode vendingAppVersionCode
          minSdkVersion androidMinSdk
@@ -3596,8 +3601,8 @@ diff -Naur backup/vending-app/build.gradle input/vending-app/build.gradle
  
      buildTypes {
 diff -Naur backup/vending-app/src/main/AndroidManifest.xml input/vending-app/src/main/AndroidManifest.xml
---- backup/vending-app/src/main/AndroidManifest.xml	2025-03-15 17:15:51.224990157 +0300
-+++ input/vending-app/src/main/AndroidManifest.xml	2025-03-15 17:24:08.100989968 +0300
+--- backup/vending-app/src/main/AndroidManifest.xml	2025-03-15 18:25:30.693999186 +0300
++++ input/vending-app/src/main/AndroidManifest.xml	2025-03-15 18:25:57.561999175 +0300
 @@ -17,7 +17,7 @@
          android:maxSdkVersion="22" />
      <uses-permission android:name="org.microg.gms.permission.READ_SETTINGS" />
@@ -3631,8 +3636,8 @@ diff -Naur backup/vending-app/src/main/AndroidManifest.xml input/vending-app/src
          </service>
  
 diff -Naur backup/vending-app/src/main/java/org/microg/vending/billing/Constants.kt input/vending-app/src/main/java/org/microg/vending/billing/Constants.kt
---- backup/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2025-03-15 17:15:51.284990157 +0300
-+++ input/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2025-03-15 17:24:08.100989968 +0300
+--- backup/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2025-03-15 18:25:30.705999186 +0300
++++ input/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2025-03-15 18:25:57.561999175 +0300
 @@ -5,6 +5,8 @@
  
  package org.microg.vending.billing

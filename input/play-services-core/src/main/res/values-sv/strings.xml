@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="pref_gcm_confirm_new_apps_title">Bekräfta nya appar</string>
+    <string name="gcm_app_error_unregistering">Fel vid avregistrering</string>
+    <string name="pref_gcm_heartbeat_summary">Intervallet i sekunder, för att systemet ska pinga Googles servrar. Längre intervall kommer att minska batteriförbrukningen, men kan orsaka förseningar på push-meddelanden.
+\nInaktuell, kommer att ersättas i framtida versioner.</string>
+    <string name="checkin_last_registration">Senaste registrering: <xliff:g example="Yesterday, 02:20 PM">%1$s</xliff:g></string>
+    <string name="pref_auth_trust_google_title">Lita på Google för appbehörigheter</string>
+    <string name="gcm_no_message_yet">Inga meddelanden hittills</string>
+    <string name="pref_about_title">Om MicroG-tjänster</string>
+    <string name="signin_subtext_policy_privacy">Sekretesspolicy</string>
+    <string name="pick_place_title">Välj en plats</string>
+    <string name="games_info_content">För att använda Play Games krävs det att du installerar appen Google Play Games. Appen kan fortsätta utan Play Games, men det är möjligt att den kommer att bete sig oväntat.</string>
+    <string name="gcm_unregister_after_deny_message">Du nekade en app, att registrera dig för push-meddelanden, som redan är registrerad.
+\nVill du avregistrera den nu så den inte får push-meddelanden i framtiden?</string>
+    <string name="self_check_resolution_correct_sig">Antingen är den installerade <xliff:g example="F-Droid">%1$s</xliff:g> inte kompatibel eller så är signaturspoofing inte aktiv för den. Kontrollera dokumentationen om vilka applikationer och ROM-filer som är kompatibla.</string>
+    <string name="self_check_cat_fake_sig">Stöd för signaturspoofing</string>
+    <string name="perm_gsf_read_gservices_label">läs konfiguration av Google-tjänster</string>
+    <string name="auth_sign_in">Logga in</string>
+    <string name="no_network_error_desc">Du har ingen nätverksanslutning.
+\n
+\nDetta kan vara ett tillfälligt problem eller så kanske din Android-enhet inte tillhandahåller datatjänster. Försök igen när du är ansluten till ett mobilt nätverk eller anslut till ett Wi-Fi-nätverk.</string>
+    <string name="network_type_roaming">Roaming</string>
+    <string name="pref_auth_visible_summary">När detta är aktiverat kommer alla appar på den här enheten att kunna se e-postadressen till dina Google-konton utan förhandsgodkännande.</string>
+    <string name="network_type_wifi">Wi-Fi</string>
+    <string name="gcm_unregister_app">Avregistrera</string>
+    <string name="gcm_last_message_at">Senaste meddelandet: <xliff:g example="Yesterday, 02:20 PM">%1$s</xliff:g></string>
+    <string name="prefcat_configuration">Konfiguration</string>
+    <string name="perm_c2dm_receive_label">lyssna på C2DM-meddelanden</string>
+    <string name="place_picker_location_lat_lng">(%1$.7f, %2$.7f)</string>
+    <string name="prefcat_google_services">Google Services</string>
+    <string name="prefcat_components">Komponenter</string>
+    <string name="just_a_sec">En sekund…</string>
+    <string name="service_name_mcs">Cloud Messaging</string>
+    <string name="gcm_unregister_confirm_title">Avregistrera <xliff:g example="F-Droid">%1$s</xliff:g>\?</string>
+    <string name="signin_picker_title">Välj ett konto</string>
+    <string name="pref_push_app_wake_for_delivery_summary">Starta appen när i bakgrunden för att ta emot inkommande push-meddelanden.</string>
+    <string name="auth_general_error_desc">Det gick inte att kommunicera med Googles servrar.
+\n
+\nFörsök igen senare.</string>
+    <string name="google_account_label">Google</string>
+    <string name="checkin_enable_switch">Registrera enhet</string>
+    <string name="place_picker_nearby_places">Närliggande platser</string>
+    <string name="perm_provision_label">tillhandahållande av mikro G-tjänster</string>
+    <string name="service_name_snet">Google SafetyNet</string>
+    <string name="self_check_cat_system">System</string>
+    <string name="pick_place_desc">Platsväljaren är ännu inte tillgänglig.</string>
+    <string name="prefcat_test">Testa</string>
+    <string name="gcm_network_state_connected">Ansluten sedan <xliff:g example="2 hours ago">%1$s</xliff:g></string>
+    <string name="gcm_registered">Registrerad</string>
+    <string name="pref_more_settings">Mer</string>
+    <string name="pref_auth_include_android_id_summary">Vid inaktivering kommer autentiseringsförfrågningar inte att kopplas till enhetsregistreringen, vilket kan göra att obehöriga enheter kan logga in, men kan ha oförutsedda konsekvenser.</string>
+    <string name="pref_gcm_heartbeat_title">Cloud Messaging hjärtslagsintervall</string>
+    <string name="signin_picker_subtitle">för att fortsätta till <xliff:g example="F-Droid">%1$s</xliff:g></string>
+    <string name="signin_confirm_title">Tillåt att logga in på <xliff:g example="F-Droid">%1$s</xliff:g></string>
+    <string name="self_check_pkg_vending">Play Store (Phonesky)</string>
+    <string name="self_check_resolution_battery_optimizations">Tryck här för att inaktivera batterioptimering. Att inte göra detta kan leda till att appar inte fungerar.</string>
+    <string name="sorry">Tyvärr…</string>
+    <string name="pref_gcm_confirm_new_apps_summary">Fråga innan en ny app registreras för att få push-meddelanden</string>
+    <string name="pref_push_app_wake_for_delivery_title">Starta app på push-meddelande</string>
+    <string name="cond_gcm_bat_action">Inaktivera optimering</string>
+    <string name="pref_about_summary">Versionsinformation och använda bibliotek</string>
+    <string name="place_picker_select_title">Välj denna plats</string>
+    <string name="perm_provision_description">Tillåter appen att konfigurera mikro G-tjänster utan användarinteraktion</string>
+    <string name="gcm_enable_switch">Ta emot push-meddelanden</string>
+    <string name="perm_extended_access_label">Utökad åtkomst till Google-tjänster</string>
+    <string name="network_type_mobile">Mobilt nätverk</string>
+    <string name="pref_auth_trust_google_summary">När inaktivering frågas användaren innan en apps auktorisationsförfrågan skickas till Google. Vissa appar kommer inte att kunna använda Google-kontot om detta är inaktiverat.</string>
+    <string name="self_check_cat_gms_packages">Installerade paket</string>
+    <string name="ask_permission_tos">Genom att fortsätta tillåter du att appen och Google använder din information i enlighet med deras respektive användarvillkor och sekretesspolicyer.</string>
+    <string name="cond_gcm_bat_summary">Du aktiverade Cloud Messaging men har batterioptimering aktivt för mikroG-tjänster. För att push-meddelanden skall kunna tas emot bör du avaktivera batterioptimering.</string>
+    <string name="pref_info_status">Status</string>
+    <string name="gcm_allow_app_popup">Vill du tillåta <xliff:g example="F-Droid">%1$s</xliff:g> att registrera sig för push-meddelanden?</string>
+    <string name="games_title">Google Play Games</string>
+    <string name="self_check_name_fake_sig_perm">Systemet stödjer signaturspoofing:</string>
+    <string name="pref_gcm_apps_summary">Lista över appar som för närvarande är registrerade för Cloud Messaging.</string>
+    <string name="pref_auth_visible_title">Tillåt appar att hitta konton</string>
+    <string name="pref_device_registration_android_id">Android-ID</string>
+    <string name="self_check_resolution_app_installed">Installera programmet <xliff:g example="F-Droid"> %1$s </xliff:g> eller ett kompatibel. Kontrollera dokumentationen om vilka applikationer som är kompatibla.</string>
+    <string name="network_type_other">Andra nätverk</string>
+    <string name="gcm_network_state_disconnected">Bortkopplad</string>
+    <string name="service_name_checkin">Google enhetsregistrering</string>
+    <string name="signin_picker_add_account_label">Lägg till ett annat konto</string>
+    <string name="self_check_pkg_gsf">Services Framework (GSF)</string>
+    <string name="auth_connecting">Din enhet upprättar en anslutning till Googles servrar för att logga in dig.
+\n
+\nDet kan ta några sekunder.</string>
+    <string name="pref_gcm_apps_title">Appar som använder Cloud Messaging</string>
+    <string name="deny">Neka</string>
+    <string name="perm_c2dm_send_label">skicka C2DM-meddelanden till andra appar</string>
+    <string name="signin_confirm_button_text">Tillåt och dela</string>
+    <string name="prefcat_about">Om</string>
+    <string name="gcm_unregister_confirm_message">Vissa appar registreras inte om automatiskt och/eller ger inte möjlighet att göra det manuellt. Dessa appar kanske inte fungerar korrekt efter avregistrering.
+\nVill du fortsätta?</string>
+    <string name="gcm_registered_since">Registrerad sedan: <xliff:g example="Yesterday, 02:20 PM">%1$s</xliff:g></string>
+    <string name="checkin_not_registered">Inte registrerat</string>
+    <string name="ask_scope_permission_title"><xliff:g example="F-Droid">%1$s</xliff:g> vill:</string>
+    <string name="prefcat_push_apps_unregistered_title">Oregistrerade appar</string>
+    <string name="self_check_resolution_perm_granted">Detta är en stark indikator på att din ROM stödjer signaturspoofing, men kräver ytterligare åtgärder för att aktivera den. Kontrollera dokumentationen om vilka åtgärder som kan krävas.</string>
+    <string name="gms_settings_name">microG-inställningar</string>
+    <string name="cond_gcm_bat_title">Batterioptimering aktiverad</string>
+    <string name="pref_add_account_title">Konto</string>
+    <string name="signin_subtext_policy">Innan du använder den här appen, granska dess %1$s och %2$s.</string>
+    <string name="gcm_not_registered">Inte registrerad</string>
+    <string name="account_manager_title">Google Account Manager</string>
+    <string name="perm_status_broadcast_label">lyssna på interna statusmeddelanden</string>
+    <string name="perm_gtalk_svc_label">utbyta meddelanden och ta emot synkroniseringsaviseringar från Googles servrar</string>
+    <string name="gcm_messages_counter">Meddelanden: <xliff:g example="123">%1$d</xliff:g> (<xliff:g example="12345">%2$d</xliff:g> bytes)</string>
+    <string name="self_check_name_system_spoofs">Systemets spoofsignatur:</string>
+    <string name="prefcat_push_apps_title">Appar som använder push-meddelanden</string>
+    <string name="prefs_account">Kontoinställningar</string>
+    <string name="self_check_pkg_gms">Play Services (GmsCore)</string>
+    <string name="lacking_permission_toast">microG-tjänster: Saknar behörighet att <xliff:g example="have full network acccess">%1$s</xliff:g></string>
+    <string name="auth_notification_content"><xliff:g example="F-Droid">%1$s</xliff:g> kräver din autentisering för att komma åt ditt Google-konto.</string>
+    <string name="gms_app_name">microG-tjänster</string>
+    <string name="self_check_name_perm_granted">Systemet ger signaturspoofingtillstånd:</string>
+    <string name="auth_before_connect">En app på din enhet försöker logga in på ett Google-konto.\n\nOm detta var avsiktligt, använd knappen <b>Logga in</b> för att ansluta till Googles inloggningssida, om inte, tryck på <b>Avbryt</b> för att gå tillbaka till programmet som gjorde att den här dialogrutan dök upp.</string>
+    <string name="self_check_name_battery_optimizations">Batterioptimering ignorerad:</string>
+    <string name="signin_subtext_sharing">För att fortsätta kommer microG att dela namn, e-postadress och profilbild för ditt Google-konto med <xliff:g example="F-Droid">%1$s</xliff:g>.</string>
+    <string name="auth_notification_title">Autentisering krävs</string>
+    <string name="pref_auth_include_android_id_title">Autentisera med enhetsregistrering</string>
+    <string name="pref_push_app_allow_register_title">Tillåt registrering</string>
+    <string name="allow">Tillåt</string>
+    <string name="prefs_account_security">Inloggning och säkerhet</string>
+    <string name="pref_gcm_ping_interval">Pingintervall: <xliff:g example="10 minutes">%1$s</xliff:g></string>
+    <string name="gms_settings_summary">Konfigurera microG-tjänster.</string>
+    <string name="pref_add_account_summary">Lägg till Google-konto</string>
+    <string name="self_check_resolution_fake_sig_perm">Din ROM har inget inhemskt stöd för signaturspoofing. Du kan fortfarande använda Xposed eller andra system för att spoofa signaturen. Kontrollera dokumentationen vilka ROM som stödjer signaturspoofing och hur man använder mikroG på ROM som inte gör det.</string>
+    <string name="auth_finalize">Din enhet kontaktar Google för att spara information på ditt konto.
+\n
+\nDet kan ta några minuter.</string>
+    <string name="pref_checkin_enable_summary">Registrerar din enhet på Google services och skapar en unik enhetsidentifierare. MikroG tar bort andra identifieringsbitar utom ditt Google-kontonamn från registreringsdata.</string>
+    <string name="cond_perm_title">Behörighet saknas</string>
+    <string name="pref_push_app_allow_register_summary">Tillåt appen att registrera sig för push-meddelanden.</string>
+    <string name="self_check_name_correct_sig"><xliff:g example="F-Droid">%1$s</xliff:g> har rätt signatur: </string>
+    <string name="pref_gcm_enable_mcs_summary">Cloud Messaging är en push-meddelandeleverantör som används av många tredjepartsprogram. För att använda den måste du aktivera enhetsregistrering.</string>
+    <string name="signin_subtext_policy_terms">villkor för tjänsten</string>
+    <string name="prefcat_push_apps_registered_title">Registrerade appar</string>
+    <string name="prefcat_location_service">Platstjänster</string>
+    <string name="gcm_app_not_installed_anymore">Inte längre installerad</string>
+    <string name="prefcat_push_networks_title">Nätverk att använda för push-meddelanden</string>
+    <string name="ask_service_permission_title"><xliff:g example="F-Droid">%1$s</xliff:g> vill använda:</string>
+    <string name="self_check_name_app_installed"><xliff:g example="F-Droid">%1$s</xliff:g> installerad: </string>
+    <string name="prefcat_services">Tjänster</string>
+    <string name="self_check_resolution_system_spoofs">Kontrollera dokumentationen om vilka åtgärder som kan krävas.</string>
+    <string name="games_info_title"><xliff:g example="F-Droid">%1$s</xliff:g> vill använda Play Games</string>
+    <string name="prefs_account_privacy">Personlig information och sekretess</string>
+    <string name="pref_device_registration_import_custom_profile_title">Importera anpassad profil</string>
+    <string name="pref_safetynet_recent_request_type">Förfrågningstyp</string>
+    <string name="pref_recaptcha_enterprise_test_title">Testa ReCAPTCHA Enterprise</string>
+    <string name="pref_safetynet_test_title">Testa SafetyNet-attestering</string>
+    <string name="pref_safetynet_test_no_result">Inget resultat</string>
+    <string name="safetynet_intro">Google SafetyNet är ett enhetscertifieringssystem, vilket säkerställer att enheten är korrekt säkrad och kompatibel med Android CTS. Vissa program använder SafetyNet av säkerhetsskäl eller som en förutsättning för manipuleringsskydd.
+\n
+\nMicroG GmsCore innehåller en fri implementering av SafetyNet, men den officiella servern kräver att SafetyNet-förfrågningar undertecknas med hjälp av det proprietära DroidGuard-systemet.</string>
+    <string name="pref_device_registration_import_custom_profile_summary">Importera enhetsprofil från fil</string>
+    <string name="pref_safetynet_recent_copy_json">Kopiera JSON JWS-data</string>
+    <string name="pref_test_summary_failed">Misslyckat: %s</string>
+    <string name="pref_safetynet_recent_advice">Råd</string>
+    <string name="push_notifications_summary_values_seconds">%s sekunder</string>
+    <string name="pref_safetynet_test_invalid_json">Ogiltig JSON</string>
+    <string name="menu_clear_recent_requests">Rensa tidigare förfrågningar</string>
+    <string name="pref_safetynet_recent_recaptcha_enterprise_summary">ReCaptcha Enterprise: %s</string>
+    <string name="pref_safetynet_recent_cat_request">Förfrågningsdata</string>
+    <string name="pref_safetynet_recent_attestation_summary">Attest: %s</string>
+    <string name="prefcat_safetynet_apps_title">Appar som använder SafetyNet</string>
+    <string name="safetynet_enable_switch">Tillåt enhetsattestering</string>
+    <string name="pref_safetynet_test_integrity_failed">Sekretess misslyckades</string>
+    <string name="push_notifications_summary_automatic">PÅ / Automatisk: %s</string>
+    <string name="pref_device_registration_serial_title">Serienummer</string>
+    <string name="pref_safetynet_test_cts_failed">CTS misslyckades</string>
+    <string name="push_notifications_summary_manual">PÅ / Manuell: %s</string>
+    <string name="profile_name_auto">Automatisk: %s</string>
+    <string name="push_notifications_summary_values_minutes">%s minuter</string>
+    <string name="pref_safetynet_test_integrity_cts_passed">Sekretess och CTS klart</string>
+    <string name="pref_safetynet_recent_uses">Tidigare använt</string>
+    <string name="pref_droidguard_unsupported_summary">DroidGuard stöds inte på denna enhet. SafetyNet-jänster kanske inte fungerar korrekt.</string>
+    <string name="pref_safetynet_recent_nonce">Icke (Hex)</string>
+    <string name="safetynet_last_run_at">Senast använd: <xliff:g example="Yesterday, 02:20 PM">%1$s</xliff:g></string>
+    <string name="pref_safetynet_recent_recaptcha_summary">ReCaptcha: %s</string>
+    <string name="pref_test_summary_passed">Klarade alla tester</string>
+    <string name="push_notifications_summary_off">AV</string>
+    <string name="pref_safetynet_recent_response_status">Svarsstatus</string>
+    <string name="pref_device_registration_select_profile_title">Välj profil</string>
+    <string name="pref_test_summary_warn">Varning: %s</string>
+    <string name="pref_droidguard_operation_mode">Åtgärdsläge</string>
+    <string name="profile_name_real">Verklig</string>
+    <string name="pref_safetynet_recent_copied">Kopierat till urklipp!</string>
+    <string name="profile_name_user">Anpassad: %s</string>
+    <string name="pref_recaptcha_test_title">Testa ReCAPTCHA</string>
+    <string name="profile_name_native">Inhemsk</string>
+    <string name="pref_test_summary_running">Kör…</string>
+    <string name="pref_safetynet_recent_cat_basic">Grundläggande data</string>
+    <string name="profile_name_system">System: %s</string>
+    <string name="pref_safetynet_recent_cat_response">Svarsdata</string>
+    <string name="pref_safetynet_recent_token">Token</string>
+    <string name="pref_safetynet_test_not_completed">Inte färdigt ännu</string>
+    <string name="pref_safetynet_recent_request_time">Tid för förfrågan</string>
+    <string name="pref_device_registration_device_profile_category">Enhetsprofil</string>
+    <string name="pref_safetynet_recent_eval_type">Evalueringstyp</string>
+    <string name="pref_vending_summary_licensing_on">Licensiering på</string>
+    <string name="pref_vending_licensing_enable_switch">Svara på förfrågningar om licensverifiering</string>
+    <string name="pref_vending_license_enable_summary">Vissa appar kräver verifiering att du har köpt dem på Google Play. På begäran av en app kan microG ladda ner ett köpbevis från Google. Om det är inaktiverat, eller om inget Google-konto lagts till, ignoreras förfrågan om licensverifiering.</string>
+    <string name="pref_vending_summary_licensing_off">Licensiering av</string>
+    <string name="service_name_vending">Play Store-tjänster</string>
+    <string name="feedback_disabled">Återkoppling är inte möjligt för närvarande</string>
+    <string name="pref_auth_strip_device_name_summary">När det är aktiverat kommer autentiseringsförfrågningar inte att inkludera enhetens namn, vilket kan tillåta obehöriga enheter att logga in, men kan ha oförutsedda konsekvenser.</string>
+    <string name="pref_auth_strip_device_name_title">Ta bort enhetsnamn för autentisering</string>
+    <string name="perm_car_info_description">Tillgång till din bils information</string>
+    <string name="perm_car_speed_label">Bilhastighet</string>
+    <string name="perm_car_info_label">Bilinformation</string>
+    <string name="perm_car_fuel_label">Bilens bränslenivå</string>
+    <string name="perm_car_fuel_description">Få tillgång till din bils bränslenivåinformation</string>
+    <string name="perm_car_mileage_label">Bilens körsträcka</string>
+    <string name="perm_car_speed_description">Få tillgång till din bils hastighet</string>
+    <string name="perm_car_vendor_extension_label">Bilförsäljarkanal</string>
+    <string name="perm_car_vendor_extension_description">Få tillgång till din bils leverantörskanal för att utbyta bilspecifik information</string>
+    <string name="pref_accounts_summary">Lägg till och hantera Google-konton</string>
+    <string name="prefcat_accounts_settings_title">Inställningar</string>
+    <string name="pref_accounts_title">Google-konton</string>
+    <string name="prefcat_accounts_current_accounts_title">Konton</string>
+    <string name="pref_vending_licensing_category">Google Play-licensiering</string>
+    <string name="pref_vending_billing_category">Google Play-fakturering</string>
+    <string name="pref_vending_billing_enable_switch">Hantera fakturafrågor</string>
+    <string name="pref_vending_billing_enable_summary">När det är aktiverat kan vissa appar slutföra inköp eller starta prenumerationer via Googles Plays betalningstjänst.</string>
+    <string name="pref_vending_billing_note_experimental">Denna funktion är experimentell och kan leda till förlust av pengar. Du har varnats.</string>
+    <string name="pref_vending_billing_note_licensing">Vissa appar kan kräva att du också aktiverar licensverifiering för att verifiera dina inköp.</string>
+    <string name="backup_disabled">Säkerhetskopiering är för närvarande inte möjlig</string>
+    <string name="perm_car_mileage_description">Få tillgång till din bils körsträcka</string>
+    <string name="credentials_assisted_continue">Fortsätt</string>
+    <string name="credentials_assisted_cancel">Avbryt</string>
+    <string name="credentials_assisted_confirmation_header">Loggar in dig</string>
+    <string name="credentials_assisted_continue_as_user_button_label">Fortsätt som %1$s</string>
+    <string name="credentials_assisted_sign_back_title">Logga in igen, på %1$s, med Google</string>
+    <string name="credentials_assisted_signin_consent_header">Loggar in som %1$s</string>
+    <string name="credentials_assisted_signin_description">Du kan hantera inloggning med Google i dina Google-konton.</string>
+    <string name="credentials_assisted_choose_account_label">Välj konto</string>
+    <string name="credentials_assisted_signin_consent">Genom att fortsätta kommer Google att dela ditt namn, din e-postadress och din profilbild med %1$s. Se %1$s:s sekretesspolicy och användarvillkor.</string>
+    <string name="credentials_assisted_choose_account_subtitle">för att fortsätta till %1$s</string>
+    <string name="credentials_assisted_signin_button_text_long">Logga in med Google</string>
+    <string name="auth_package_override_request_title">Tillåt <b><xliff:g example="F-Droid">%1$s</xliff:g></b> privilegierad åtkomst till <xliff:g example="account@example.com">%2$s</xliff:g>\?</string>
+    <string name="auth_package_override_request_message"><b><xliff:g example="F-Droid">%1$s</xliff:g></b> vill komma åt ditt konto som om det var <b><xliff:g example="F-Droid">%2$s</xliff:g> by <xliff:g example="F-Droid Inc.">%3$s</xliff:g></b>. Detta kan ge F-Droid privilegierad tillgång till ditt konto.</string>
+    <string name="pref_vending_licensing_purchase_free_apps_switch">Lägg automatiskt till gratisappar i biblioteket</string>
+    <string name="pref_vending_licensing_purchase_free_apps_summary">Gratisappar kan kontrollera om de har laddats ner från Google Play. Lägg automatiskt till gratisappar i ditt kontobibliotek för att alltid klara kontrollen för alla gratisappar som för närvarande är tillgängliga för dig.</string>
+    <string name="limited_services_dialog_information_ack">Jag förstår</string>
+    <string name="limited_services_app_name">microG Limited Services</string>
+    <string name="limited_services_dialog_information">Du använder microG Limited Services. Till skillnad från de vanliga mikroG-tjänsterna fungerar denna version endast med appar som använder mikroG-bibliotek, inte de på Google Play. Det innebär att de flesta appar ignorerar dessa tjänster.</string>
+    <string name="auth_action_notification_content">Ditt Google-konto behöver ytterligare inställning.</string>
+    <string name="auth_action_step_allow_microg_gcm">Tillåt Cloud Messaging för microG</string>
+    <string name="auth_action_step_enable_lockscreen">Konfigurera säkert skärmlås</string>
+    <string name="auth_action_step_perform_content_description">Tryck för att utföra steg</string>
+    <string name="auth_action_notification_title">Kontoåtgärder krävs</string>
+    <string name="auth_action_notification_channel_name">Google kontomeddelanden</string>
+    <string name="auth_action_activity_explanation">Slutför följande steg för att kunna använda ditt Google-konto %s på den här enheten.</string>
+    <string name="auth_action_notification_channel_description">Meddelar när en av dina Google-konton kräver ytterligare inställning innan det kan användas eller när ett konto är oförenligt med microG.</string>
+    <string name="auth_action_activity_header">Slutför installation av ditt Google-konto</string>
+    <string name="auth_action_step_enable_checkin">Aktivera enhetsregistrering</string>
+    <string name="auth_action_step_enable_checkin_description">Din enhet måste registreras hos Google minst en gång.\n\nDu kan inaktivera Google-enhetsregistrering efter att kontoinställningen är klar.</string>
+    <string name="auth_action_step_enable_gcm">Aktivera Cloud Messaging</string>
+    <string name="auth_action_step_enable_gcm_description">Du kan inaktivera Cloud Messaging efter att kontoinställningen är klar.</string>
+    <string name="auth_action_step_allow_microg_gcm_description">Enligt dina inställningar, behöver microG tillstånd från dig innan det kan registreras för Cloud Messaging.</string>
+    <string name="auth_action_activity_finish">Slutför</string>
+    <string name="auth_action_step_enable_lockscreen_description">Ditt Google-konto hanteras av din arbetsplats eller utbildningsinstitution. Din administratör bestämde att enheter behöver ett säkert skärmlås innan de kan komma åt kontodata.\n\nAnge ett lösenord, PIN eller mönsterlåsskärm.</string>
+    <string name="auth_action_step_completed_content_description">Steg färdigställt</string>
+    <string name="pref_vending_asset_delivery_category">Google Play Asset Delivery</string>
+    <string name="pref_vending_asset_delivery_switch">Aktivera tillgångsleverans på begäran</string>
+    <string name="pref_vending_asset_delivery_summary">Ladda ner fler tillgångar, på begäran av appar som använder Google Play Asset Delivery</string>
+    <string name="pref_vending_asset_device_sync_summary">Applikationer som använder Play Asset Delivery kommer att ladda ner ytterligare tillgångar baserat på informationen från den enhet som för närvarande används.</string>
+    <string name="pref_vending_asset_device_sync_switch">Aktivera synkronisering av enhetsinformation</string>
+    <string name="games_achievement_list_title">Framgångar</string>
+    <string name="games_achievements_empty_text">Inga framgångar för detta spel</string>
+    <string name="games_api_access_denied">Inget konton på den här enheten kan komma åt spelets API</string>
+    <string name="games_achievement_locked_content_description">låst</string>
+    <string name="games_achievement_unlocked_content_description">upplåst</string>
+    <string name="games_achievement_extra_text">%1$s XP</string>
+    <string name="games_leaderboard_score_empty_text">Otroligt! Det finns inga offentliga högsta poäng för detta spel.</string>
+    <string name="games_leaderboard_list_title">Ranking</string>
+    <string name="games_leaderboards_score_label">Poäng: %1$s</string>
+    <string name="games_snapshot_empty_text">Inga spel har sparats ännu</string>
+    <string name="games_snapshot_choose_btn_text">välj</string>
+    <string name="games_snapshot_delete_btn_text">ta bort</string>
+    <string name="games_delete_snapshot_dialog_title">Ta bort sparat spel</string>
+    <string name="games_delete_snapshot_error">Borttagning misslyckades, försök igen senare</string>
+    <string name="games_delete_snapshot_dialog_cancel">Avbryt</string>
+    <string name="games_leaderboard_empty_text">Inga leaderboards för detta spel</string>
+    <string name="games_delete_snapshot_dialog_message">Är du säker på att du vill ta bort detta sparade spel?</string>
+    <string name="games_delete_snapshot_dialog_ok">OK</string>
+</resources>
