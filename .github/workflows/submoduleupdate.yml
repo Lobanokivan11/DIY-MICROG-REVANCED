@@ -10,6 +10,7 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -19,6 +20,8 @@ jobs:
           git submodule update --recursive --remote
       - name: Commit & push changes
         run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
           git commit -am "Update submodules"
           git push
       - name: Actions Ntfy
