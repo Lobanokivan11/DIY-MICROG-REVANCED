@@ -3,7 +3,7 @@ name: Submodule updates
 on:
   workflow_dispatch:
   schedule:
-  - cron: "0 11 * * *"
+  - cron: "0 11,12,13 * * *"
   push:
     branches: 
       - main
