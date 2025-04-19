@@ -8,7 +8,7 @@
 
 3. Enter Google Accounts and login into Google Account as always
 
-6. That's All, Install Youtube ReVanced or anything Youtube With Other Revanced patches you want Open it and gongratulations You may watch Any Videos From Youtube.
+4. That's All, Install Youtube ReVanced or anything Youtube With Other Revanced patches you want Open it and gongratulations You may watch Any Videos From Youtube.
 
 ## How to Install (Huawei)
 
@@ -18,7 +18,7 @@
 
 3. Enter Google Accounts and login into Google Account as always
 
-6. That's All, Install Youtube ReVanced or anything Youtube With Other Revanced patches you want Open it and gongratulations You may watch Any Videos From Youtube.
+4. That's All, Install Youtube ReVanced or anything Youtube With Other Revanced patches you want Open it and gongratulations You may watch Any Videos From Youtube.
 
 ## Known Problems
 
