@@ -1247,7 +1247,7 @@ diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-s
  
      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
      <uses-permission android:name="android.permission.INTERNET" />
-@@ -153,12 +153,12 @@
+@@ -153,10 +153,10 @@
      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
  
@@ -1260,12 +1260,9 @@ diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-s
 +    <uses-permission android:name="${basePackageName}.android.gtalkservice.permission.GTALK_SERVICE" />
 +    <uses-permission android:name="${basePackageName}.android.gms.auth.api.phone.permission.SEND" />
  
--    <uses-permission android:name="org.microg.gms.STATUS_BROADCAST" />
-+    <uses-permission android:name="${basePackageName}.microg.gms.STATUS_BROADCAST" />
+     <uses-permission android:name="org.microg.gms.STATUS_BROADCAST" />
  
-     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-@@ -207,14 +207,14 @@
+@@ -207,7 +207,7 @@
          android:networkSecurityConfig="@xml/network_security_config"
          android:theme="@style/Theme.App">
  
@@ -1273,14 +1270,6 @@ diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-s
 +        <library android:name="${basePackageName}.android.gms" />
  
          <!-- Provision -->
- 
-         <service
-             android:name="org.microg.gms.provision.ProvisionService"
-             android:exported="true"
--            android:permission="org.microg.gms.PROVISION" />
-+            android:permission="${basePackageName}.microg.gms.PROVISION" />
- 
-         <!-- Location -->
  
 @@ -225,7 +225,7 @@
              android:process=":ui"
