@@ -19,7 +19,3 @@
 3. Enter Google Accounts and login into Google Account as always
 
 4. That's All, Install Youtube ReVanced or anything Youtube With Other Revanced patches you want Open it and gongratulations You may watch Any Videos From Youtube.
-
-## Known Problems
-
-- ReVanced GmsCore Is conflicting With Official Microg Services(Not Google Play Services).
