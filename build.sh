@@ -1,6 +1,6 @@
 sudo apt update
 sudo apt install git git-lfs zipalign apksigner
-sudo git lfs install
+git lfs install
 git submodule update --init --recursive
 git clone https://github.com/microg/GmsCore.git input
 cd input
