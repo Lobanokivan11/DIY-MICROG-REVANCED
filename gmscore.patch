@@ -1,32 +1,6 @@
-diff -Naur inputbak/README.md input/README.md
---- inputbak/README.md	2026-01-01 18:27:33.889989921 +0300
-+++ input/README.md	2026-01-01 18:28:05.437989909 +0300
-@@ -13,6 +13,22 @@
- 
- If you'd like to help translate microG, take a look at [TRANSLATION](TRANSLATION.md).
- 
-+About this fork
-+-------
-+This repository is a fork of [microG GmsCore](https://github.com/microg/GmsCore) to allow patched Google apps to run without root and under a different package name using GmsCore instead of Google Play Services, via the "GmsCore support" patch by ReVanced from [ReVanced Patches](https://github.com/revanced/revanced-patches) with the minimum amount of changes necessary to upstream.
-+
-+Goals of this fork:
-+- Run next to an existing GMS installation such as [microG GmsCore](https://github.com/microg/GmsCore) or Google Play Services.
-+- Usage with the "GmsCore support" patch by ReVanced from [ReVanced Patches](https://github.com/revanced/revanced-patches)
-+- Feature parity with upstream
-+
-+Nongoals of this fork:
-+- New features that do not contribute to the goal of this fork
-+- Bug fixes that do not contribute to the goal of this fork
-+
-+Contributing to the fork
-+-------
-+You can create an issue or pull request to contribute to the fork. In both cases, ensure it aligns with this fork's goals.
- 
- License
- -------
 diff -Naur inputbak/build.gradle input/build.gradle
---- inputbak/build.gradle	2026-01-01 18:27:33.897989921 +0300
-+++ input/build.gradle	2026-01-01 18:28:05.437989909 +0300
+--- inputbak/build.gradle	2026-02-27 15:35:37.473862049 +0300
++++ input/build.gradle	2026-02-27 15:36:06.713962847 +0300
 @@ -4,6 +4,9 @@
   */
  
@@ -38,8 +12,8 @@ diff -Naur inputbak/build.gradle input/build.gradle
      ext.wearableVersion = '0.1.1'
  
 diff -Naur inputbak/firebase-auth/core/build.gradle input/firebase-auth/core/build.gradle
---- inputbak/firebase-auth/core/build.gradle	2026-01-01 18:27:33.901989921 +0300
-+++ input/firebase-auth/core/build.gradle	2026-01-01 18:28:05.441989909 +0300
+--- inputbak/firebase-auth/core/build.gradle	2026-02-27 15:35:37.475976494 +0300
++++ input/firebase-auth/core/build.gradle	2026-02-27 15:36:06.714493853 +0300
 @@ -33,6 +33,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -52,8 +26,8 @@ diff -Naur inputbak/firebase-auth/core/build.gradle input/firebase-auth/core/bui
  
      sourceSets {
 diff -Naur inputbak/firebase-auth/core/src/main/AndroidManifest.xml input/firebase-auth/core/src/main/AndroidManifest.xml
---- inputbak/firebase-auth/core/src/main/AndroidManifest.xml	2026-01-01 18:27:33.901989921 +0300
-+++ input/firebase-auth/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.441989909 +0300
+--- inputbak/firebase-auth/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.476036773 +0300
++++ input/firebase-auth/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.714862310 +0300
 @@ -12,7 +12,7 @@
      <application>
          <service android:name="org.microg.gms.firebase.auth.FirebaseAuthService">
@@ -64,16 +38,16 @@ diff -Naur inputbak/firebase-auth/core/src/main/AndroidManifest.xml input/fireba
          </service>
          <activity
 diff -Naur inputbak/gradle.properties input/gradle.properties
---- inputbak/gradle.properties	2026-01-01 18:27:33.921989921 +0300
-+++ input/gradle.properties	2026-01-01 18:28:05.441989909 +0300
+--- inputbak/gradle.properties	2026-02-27 15:35:37.481455134 +0300
++++ input/gradle.properties	2026-02-27 15:36:06.715119159 +0300
 @@ -2,3 +2,4 @@
  org.gradle.configuration-cache=true
  org.gradle.caching=true
  org.gradle.jvmargs=-Xmx4096m -XX:+UseParallelGC --add-exports=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
 +android.enableJetifier=true
 diff -Naur inputbak/play-services-ads/core/build.gradle input/play-services-ads/core/build.gradle
---- inputbak/play-services-ads/core/build.gradle	2026-01-01 18:27:33.949989921 +0300
-+++ input/play-services-ads/core/build.gradle	2026-01-01 18:28:05.441989909 +0300
+--- inputbak/play-services-ads/core/build.gradle	2026-02-27 15:35:37.488557803 +0300
++++ input/play-services-ads/core/build.gradle	2026-02-27 15:36:06.715599785 +0300
 @@ -23,6 +23,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -86,8 +60,8 @@ diff -Naur inputbak/play-services-ads/core/build.gradle input/play-services-ads/
  
      sourceSets {
 diff -Naur inputbak/play-services-ads/core/src/main/AndroidManifest.xml input/play-services-ads/core/src/main/AndroidManifest.xml
---- inputbak/play-services-ads/core/src/main/AndroidManifest.xml	2026-01-01 18:27:33.949989921 +0300
-+++ input/play-services-ads/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.441989909 +0300
+--- inputbak/play-services-ads/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.488604902 +0300
++++ input/play-services-ads/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.715814774 +0300
 @@ -7,7 +7,7 @@
      <application>
          <service android:name="org.microg.gms.ads.AdRequestService">
@@ -98,8 +72,8 @@ diff -Naur inputbak/play-services-ads/core/src/main/AndroidManifest.xml input/pl
              </intent-filter>
          </service>
 diff -Naur inputbak/play-services-ads-identifier/core/build.gradle input/play-services-ads-identifier/core/build.gradle
---- inputbak/play-services-ads-identifier/core/build.gradle	2026-01-01 18:27:33.925989921 +0300
-+++ input/play-services-ads-identifier/core/build.gradle	2026-01-01 18:28:05.445989909 +0300
+--- inputbak/play-services-ads-identifier/core/build.gradle	2026-02-27 15:35:37.482274768 +0300
++++ input/play-services-ads-identifier/core/build.gradle	2026-02-27 15:36:06.716152371 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -112,8 +86,8 @@ diff -Naur inputbak/play-services-ads-identifier/core/build.gradle input/play-se
  
      sourceSets {
 diff -Naur inputbak/play-services-ads-identifier/core/src/main/AndroidManifest.xml input/play-services-ads-identifier/core/src/main/AndroidManifest.xml
---- inputbak/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2026-01-01 18:27:33.925989921 +0300
-+++ input/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.445989909 +0300
+--- inputbak/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.482328078 +0300
++++ input/play-services-ads-identifier/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.716365100 +0300
 @@ -8,7 +8,7 @@
      <application>
          <service android:name=".AdvertisingIdService">
@@ -124,8 +98,8 @@ diff -Naur inputbak/play-services-ads-identifier/core/src/main/AndroidManifest.x
              </intent-filter>
          </service>
 diff -Naur inputbak/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt input/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt
---- inputbak/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2026-01-01 18:27:33.925989921 +0300
-+++ input/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2026-01-01 18:28:05.445989909 +0300
+--- inputbak/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2026-02-27 15:35:37.482484777 +0300
++++ input/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2026-02-27 15:36:06.716599148 +0300
 @@ -14,6 +14,7 @@
  import android.util.Log
  import androidx.core.os.bundleOf
@@ -144,8 +118,8 @@ diff -Naur inputbak/play-services-ads-identifier/core/src/main/kotlin/org/microg
                      }
                  }
 diff -Naur inputbak/play-services-ads-lite/build.gradle input/play-services-ads-lite/build.gradle
---- inputbak/play-services-ads-lite/build.gradle	2026-01-01 18:27:33.937989921 +0300
-+++ input/play-services-ads-lite/build.gradle	2026-01-01 18:28:05.445989909 +0300
+--- inputbak/play-services-ads-lite/build.gradle	2026-02-27 15:35:37.485569164 +0300
++++ input/play-services-ads-lite/build.gradle	2026-02-27 15:36:06.716853816 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -158,8 +132,8 @@ diff -Naur inputbak/play-services-ads-lite/build.gradle input/play-services-ads-
  
      compileOptions {
 diff -Naur inputbak/play-services-ads-lite/src/main/AndroidManifest.xml input/play-services-ads-lite/src/main/AndroidManifest.xml
---- inputbak/play-services-ads-lite/src/main/AndroidManifest.xml	2026-01-01 18:27:33.937989921 +0300
-+++ input/play-services-ads-lite/src/main/AndroidManifest.xml	2026-01-01 18:28:05.449989909 +0300
+--- inputbak/play-services-ads-lite/src/main/AndroidManifest.xml	2026-02-27 15:35:37.486409998 +0300
++++ input/play-services-ads-lite/src/main/AndroidManifest.xml	2026-02-27 15:36:06.717090605 +0300
 @@ -6,7 +6,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
      <uses-permission android:name="android.permission.INTERNET" />
@@ -170,8 +144,8 @@ diff -Naur inputbak/play-services-ads-lite/src/main/AndroidManifest.xml input/pl
      <queries>
          <!-- Website links -->
 diff -Naur inputbak/play-services-appinvite/core/build.gradle input/play-services-appinvite/core/build.gradle
---- inputbak/play-services-appinvite/core/build.gradle	2026-01-01 18:27:34.017989921 +0300
-+++ input/play-services-appinvite/core/build.gradle	2026-01-01 18:28:05.449989909 +0300
+--- inputbak/play-services-appinvite/core/build.gradle	2026-02-27 15:35:37.506240774 +0300
++++ input/play-services-appinvite/core/build.gradle	2026-02-27 15:36:06.717448062 +0300
 @@ -27,6 +27,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -184,8 +158,8 @@ diff -Naur inputbak/play-services-appinvite/core/build.gradle input/play-service
  
      sourceSets {
 diff -Naur inputbak/play-services-appinvite/core/src/main/AndroidManifest.xml input/play-services-appinvite/core/src/main/AndroidManifest.xml
---- inputbak/play-services-appinvite/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.017989921 +0300
-+++ input/play-services-appinvite/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.449989909 +0300
+--- inputbak/play-services-appinvite/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.506304814 +0300
++++ input/play-services-appinvite/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.717683601 +0300
 @@ -11,7 +11,7 @@
              android:name="org.microg.gms.appinivite.AppInviteService"
              android:exported="true">
@@ -205,8 +179,8 @@ diff -Naur inputbak/play-services-appinvite/core/src/main/AndroidManifest.xml in
                  <category android:name="android.intent.category.BROWSABLE" />
                  <category android:name="android.intent.category.DEFAULT" />
 diff -Naur inputbak/play-services-appset/core/build.gradle input/play-services-appset/core/build.gradle
---- inputbak/play-services-appset/core/build.gradle	2026-01-01 18:27:34.017989921 +0300
-+++ input/play-services-appset/core/build.gradle	2026-01-01 18:28:05.449989909 +0300
+--- inputbak/play-services-appset/core/build.gradle	2026-02-27 15:35:37.507123598 +0300
++++ input/play-services-appset/core/build.gradle	2026-02-27 15:36:06.717988788 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -219,8 +193,8 @@ diff -Naur inputbak/play-services-appset/core/build.gradle input/play-services-a
  
      sourceSets {
 diff -Naur inputbak/play-services-appset/core/src/main/AndroidManifest.xml input/play-services-appset/core/src/main/AndroidManifest.xml
---- inputbak/play-services-appset/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.017989921 +0300
-+++ input/play-services-appset/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.453989909 +0300
+--- inputbak/play-services-appset/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.507212807 +0300
++++ input/play-services-appset/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.718286726 +0300
 @@ -9,7 +9,7 @@
  
          <service android:name="org.microg.gms.appset.AppSetService">
@@ -231,8 +205,8 @@ diff -Naur inputbak/play-services-appset/core/src/main/AndroidManifest.xml input
          </service>
      </application>
 diff -Naur inputbak/play-services-auth-api-phone/core/build.gradle input/play-services-auth-api-phone/core/build.gradle
---- inputbak/play-services-auth-api-phone/core/build.gradle	2026-01-01 18:27:34.021989921 +0300
-+++ input/play-services-auth-api-phone/core/build.gradle	2026-01-01 18:28:05.453989909 +0300
+--- inputbak/play-services-auth-api-phone/core/build.gradle	2026-02-27 15:35:37.508243860 +0300
++++ input/play-services-auth-api-phone/core/build.gradle	2026-02-27 15:36:06.718542285 +0300
 @@ -23,6 +23,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -245,8 +219,8 @@ diff -Naur inputbak/play-services-auth-api-phone/core/build.gradle input/play-se
  
      sourceSets {
 diff -Naur inputbak/play-services-auth-api-phone/core/src/main/AndroidManifest.xml input/play-services-auth-api-phone/core/src/main/AndroidManifest.xml
---- inputbak/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.021989921 +0300
-+++ input/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.453989909 +0300
+--- inputbak/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.508332079 +0300
++++ input/play-services-auth-api-phone/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.719135883 +0300
 @@ -27,7 +27,7 @@
              android:name="org.microg.gms.auth.phone.SmsRetrieverService"
              android:exported="true">
@@ -257,8 +231,8 @@ diff -Naur inputbak/play-services-auth-api-phone/core/src/main/AndroidManifest.x
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
 diff -Naur inputbak/play-services-base/build.gradle input/play-services-base/build.gradle
---- inputbak/play-services-base/build.gradle	2026-01-01 18:27:34.077989921 +0300
-+++ input/play-services-base/build.gradle	2026-01-01 18:28:05.453989909 +0300
+--- inputbak/play-services-base/build.gradle	2026-02-27 15:35:37.522615116 +0300
++++ input/play-services-base/build.gradle	2026-02-27 15:36:06.720020224 +0300
 @@ -19,12 +19,15 @@
  
      buildFeatures {
@@ -277,7 +251,7 @@ diff -Naur inputbak/play-services-base/build.gradle input/play-services-base/bui
      compileOptions {
 diff -Naur inputbak/play-services-base/build.gradle.orig input/play-services-base/build.gradle.orig
 --- inputbak/play-services-base/build.gradle.orig	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-base/build.gradle.orig	2026-01-01 18:28:05.453989909 +0300
++++ input/play-services-base/build.gradle.orig	2026-02-27 15:36:06.720109444 +0300
 @@ -0,0 +1,49 @@
 +/*
 + * SPDX-FileCopyrightText: 2015 microG Project Team
@@ -329,8 +303,8 @@ diff -Naur inputbak/play-services-base/build.gradle.orig input/play-services-bas
 +    annotationProcessor project(':safe-parcel-processor')
 +}
 diff -Naur inputbak/play-services-base/core/package/build.gradle input/play-services-base/core/package/build.gradle
---- inputbak/play-services-base/core/package/build.gradle	2026-01-01 18:27:34.077989921 +0300
-+++ input/play-services-base/core/package/build.gradle	2026-01-01 18:28:05.457989909 +0300
+--- inputbak/play-services-base/core/package/build.gradle	2026-02-27 15:35:37.522844724 +0300
++++ input/play-services-base/core/package/build.gradle	2026-02-27 15:36:06.720263333 +0300
 @@ -22,6 +22,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -343,8 +317,8 @@ diff -Naur inputbak/play-services-base/core/package/build.gradle input/play-serv
  
      sourceSets {
 diff -Naur inputbak/play-services-base/core/package/src/main/AndroidManifest.xml input/play-services-base/core/package/src/main/AndroidManifest.xml
---- inputbak/play-services-base/core/package/src/main/AndroidManifest.xml	2026-01-01 18:27:34.077989921 +0300
-+++ input/play-services-base/core/package/src/main/AndroidManifest.xml	2026-01-01 18:28:05.457989909 +0300
+--- inputbak/play-services-base/core/package/src/main/AndroidManifest.xml	2026-02-27 15:35:37.522899543 +0300
++++ input/play-services-base/core/package/src/main/AndroidManifest.xml	2026-02-27 15:36:06.720437911 +0300
 @@ -15,7 +15,7 @@
              android:name="org.microg.gms.moduleinstall.ModuleInstallService"
              android:exported="true">
@@ -355,8 +329,8 @@ diff -Naur inputbak/play-services-base/core/package/src/main/AndroidManifest.xml
              </intent-filter>
          </service>
 diff -Naur inputbak/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java input/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java
---- inputbak/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2026-01-01 18:27:34.081989921 +0300
-+++ input/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2026-01-01 18:28:05.457989909 +0300
+--- inputbak/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2026-02-27 15:35:37.523394950 +0300
++++ input/play-services-base/core/src/main/java/org/microg/gms/AbstractGmsServiceBroker.java	2026-02-27 15:36:06.720769959 +0300
 @@ -23,6 +23,7 @@
  import android.os.RemoteException;
  import android.util.Log;
@@ -366,8 +340,8 @@ diff -Naur inputbak/play-services-base/core/src/main/java/org/microg/gms/Abstrac
  import com.google.android.gms.common.internal.*;
  
 diff -Naur inputbak/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java input/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java
---- inputbak/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2026-01-01 18:27:34.081989921 +0300
-+++ input/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2026-01-01 18:28:05.457989909 +0300
+--- inputbak/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2026-02-27 15:35:37.523864916 +0300
++++ input/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2026-02-27 15:36:06.721192276 +0300
 @@ -28,6 +28,7 @@
  
  import androidx.annotation.NonNull;
@@ -422,8 +396,8 @@ diff -Naur inputbak/play-services-base/core/src/main/java/org/microg/gms/common/
  
      public static String[] getCallingPackageCandidates(@NonNull Context context) {
 diff -Naur inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt input/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt
---- inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2026-01-01 18:27:34.085989921 +0300
-+++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2026-01-01 18:28:05.461989909 +0300
+--- inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2026-02-27 15:35:37.524792470 +0300
++++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt	2026-02-27 15:36:06.722135861 +0300
 @@ -91,6 +91,10 @@
          PERMISSIONS_PRIVILEGED
      ),
@@ -437,7 +411,7 @@ diff -Naur inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/commo
      ),
 diff -Naur inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt.orig input/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt.orig
 --- inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt.orig	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt.orig	2026-01-01 18:27:15.529989928 +0300
++++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/KnownGooglePackages.kt.orig	2026-02-27 15:36:06.722858155 +0300
 @@ -0,0 +1,229 @@
 +/*
 + * SPDX-FileCopyrightText: 2024 microG Project Team
@@ -668,10 +642,10 @@ diff -Naur inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/commo
 +
 +fun isGooglePackage(packageName: String, certificate: CertData): Boolean =
 +    listOf(SHA1, SHA256).any { isGooglePackage(PackageAndCertHash(packageName, it, certificate.digest(it).toHexString())) }
-\ No newline at end of file
+\ В конце файла нет новой строки
 diff -Naur inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt input/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt
 --- inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	2026-01-01 18:28:05.461989909 +0300
++++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	2026-02-27 15:36:06.723002413 +0300
 @@ -0,0 +1,157 @@
 +package org.microg.gms.common
 +
@@ -830,10 +804,10 @@ diff -Naur inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/commo
 +        }
 +    }
 +}
-\ No newline at end of file
+\ В конце файла нет новой строки
 diff -Naur inputbak/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java
---- inputbak/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2026-01-01 18:27:34.129989921 +0300
-+++ input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2026-01-01 18:28:05.461989909 +0300
+--- inputbak/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2026-02-27 15:35:37.535288123 +0300
++++ input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2026-02-27 15:36:06.723164212 +0300
 @@ -29,6 +29,7 @@
  import android.content.pm.Signature;
  import android.os.IBinder;
@@ -853,7 +827,7 @@ diff -Naur inputbak/play-services-base/src/main/java/org/microg/gms/common/Multi
                  return false;
 diff -Naur inputbak/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java.orig input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java.orig
 --- inputbak/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java.orig	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java.orig	2026-01-01 18:28:05.465989909 +0300
++++ input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java.orig	2026-02-27 15:36:06.723299811 +0300
 @@ -0,0 +1,347 @@
 +/*
 + * Copyright (C) 2013-2017 microG Project Team
@@ -1203,8 +1177,8 @@ diff -Naur inputbak/play-services-base/src/main/java/org/microg/gms/common/Multi
 +    }
 +}
 diff -Naur inputbak/play-services-basement/build.gradle input/play-services-basement/build.gradle
---- inputbak/play-services-basement/build.gradle	2026-01-01 18:27:34.133989921 +0300
-+++ input/play-services-basement/build.gradle	2026-01-01 18:28:05.465989909 +0300
+--- inputbak/play-services-basement/build.gradle	2026-02-27 15:35:37.535602561 +0300
++++ input/play-services-basement/build.gradle	2026-02-27 15:36:06.723603699 +0300
 @@ -30,7 +30,12 @@
          minSdkVersion androidMinSdk
          targetSdkVersion androidTargetSdk
@@ -1220,7 +1194,7 @@ diff -Naur inputbak/play-services-basement/build.gradle input/play-services-base
      compileOptions {
 diff -Naur inputbak/play-services-basement/build.gradle.orig input/play-services-basement/build.gradle.orig
 --- inputbak/play-services-basement/build.gradle.orig	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-basement/build.gradle.orig	2026-01-01 18:28:05.465989909 +0300
++++ input/play-services-basement/build.gradle.orig	2026-02-27 15:36:06.723717348 +0300
 @@ -0,0 +1,55 @@
 +/*
 + * SPDX-FileCopyrightText: 2015 microG Project Team
@@ -1278,8 +1252,8 @@ diff -Naur inputbak/play-services-basement/build.gradle.orig input/play-services
 +    annotationProcessor project(':safe-parcel-processor')
 +}
 diff -Naur inputbak/play-services-basement/src/main/AndroidManifest.xml input/play-services-basement/src/main/AndroidManifest.xml
---- inputbak/play-services-basement/src/main/AndroidManifest.xml	2026-01-01 18:27:34.133989921 +0300
-+++ input/play-services-basement/src/main/AndroidManifest.xml	2026-01-01 18:28:05.465989909 +0300
+--- inputbak/play-services-basement/src/main/AndroidManifest.xml	2026-02-27 15:35:37.536466195 +0300
++++ input/play-services-basement/src/main/AndroidManifest.xml	2026-02-27 15:36:06.723812688 +0300
 @@ -7,7 +7,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
      <application>
@@ -1290,8 +1264,8 @@ diff -Naur inputbak/play-services-basement/src/main/AndroidManifest.xml input/pl
      </application>
  </manifest>
 diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java input/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java
---- inputbak/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2026-01-01 18:27:34.149989921 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2026-01-01 18:28:05.465989909 +0300
+--- inputbak/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2026-02-27 15:35:37.539611582 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2026-02-27 15:36:06.723932407 +0300
 @@ -16,6 +16,8 @@
  
  package org.microg.gms.auth;
@@ -1311,8 +1285,8 @@ diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/auth/Aut
  
      public static final String KEY_ACCOUNT_SERVICES = "services";
 diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/common/Constants.java input/play-services-basement/src/main/java/org/microg/gms/common/Constants.java
---- inputbak/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2026-01-01 18:27:34.149989921 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2026-01-01 18:28:05.469989909 +0300
+--- inputbak/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2026-02-27 15:35:37.539611582 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2026-02-27 15:36:06.724040416 +0300
 @@ -20,7 +20,8 @@
  
  public class Constants {
@@ -1324,8 +1298,8 @@ diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/common/C
      public static final String GSF_PACKAGE_NAME = "com.google.android.gsf";
      public static final String GMS_PACKAGE_SIGNATURE_SHA1 = "38918a453d07199354f8b19af05ec6562ced5788";
 diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java input/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java
---- inputbak/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2026-01-01 18:27:34.149989921 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2026-01-01 18:41:44.101989596 +0300
+--- inputbak/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2026-02-27 15:35:37.539914670 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/common/GmsService.java	2026-02-27 15:36:06.724224575 +0300
 @@ -16,107 +16,109 @@
  
  package org.microg.gms.common;
@@ -1846,8 +1820,8 @@ diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/common/G
  
      public static GmsService byServiceId(int serviceId) {
 diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java
---- inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2026-01-01 18:27:34.149989921 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2026-01-01 18:28:05.473989909 +0300
+--- inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2026-02-27 15:35:37.539914670 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2026-02-27 15:36:06.724510423 +0300
 @@ -16,18 +16,20 @@
  
  package org.microg.gms.gcm;
@@ -1906,7 +1880,7 @@ diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmC
  
 diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java.orig input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java.orig
 --- inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java.orig	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java.orig	2026-01-01 18:28:05.473989909 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java.orig	2026-02-27 15:36:06.724621432 +0300
 @@ -0,0 +1,101 @@
 +/*
 + * Copyright (C) 2013-2017 microG Project Team
@@ -2010,8 +1984,8 @@ diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmC
 +    public static final String GCMID_REFRESH = "gcm.googleapis.com/refresh";
 +}
 diff -Naur inputbak/play-services-cast/core/build.gradle input/play-services-cast/core/build.gradle
---- inputbak/play-services-cast/core/build.gradle	2026-01-01 18:27:34.165989921 +0300
-+++ input/play-services-cast/core/build.gradle	2026-01-01 18:28:05.473989909 +0300
+--- inputbak/play-services-cast/core/build.gradle	2026-02-27 15:35:37.543574023 +0300
++++ input/play-services-cast/core/build.gradle	2026-02-27 15:36:06.724981090 +0300
 @@ -32,6 +32,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -2024,8 +1998,8 @@ diff -Naur inputbak/play-services-cast/core/build.gradle input/play-services-cas
  
      buildFeatures {
 diff -Naur inputbak/play-services-cast/core/src/main/AndroidManifest.xml input/play-services-cast/core/src/main/AndroidManifest.xml
---- inputbak/play-services-cast/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.165989921 +0300
-+++ input/play-services-cast/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.477989909 +0300
+--- inputbak/play-services-cast/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.543626853 +0300
++++ input/play-services-cast/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.725156488 +0300
 @@ -15,7 +15,7 @@
  
          <service android:name="org.microg.gms.cast.CastDeviceControllerService">
@@ -2036,8 +2010,8 @@ diff -Naur inputbak/play-services-cast/core/src/main/AndroidManifest.xml input/p
          </service>
      </application>
 diff -Naur inputbak/play-services-cast-framework/src/main/AndroidManifest.xml input/play-services-cast-framework/src/main/AndroidManifest.xml
---- inputbak/play-services-cast-framework/src/main/AndroidManifest.xml	2026-01-01 18:27:34.153989921 +0300
-+++ input/play-services-cast-framework/src/main/AndroidManifest.xml	2026-01-01 18:28:05.477989909 +0300
+--- inputbak/play-services-cast-framework/src/main/AndroidManifest.xml	2026-02-27 15:35:37.541498748 +0300
++++ input/play-services-cast-framework/src/main/AndroidManifest.xml	2026-02-27 15:36:06.725270177 +0300
 @@ -9,21 +9,21 @@
      <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
  
@@ -2065,9 +2039,9 @@ diff -Naur inputbak/play-services-cast-framework/src/main/AndroidManifest.xml in
      </application>
  
 diff -Naur inputbak/play-services-core/build.gradle input/play-services-core/build.gradle
---- inputbak/play-services-core/build.gradle	2026-01-01 18:27:34.249989921 +0300
-+++ input/play-services-core/build.gradle	2026-01-01 18:28:05.477989909 +0300
-@@ -117,6 +117,8 @@
+--- inputbak/play-services-core/build.gradle	2026-02-27 15:35:37.549111323 +0300
++++ input/play-services-core/build.gradle	2026-02-27 15:36:06.725587845 +0300
+@@ -119,6 +119,8 @@
      }
  
      defaultConfig {
@@ -2076,7 +2050,7 @@ diff -Naur inputbak/play-services-core/build.gradle input/play-services-core/bui
          versionName version
          versionCode appVersionCode
  
-@@ -126,7 +128,6 @@
+@@ -128,7 +130,6 @@
          multiDexEnabled true
          multiDexKeepProguard file('multidex-keep.pro')
  
@@ -2084,7 +2058,7 @@ diff -Naur inputbak/play-services-core/build.gradle input/play-services-core/bui
          resValue "string", "package_id", "com.google.android.gms"
  
          buildConfigField "String", "SAFETYNET_KEY", "\"${localProperties.get("safetynet.key", "")}\""
-@@ -135,6 +136,19 @@
+@@ -137,6 +138,19 @@
          buildConfigField "String", "RECAPTCHA_ENTERPRISE_PROJECT_ID", "\"${localProperties.get("recaptchaEnterpreise.projectId", "")}\""
          buildConfigField "String", "RECAPTCHA_ENTERPRISE_SITE_KEY", "\"${localProperties.get("recaptchaEnterpreise.siteKey", "")}\""
          buildConfigField "String", "RECAPTCHA_ENTERPRISE_API_KEY", "\"${localProperties.get("recaptchaEnterpreise.apiKey", "")}\""
@@ -2104,237 +2078,9 @@ diff -Naur inputbak/play-services-core/build.gradle input/play-services-core/bui
  
          ndk {
              abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
-diff -Naur inputbak/play-services-core/build.gradle.orig input/play-services-core/build.gradle.orig
---- inputbak/play-services-core/build.gradle.orig	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-core/build.gradle.orig	2026-01-01 18:28:05.481989909 +0300
-@@ -0,0 +1,224 @@
-+/*
-+ * SPDX-FileCopyrightText: 2013 microG Project Team
-+ * SPDX-License-Identifier: Apache-2.0
-+ */
-+
-+apply plugin: 'com.android.application'
-+apply plugin: 'kotlin-android'
-+
-+configurations {
-+    mapboxRuntimeOnly
-+    vtmRuntimeOnly
-+    if (hasModule("hms", true)) hmsRuntimeOnly
-+    defaultRuntimeOnly
-+}
-+
-+dependencies {
-+    implementation "com.squareup.wire:wire-runtime:$wireVersion"
-+    implementation "de.hdodenhof:circleimageview:1.3.0"
-+
-+    implementation project(':fake-signature')
-+    implementation project(':firebase-dynamic-links')
-+    implementation project(':firebase-auth-core')
-+    implementation project(':play-services-ads-core')
-+    implementation project(':play-services-ads-identifier-core')
-+    implementation project(':play-services-ads-lite-core')
-+    implementation project(':play-services-appinvite-core')
-+    implementation project(':play-services-appset-core')
-+    implementation project(':play-services-auth-api-phone-core')
-+    implementation project(':play-services-auth-blockstore-core')
-+    implementation project(':play-services-auth-workaccount-core')
-+    implementation project(':play-services-base-core')
-+    implementation project(':play-services-cast-core')
-+    implementation project(':play-services-cast-framework-core')
-+    implementation project(':play-services-conscrypt-provider-core')
-+    implementation project(':play-services-cronet-core')
-+    implementation project(':play-services-droidguard-core')
-+    implementation project(':play-services-fido-core')
-+    implementation project(':play-services-fitness-core')
-+    implementation project(':play-services-gmscompliance-core')
-+    implementation project(':play-services-location-core')
-+    implementation project(':play-services-location-core-base')
-+    implementation project(':play-services-oss-licenses-core')
-+    implementation project(':play-services-panorama-core')
-+    implementation project(':play-services-pay-core')
-+    implementation project(':play-services-recaptcha-core')
-+    implementation project(':play-services-safetynet-core')
-+    implementation project(':play-services-tapandpay-core')
-+    implementation project(':play-services-threadnetwork-core')
-+    implementation project(':play-services-vision-core')
-+    implementation project(':play-services-wearable-core')
-+
-+    implementation project(':play-services-core-proto')
-+
-+    implementation project(':play-services-core:microg-ui-tools') // deprecated
-+    implementation project(':play-services-base-core-package')
-+    implementation project(':play-services-api')
-+
-+    implementation project(':play-services-appinvite')
-+    implementation project(':play-services-auth-base')
-+    implementation project(':play-services-auth')
-+    implementation project(':play-services-clearcut')
-+    implementation project(':play-services-drive')
-+    implementation project(':play-services-games')
-+    implementation project(':play-services-maps')
-+    implementation project(':play-services-measurement-base')
-+    implementation project(':play-services-places')
-+    implementation project(':play-services-recaptcha')
-+    implementation project(':play-services-safetynet')
-+    implementation project(':play-services-tasks-ktx')
-+    implementation project(':play-services-fitness')
-+
-+    mapboxRuntimeOnly project(':play-services-maps-core-mapbox')
-+    vtmRuntimeOnly project(':play-services-maps-core-vtm')
-+    defaultRuntimeOnly project(':play-services-location-core-provider')
-+
-+    if (hasModule("nearby", true)) runtimeOnly project(':play-services-nearby-core-package')
-+    if (hasModule("hms", false)) hmsRuntimeOnly project(':play-services-maps-core-hms')
-+
-+    // AndroidX UI
-+    implementation "androidx.multidex:multidex:$multidexVersion"
-+    implementation "androidx.appcompat:appcompat:$appcompatVersion"
-+    implementation "androidx.mediarouter:mediarouter:$mediarouterVersion"
-+    implementation "androidx.preference:preference-ktx:$preferenceVersion"
-+    implementation "androidx.webkit:webkit:$webkitVersion"
-+
-+    // Material Components
-+    implementation "com.google.android.material:material:$materialVersion"
-+
-+    // Compose
-+    def composeBom = platform('androidx.compose:compose-bom:2024.04.00')
-+    implementation composeBom
-+    implementation 'androidx.compose.material3:material3'
-+    implementation 'androidx.compose.ui:ui-tooling-preview'
-+    debugImplementation 'androidx.compose.ui:ui-tooling'
-+    implementation 'androidx.activity:activity-compose:1.8.2'
-+
-+    // Navigation
-+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
-+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
-+
-+    implementation "com.android.volley:volley:$volleyVersion"
-+
-+    implementation "androidx.lifecycle:lifecycle-service:$lifecycleVersion"
-+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-+}
-+
-+android {
-+    namespace "com.google.android.gms"
-+
-+    compileSdkVersion androidCompileSdk
-+    buildToolsVersion "$androidBuildVersionTools"
-+
-+    buildFeatures {
-+        buildConfig = true
-+        dataBinding = true
-+        compose true
-+    }
-+
-+    defaultConfig {
-+        versionName version
-+        versionCode appVersionCode
-+
-+        minSdkVersion androidMinSdk
-+        targetSdkVersion androidTargetSdk
-+
-+        multiDexEnabled true
-+        multiDexKeepProguard file('multidex-keep.pro')
-+
-+        manifestPlaceholders = [appLabel:"@string/gms_app_name"]
-+        resValue "string", "package_id", "com.google.android.gms"
-+
-+        buildConfigField "String", "SAFETYNET_KEY", "\"${localProperties.get("safetynet.key", "")}\""
-+        buildConfigField "String", "RECAPTCHA_SITE_KEY", "\"${localProperties.get("recaptcha.siteKey", "")}\""
-+        buildConfigField "String", "RECAPTCHA_SECRET", "\"${localProperties.get("recaptcha.secret", "")}\""
-+        buildConfigField "String", "RECAPTCHA_ENTERPRISE_PROJECT_ID", "\"${localProperties.get("recaptchaEnterpreise.projectId", "")}\""
-+        buildConfigField "String", "RECAPTCHA_ENTERPRISE_SITE_KEY", "\"${localProperties.get("recaptchaEnterpreise.siteKey", "")}\""
-+        buildConfigField "String", "RECAPTCHA_ENTERPRISE_API_KEY", "\"${localProperties.get("recaptchaEnterpreise.apiKey", "")}\""
-+
-+        ndk {
-+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
-+        }
-+    }
-+
-+    composeOptions {
-+        kotlinCompilerExtensionVersion = "1.5.10"
-+    }
-+
-+    sourceSets {
-+        main {
-+            java.srcDirs += 'src/main/kotlin'
-+        }
-+    }
-+
-+    lintOptions {
-+        disable 'MissingTranslation', 'GetLocales', 'InvalidPackage', 'BatteryLife', 'ImpliedQuantity', 'MissingQuantity', 'InvalidWakeLockTag', 'UniquePermission'
-+    }
-+
-+    buildTypes {
-+        release {
-+            minifyEnabled false
-+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-+        }
-+    }
-+
-+    flavorDimensions = ['maps', 'target']
-+    productFlavors {
-+        "default" {
-+            dimension 'target'
-+        }
-+        "huawei" {
-+            dimension 'target'
-+            versionNameSuffix "-hw"
-+        }
-+        "huaweilh" {
-+            dimension 'target'
-+            versionNameSuffix "-lh"
-+            versionCode appVersionCode - 1000
-+            matchingFallbacks = ['huawei']
-+        }
-+        "user" {
-+            dimension 'target'
-+            applicationId = "org.microg.gms"
-+            versionNameSuffix "-user"
-+            manifestPlaceholders = [appLabel:"@string/limited_services_app_name"]
-+            matchingFallbacks = ['default']
-+            resValue "string", "package_id", "org.microg.gms"
-+        }
-+        "hms" {
-+            dimension 'maps'
-+        }
-+        "mapbox" {
-+            dimension 'maps'
-+        }
-+        "vtm" {
-+            dimension 'maps'
-+        }
-+    }
-+
-+    compileOptions {
-+        sourceCompatibility JavaVersion.VERSION_1_8
-+        targetCompatibility JavaVersion.VERSION_1_8
-+    }
-+
-+    kotlinOptions {
-+        jvmTarget = 1.8
-+    }
-+
-+    packagingOptions {
-+        exclude 'META-INF/ASL2.0'
-+        jniLibs {
-+            useLegacyPackaging true
-+        }
-+    }
-+}
-+
-+if (file('user.gradle').exists()) {
-+    apply from: 'user.gradle'
-+}
-+
-+android.applicationVariants.all { variant ->
-+    variant.outputs.each { output ->
-+        output.outputFileName = variant.applicationId + "-" + variant.versionCode + variant.versionName.substring(version.length()) + ".apk"
-+    }
-+}
 diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-services-core/src/main/AndroidManifest.xml
---- inputbak/play-services-core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.261989921 +0300
-+++ input/play-services-core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.485989909 +0300
+--- inputbak/play-services-core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.553422292 +0300
++++ input/play-services-core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.726135830 +0300
 @@ -17,124 +17,124 @@
      xmlns:tools="http://schemas.android.com/tools">
  
@@ -2620,8 +2366,8 @@ diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-s
              </intent-filter>
          </receiver>
  
-@@ -372,7 +365,7 @@
-                 <action android:name="org.microg.gms.gcm.REGISTER_ACCOUNT" />
+@@ -373,7 +366,7 @@
+                 <action android:name="org.microg.gms.gcm.REGISTER_ALL_ACCOUNTS" />
                  <action android:name="org.microg.gms.gcm.NOTIFY_COMPLETE" />
  
 -                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -2629,7 +2375,7 @@ diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-s
              </intent-filter>
          </receiver>
  
-@@ -380,7 +373,7 @@
+@@ -381,7 +374,7 @@
              android:name="org.microg.gms.gcm.SendReceiver"
              android:process=":persistent">
              <intent-filter>
@@ -3492,1344 +3238,9 @@ diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-s
                      tools:ignore="WearableBindListener" />
              </intent-filter>
          </service>
-diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml.orig input/play-services-core/src/main/AndroidManifest.xml.orig
---- inputbak/play-services-core/src/main/AndroidManifest.xml.orig	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-core/src/main/AndroidManifest.xml.orig	2026-01-01 18:27:15.701989928 +0300
-@@ -0,0 +1,1331 @@
-+<?xml version="1.0" encoding="utf-8"?><!--
-+  ~ Copyright (C) 2013-2019 microG Project Team
-+  ~
-+  ~ Licensed under the Apache License, Version 2.0 (the "License");
-+  ~ you may not use this file except in compliance with the License.
-+  ~ You may obtain a copy of the License at
-+  ~
-+  ~     http://www.apache.org/licenses/LICENSE-2.0
-+  ~
-+  ~ Unless required by applicable law or agreed to in writing, software
-+  ~ distributed under the License is distributed on an "AS IS" BASIS,
-+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-+  ~ See the License for the specific language governing permissions and
-+  ~ limitations under the License.
-+  -->
-+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-+    xmlns:tools="http://schemas.android.com/tools">
-+
-+    <permission
-+        android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"
-+        android:label="@string/perm_gsf_read_gservices_label"
-+        android:protectionLevel="normal" />
-+    <permission
-+        android:name="com.google.android.c2dm.permission.RECEIVE"
-+        android:label="@string/perm_c2dm_receive_label"
-+        android:permissionGroup="android.permission-group.NETWORK"
-+        android:protectionLevel="normal" />
-+    <permission
-+        android:name="com.google.android.c2dm.permission.SEND"
-+        android:label="@string/perm_c2dm_send_label"
-+        android:permissionGroup="android.permission-group.NETWORK"
-+        android:protectionLevel="privileged|signature" />
-+    <permission
-+        android:name="com.google.android.gtalkservice.permission.GTALK_SERVICE"
-+        android:label="@string/perm_gtalk_svc_label"
-+        android:permissionGroup="android.permission-group.MESSAGES"
-+        android:protectionLevel="signature" />
-+
-+    <permission-tree
-+        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH"
-+        android:icon="@drawable/proprietary_auth_ic_scope_icon_default" />
-+
-+    <permission
-+        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.cp"
-+        android:description="@string/permission_service_cp_description"
-+        android:label="@string/permission_service_cp_label"
-+        android:protectionLevel="dangerous" />
-+    <permission
-+        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.local"
-+        android:description="@string/permission_service_local_description"
-+        android:label="@string/permission_service_local_label"
-+        android:protectionLevel="dangerous" />
-+    <permission
-+        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.mail"
-+        android:description="@string/permission_service_mail_description"
-+        android:label="@string/permission_service_mail_label"
-+        android:protectionLevel="dangerous" />
-+    <permission
-+        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.writely"
-+        android:description="@string/permission_service_writely_description"
-+        android:label="@string/permission_service_writely_label"
-+        android:protectionLevel="dangerous" />
-+
-+    <permission
-+        android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"
-+        android:label="@string/perm_activity_recognition_label"
-+        android:description="@string/perm_activity_recognition_description"
-+        android:protectionLevel="normal" />
-+
-+    <permission
-+        android:name="com.google.android.gms.permission.AD_ID"
-+        android:label="@string/perm_ad_id_label"
-+        android:description="@string/perm_ad_id_description"
-+        android:protectionLevel="normal" />
-+    <permission
-+        android:name="com.google.android.gms.permission.AD_ID_NOTIFICATION"
-+        android:label="@string/perm_ad_id_notification_label"
-+        android:description="@string/perm_ad_id_notification_description"
-+        android:protectionLevel="normal" />
-+
-+
-+    <permission
-+        android:name="com.google.android.gms.auth.api.phone.permission.SEND"
-+        android:protectionLevel="signature" />
-+
-+    <permission
-+        android:name="org.microg.gms.STATUS_BROADCAST"
-+        android:label="@string/perm_status_broadcast_label"
-+        android:protectionLevel="normal" />
-+    <permission
-+        android:name="org.microg.gms.EXTENDED_ACCESS"
-+        android:label="@string/perm_extended_access_label"
-+        android:protectionLevel="dangerous" />
-+    <permission
-+        android:name="org.microg.gms.PROVISION"
-+        android:description="@string/perm_provision_description"
-+        android:label="@string/perm_provision_label"
-+        android:protectionLevel="privileged|signature" />
-+
-+    <permission
-+        android:name="com.google.android.gms.permission.CAR_SPEED"
-+        android:label="@string/perm_car_speed_label"
-+        android:description="@string/perm_car_speed_description"
-+        android:permissionGroup="android.permission-group.LOCATION"
-+        android:protectionLevel="dangerous" />
-+
-+    <permission-group
-+        android:name="com.google.android.gms.permission.CAR_INFORMATION"
-+        android:label="@string/perm_car_info_label"
-+        android:description="@string/perm_car_info_description" />
-+    <permission
-+        android:name="com.google.android.gms.permission.CAR_FUEL"
-+        android:label="@string/perm_car_fuel_label"
-+        android:description="@string/perm_car_fuel_description"
-+        android:permissionGroup="com.google.android.gms.permission.CAR_INFORMATION"
-+        android:protectionLevel="dangerous" />
-+    <permission
-+        android:name="com.google.android.gms.permission.CAR_MILEAGE"
-+        android:label="@string/perm_car_mileage_label"
-+        android:description="@string/perm_car_mileage_description"
-+        android:permissionGroup="com.google.android.gms.permission.CAR_INFORMATION"
-+        android:protectionLevel="dangerous" />
-+    <permission
-+        android:name="com.google.android.gms.permission.CAR_VENDOR_EXTENSION"
-+        android:label="@string/perm_car_vendor_extension_label"
-+        android:description="@string/perm_car_vendor_extension_description"
-+        android:permissionGroup="com.google.android.gms.permission.CAR_INFORMATION"
-+        android:protectionLevel="dangerous" />
-+    <permission
-+        android:name="com.google.android.gms.locationsharingreporter.periodic.STATUS_UPDATE"
-+        android:protectionLevel="signature"/>
-+    <uses-permission android:name="com.google.android.gms.locationsharingreporter.periodic.STATUS_UPDATE"/>
-+
-+    <permission
-+        android:name="com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE"
-+        android:protectionLevel="signature"/>
-+    <uses-permission android:name="com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE" />
-+
-+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-+    <uses-permission android:name="android.permission.INTERNET" />
-+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-+
-+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
-+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-+    <uses-permission android:name="android.permission.WAKE_LOCK" />
-+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
-+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
-+    <uses-permission android:name="android.permission.READ_SYNC_STATS" />
-+    <uses-permission android:name="android.permission.READ_CONTACTS" />
-+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-+
-+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-+
-+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-+    <uses-permission android:name="com.google.android.c2dm.permission.SEND" />
-+    <uses-permission android:name="com.google.android.gtalkservice.permission.GTALK_SERVICE" />
-+    <uses-permission android:name="com.google.android.gms.auth.api.phone.permission.SEND" />
-+
-+    <uses-permission android:name="org.microg.gms.STATUS_BROADCAST" />
-+
-+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-+    <uses-permission
-+        android:name="android.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST"
-+        tools:ignore="ProtectedPermissions" />
-+    <uses-permission
-+        android:name="android.permission.UPDATE_APP_OPS_STATS"
-+        tools:ignore="ProtectedPermissions" />
-+
-+    <uses-permission android:name="android.permission.CAMERA"/>
-+    <uses-feature
-+        android:name="android.hardware.camera"
-+        android:required="false" />
-+
-+    <uses-sdk
-+        tools:overrideLibrary="androidx.compose.ui.tooling,
-+        androidx.compose.material3,
-+        androidx.activity.compose,
-+        androidx.compose.material.icons,
-+        androidx.compose.material.ripple,
-+        androidx.compose.foundation,
-+        androidx.compose.animation,
-+        androidx.compose.foundation.layout,
-+        androidx.compose.animation.core,
-+        androidx.compose.ui.unit,
-+        androidx.compose.ui.geometry,
-+        androidx.compose.ui.tooling.data,
-+        androidx.compose.ui.util,
-+        androidx.compose.ui.text,
-+        androidx.compose.ui.graphics,
-+        androidx.compose.ui.geometry,
-+        androidx.compose.ui.tooling.preview,
-+        androidx.compose.runtime.saveable,
-+        org.opencv"
-+        />
-+    <application
-+        android:allowBackup="true"
-+        android:forceQueryable="true"
-+        android:fullBackupOnly="true"
-+        android:icon="@mipmap/ic_app"
-+        android:roundIcon="@mipmap/ic_app"
-+        android:label="${appLabel}"
-+        android:multiArch="true"
-+        android:networkSecurityConfig="@xml/network_security_config"
-+        android:theme="@style/Theme.App">
-+
-+        <library android:name="com.google.android.gms" />
-+
-+        <!-- Provision -->
-+
-+        <service
-+            android:name="org.microg.gms.provision.ProvisionService"
-+            android:exported="true"
-+            android:permission="org.microg.gms.PROVISION" />
-+
-+        <!-- Location -->
-+
-+        <activity
-+            android:name="org.microg.gms.ui.PlacePickerActivity"
-+            android:exported="true"
-+            android:label="@string/pick_place_title"
-+            android:process=":ui"
-+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.location.places.ui.PICK_PLACE" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </activity>
-+
-+        <activity
-+            android:name=".locationsharingreporter.service.settings.LocationSharingSettingsActivity"
-+            android:enabled="true"
-+            android:process=":ui"
-+            android:excludeFromRecents="true"
-+            android:taskAffinity="org.microg.gms.settings"
-+            android:exported="false" />
-+
-+        <activity
-+            android:name=".locationsharingreporter.service.settings.LocationShareConfirmActivity"
-+            android:enabled="true"
-+            android:process=":ui"
-+            android:theme="@style/ThemeTranslucentCommon"
-+            android:launchMode="singleInstance"
-+            android:excludeFromRecents="true"
-+            android:exported="false" />
-+
-+        <service android:name="org.microg.gms.places.GeoDataService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.location.places.GeoDataApi" />
-+                <action android:name="com.google.android.gms.location.places.PlacesApi" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.places.PlaceDetectionService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.location.places.PlaceDetectionApi" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.wearable.location.WearableLocationService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
-+                <data
-+                    android:host="*"
-+                    android:pathPrefix="/com/google/android/location/fused/wearable"
-+                    android:scheme="wear" />
-+            </intent-filter>
-+        </service>
-+
-+        <!-- Services Framework -->
-+
-+        <provider
-+            android:name="org.microg.gms.gservices.GServicesProvider"
-+            android:authorities="com.google.android.gsf.gservices"
-+            android:exported="true" />
-+        <provider
-+            android:name="org.microg.gms.settings.GoogleSettingsProvider"
-+            android:authorities="com.google.settings"
-+            android:exported="true" />
-+        <provider
-+            android:name="org.microg.gms.feeds.SubscribedFeedsProvider"
-+            android:authorities="subscribedfeeds"
-+            android:exported="true"
-+            android:multiprocess="false"
-+            android:readPermission="android.permission.SUBSCRIBED_FEEDS_READ"
-+            android:writePermission="android.permission.SUBSCRIBED_FEEDS_WRITE" />
-+        <provider
-+            android:authorities="com.google.android.gms.fileprovider"
-+            android:name="org.microg.gms.settings.GmsFileProvider"
-+            android:exported="false"
-+            android:grantUriPermissions="true">
-+            <meta-data
-+                android:name="android.support.FILE_PROVIDER_PATHS"
-+                android:resource="@xml/file_provider_paths"/>
-+        </provider>
-+
-+        <!-- Device Checkin -->
-+
-+        <service android:name="org.microg.gms.checkin.CheckinService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.checkin.BIND_TO_SERVICE" />
-+            </intent-filter>
-+        </service>
-+
-+        <receiver android:name="org.microg.gms.checkin.TriggerReceiver">
-+            <intent-filter>
-+                <action android:name="android.intent.action.BOOT_COMPLETED" />
-+                <action android:name="android.intent.action.AIRPLANE_MODE" />
-+
-+                <action android:name="android.server.checkin.CHECKIN" />
-+
-+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-+                <action android:name="android.intent.action.PACKAGE_RESTARTED" />
-+            </intent-filter>
-+            <intent-filter>
-+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-+
-+                <category android:name="android.server.checkin.CHECKIN" />
-+            </intent-filter>
-+            <intent-filter>
-+                <action android:name="android.provider.Telephony.SECRET_CODE" />
-+
-+                <data
-+                    android:host="2432546"
-+                    android:scheme="android_secret_code" />
-+            </intent-filter>
-+        </receiver>
-+
-+        <!-- Cloud Messaging -->
-+        <service
-+            android:name="org.microg.gms.gcm.PushRegisterService"
-+            android:process=":persistent">
-+            <intent-filter>
-+                <action android:name="com.google.android.c2dm.intent.REGISTER" />
-+                <action android:name="com.google.android.c2dm.intent.UNREGISTER" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+
-+        <receiver
-+            android:name="org.microg.gms.gcm.PushRegisterReceiver"
-+            android:process=":persistent">
-+            <intent-filter>
-+                <action android:name="com.google.iid.TOKEN_REQUEST" />
-+            </intent-filter>
-+        </receiver>
-+
-+        <service
-+            android:name="org.microg.gms.gcm.McsService"
-+            android:process=":persistent" />
-+
-+        <service
-+            android:name="org.microg.gms.gcm.GcmInGmsService"
-+            android:exported="false"
-+            android:process=":persistent"/>
-+
-+        <receiver
-+            android:name="org.microg.gms.gcm.GcmRegistrationReceiver"
-+            android:exported="false"
-+            android:process=":persistent">
-+            <intent-filter>
-+                <action android:name="org.microg.gms.gcm.REGISTERED" />
-+                <action android:name="org.microg.gms.gcm.REGISTER_ACCOUNT" />
-+                <action android:name="org.microg.gms.gcm.NOTIFY_COMPLETE" />
-+
-+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-+            </intent-filter>
-+        </receiver>
-+
-+        <receiver
-+            android:name="org.microg.gms.gcm.SendReceiver"
-+            android:process=":persistent">
-+            <intent-filter>
-+                <action android:name="com.google.android.gcm.intent.SEND" />
-+            </intent-filter>
-+        </receiver>
-+
-+        <receiver
-+            android:name="org.microg.gms.gcm.ServiceInfoReceiver"
-+            android:process=":persistent" />
-+
-+        <receiver
-+            android:name="org.microg.gms.gcm.TriggerReceiver"
-+            android:process=":persistent">
-+            <intent-filter>
-+                <action android:name="android.intent.action.BOOT_COMPLETED" />
-+                <action android:name="android.intent.action.AIRPLANE_MODE" />
-+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-+                <action android:name="android.net.conn.BACKGROUND_DATA_SETTING_CHANGED" />
-+
-+                <action android:name="org.microg.gms.gcm.RECONNECT" />
-+
-+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-+                <action android:name="android.intent.action.PACKAGE_RESTARTED" />
-+            </intent-filter>
-+            <intent-filter>
-+                <action android:name="android.provider.Telephony.SECRET_CODE" />
-+
-+                <data
-+                    android:host="42678278"
-+                    android:scheme="android_secret_code" />
-+            </intent-filter>
-+        </receiver>
-+
-+        <receiver
-+            android:name="org.microg.gms.gcm.UnregisterReceiver"
-+            android:process=":persistent">
-+            <intent-filter>
-+                <action android:name="android.intent.action.PACKAGE_DATA_CLEARED" />
-+                <action android:name="android.intent.action.PACKAGE_FULLY_REMOVED" />
-+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-+
-+                <data android:scheme="package" />
-+            </intent-filter>
-+        </receiver>
-+
-+        <!-- Car -->
-+
-+        <service android:name="org.microg.gms.car.CarService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.car.service.START" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+
-+        <!-- People -->
-+
-+        <service android:name="org.microg.gms.people.PeopleService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.people.service.START" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+
-+        <service
-+            android:name="org.microg.gms.people.ContactSyncService"
-+            android:exported="false">
-+            <intent-filter>
-+                <action android:name="android.content.SyncAdapter" />
-+            </intent-filter>
-+            <meta-data
-+                android:name="android.content.SyncAdapter"
-+                android:resource="@xml/contact_syncadapter" />
-+        </service>
-+
-+        <!-- Wearable -->
-+
-+        <service android:name="org.microg.gms.wearable.WearableService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.wearable.BIND" />
-+            </intent-filter>
-+        </service>
-+
-+        <activity
-+            android:name="com.google.android.gms.wearable.consent.TermsOfServiceActivity"
-+            android:process=":ui"
-+            android:configChanges="screenSize|orientation|keyboardHidden">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.wearable.TOS"/>
-+                <category android:name="android.intent.category.DEFAULT"/>
-+            </intent-filter>
-+        </activity>
-+
-+        <!-- Auth -->
-+
-+        <service android:name="org.microg.gms.auth.loginservice.GoogleLoginService">
-+            <intent-filter>
-+                <action android:name="android.accounts.AccountAuthenticator" />
-+            </intent-filter>
-+            <intent-filter>
-+                <action android:name="com.google.android.gsf.action.GET_GLS" />
-+            </intent-filter>
-+
-+            <meta-data
-+                android:name="android.accounts.AccountAuthenticator"
-+                android:resource="@xml/authenticator" />
-+            <meta-data
-+                android:name="android.accounts.AccountAuthenticator.customTokens"
-+                android:value="1" />
-+        </service>
-+
-+        <activity
-+            android:name="org.microg.tools.AccountPickerActivity"
-+            android:excludeFromRecents="true"
-+            android:exported="true"
-+            android:process=":ui"
-+            android:theme="@style/Theme.App.DayNight.Dialog.Alert.NoActionBar">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.common.account.CHOOSE_ACCOUNT" />
-+                <action android:name="com.google.android.gms.common.account.CHOOSE_ACCOUNT_USERTILE"/>
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </activity>
-+
-+        <activity
-+            android:name="org.microg.gms.auth.login.LoginActivity"
-+            android:configChanges="keyboardHidden|keyboard|orientation|screenSize"
-+            android:exported="true"
-+            android:process=":ui"
-+            android:launchMode="singleTask"
-+            android:theme="@style/Theme.LoginBlue">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.login.LOGIN" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </activity>
-+
-+        <activity
-+            android:name="org.microg.gms.auth.AskPermissionActivity"
-+            android:excludeFromRecents="true"
-+            android:exported="true"
-+            android:process=":ui"
-+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
-+
-+        <activity
-+            android:name="org.microg.gms.auth.AskPackageOverrideActivity"
-+            android:excludeFromRecents="true"
-+            android:exported="true"
-+            android:process=":ui"
-+            android:theme="@style/Theme.App.Translucent" />
-+
-+        <service
-+            android:name=".auth.GetToken"
-+            android:exported="true" />
-+
-+        <activity
-+            android:name=".auth.TokenActivity"
-+            android:exported="true"
-+            android:process=":ui" />
-+
-+        <provider
-+            android:name="org.microg.gms.auth.AccountContentProvider"
-+            android:authorities="com.google.android.gms.auth.accounts"
-+            android:exported="true" />
-+
-+        <activity
-+            android:name="org.microg.gms.auth.credentials.CredentialPickerActivity"
-+            android:process=":ui">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.api.credentials.PICKER" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </activity>
-+
-+        <service android:name="org.microg.gms.auth.credentials.CredentialsService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.api.credentials.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.auth.proxy.AuthProxyService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.auth.appcert.AppCertService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.be.appcert.AppCertService" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.credential.CredentialManagerService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.credential.manager.service.firstparty.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <activity
-+            android:name="org.microg.gms.auth.signin.AuthSignInActivity"
-+            android:theme="@style/Theme.App.DayNight.Dialog.Alert.NoActionBar"
-+            android:process=":ui"
-+            android:configChanges="keyboardHidden|keyboard|orientation|screenSize"
-+            android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.GOOGLE_SIGN_IN" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </activity>
-+
-+        <service android:name=".locationsharingreporter.service.LocationSharingReporterApiService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.locationsharingreporter.service.START" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.signin.SignInService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.signin.service.START" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.auth.signin.AuthSignInService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.api.signin.service.START" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+
-+        <service
-+            android:name="org.microg.gms.auth.signin.SignInConfigurationService"
-+            android:exported="false" />
-+
-+        <service android:name="org.microg.gms.auth.credentials.identity.AuthorizationService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.api.identity.service.authorization.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.auth.credentials.identity.IdentitySignInService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.api.identity.service.signin.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.auth.folsom.KeyRetrievalService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.key.retrieval.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <activity android:name="org.microg.gms.auth.folsom.ui.GenericActivity"
-+            android:exported="false"
-+            android:process=":ui"/>
-+
-+        <activity
-+            android:name="org.microg.gms.auth.credentials.identity.IdentityFidoProxyActivity"
-+            android:exported="false"
-+            android:process=":ui"
-+            android:theme="@style/Theme.App.Translucent"
-+            android:excludeFromRecents="true"/>
-+
-+        <activity
-+            android:theme="@style/Theme.AppCompat.Dialog.Alert"
-+            android:name="org.microg.gms.auth.signin.AssistedSignInActivity"
-+            android:enabled="true"
-+            android:exported="true"
-+            android:process=":ui"
-+            android:configChanges="keyboardHidden|keyboard|orientation|screenSize|smallestScreenSize|layoutDirection"
-+            android:launchMode="singleTask"
-+            android:excludeFromRecents="false">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.api.credentials.ASSISTED_SIGNIN"/>
-+                <category android:name="android.intent.category.DEFAULT"/>
-+            </intent-filter>
-+        </activity>
-+
-+        <activity
-+            android:name="org.microg.gms.auth.consent.ConsentSignInActivity"
-+            android:process=":ui"
-+            android:exported="false"
-+            android:excludeFromRecents="true"
-+            android:configChanges="keyboardHidden|keyboard|orientation|screenSize"
-+            android:theme="@style/Theme.AppCompat.DayNight.Dialog"/>
-+
-+        <activity
-+            android:name="org.microg.gms.accountaction.AccountActionActivity"
-+            android:exported="true"
-+            android:theme="@style/Theme.LoginBlue"/>
-+
-+        <!-- Games -->
-+
-+        <activity
-+            android:name="org.microg.gms.games.ui.GamePlayDataActivity"
-+            android:process=":ui"
-+            android:exported="false"
-+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-+
-+        <activity
-+            android:name="org.microg.gms.games.ui.InGameUiActivity"
-+            android:process=":ui"
-+            android:configChanges="keyboardHidden|keyboard|orientation|screenSize|smallestScreenSize|layoutDirection"
-+            android:excludeFromRecents="false"
-+            android:exported="true"
-+            android:launchMode="singleTask"
-+            android:theme="@style/Theme.AppCompat.Dialog.Alert">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.games.SHOW_SELECT_SNAPSHOT"/>
-+                <action android:name="com.google.android.gms.games.VIEW_ACHIEVEMENTS" />
-+                <action android:name="com.google.android.gms.games.VIEW_LEADERBOARDS" />
-+                <action android:name="com.google.android.gms.games.VIEW_LEADERBOARD_SCORES" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </activity>
-+
-+        <activity
-+            android:name="org.microg.gms.games.GamesSignInActivity"
-+            android:enabled="true"
-+            android:exported="false"
-+            android:process=":ui"
-+            android:configChanges="keyboardHidden|keyboard|orientation|screenSize"
-+            android:theme="@style/Theme.App.Translucent"/>
-+
-+        <activity
-+            android:name="org.microg.gms.games.UpgradeActivity"
-+            android:process=":ui"
-+            android:theme="@style/Theme.AppCompat.DayNight.Dialog">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.games.PLAY_GAMES_UPGRADE" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </activity>
-+
-+        <service
-+            android:name="org.microg.gms.games.GamesService"
-+            android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.games.service.START" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+
-+        <service
-+            android:name="org.microg.gms.games.GamesConnectService"
-+            android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.games.internal.connect.service.START" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+
-+        <service
-+            android:name="org.microg.gms.games.GamesConfigurationService"
-+            android:exported="false" />
-+
-+        <!-- Chimera -->
-+        <provider
-+            android:name="org.microg.gms.chimera.ServiceProvider"
-+            android:authorities="com.google.android.gms.chimera"
-+            android:exported="true" />
-+
-+        <!-- Fonts -->
-+        <provider
-+            android:name="org.microg.gms.fonts.FontsProvider"
-+            android:authorities="com.google.android.gms.fonts"
-+            android:exported="true" />
-+
-+        <!-- microG Settings activity -->
-+        <activity
-+            android:name="org.microg.gms.ui.MainSettingsActivity"
-+            android:exported="true"
-+            android:icon="@mipmap/ic_app_settings"
-+            android:label="@string/gms_settings_name"
-+            android:process=":ui"
-+            android:roundIcon="@mipmap/ic_app_settings"
-+            android:taskAffinity="org.microg.gms.settings">
-+            <intent-filter>
-+                <action android:name="android.intent.action.VIEW" />
-+                <data android:scheme="x-gms-settings" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+            <intent-filter>
-+                <action android:name="android.intent.action.MAIN" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+            <intent-filter>
-+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
-+                <action android:name="com.google.android.gms.settings.EXPOSURE_NOTIFICATION_SETTINGS" />
-+                <action android:name="org.microg.gms.settings.CHECKIN_SETTINGS" />
-+                <action android:name="org.microg.gms.settings.GCM_SETTINGS" />
-+                <action android:name="org.microg.gms.settings.MICROG_APP_GCM_SETTINGS" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </activity>
-+
-+        <!-- microG Settings activity-alias shown in Launcher -->
-+        <activity-alias
-+            android:name="org.microg.gms.ui.SettingsActivity"
-+            android:icon="@mipmap/ic_app_settings"
-+            android:label="@string/gms_settings_name"
-+            android:roundIcon="@mipmap/ic_app_settings"
-+            android:process=":ui"
-+            android:targetActivity="org.microg.gms.ui.MainSettingsActivity"
-+            android:taskAffinity="org.microg.gms.settings">
-+            <intent-filter>
-+                <action android:name="android.intent.action.MAIN" />
-+
-+                <category android:name="android.intent.category.LAUNCHER" />
-+            </intent-filter>
-+        </activity-alias>
-+
-+        <activity
-+            android:name="org.microg.gms.ui.SettingsDashboardActivity"
-+            android:icon="@mipmap/ic_app_settings"
-+            android:label="Legacy microG Settings"
-+            android:process=":ui"
-+            android:roundIcon="@mipmap/ic_app_settings"
-+            android:taskAffinity="org.microg.gms.settings" />
-+
-+        <!-- microG Settings embedded in System Settings on SDK 23 and newer -->
-+        <activity-alias
-+            android:name="org.microg.gms.ui.SettingsActivityLink"
-+            android:icon="@mipmap/ic_app_settings"
-+            android:label="@string/gms_settings_name"
-+            android:process=":ui"
-+            android:targetActivity="org.microg.gms.ui.MainSettingsActivity"
-+            android:taskAffinity="org.microg.gms.settings">
-+            <intent-filter>
-+                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
-+            </intent-filter>
-+
-+            <meta-data
-+                android:name="com.android.settings.category"
-+                android:value="com.android.settings.category.device" />
-+            <meta-data
-+                android:name="com.android.settings.icon"
-+                android:resource="@drawable/ic_app_settings_system" />
-+            <meta-data
-+                android:name="com.android.settings.summary"
-+                android:resource="@string/gms_settings_summary" />
-+        </activity-alias>
-+
-+        <!-- microG Settings activity-alias for Google settings compatibility -->
-+        <activity-alias
-+            android:name="com.google.android.gms.app.settings.GoogleSettingsLink"
-+            android:process=":ui"
-+            android:exported="true"
-+            android:targetActivity="org.microg.gms.ui.MainSettingsActivity"
-+            android:taskAffinity="org.microg.gms.settings">
-+        </activity-alias>
-+
-+        <activity
-+            android:name="org.microg.gms.ui.AskPushPermission"
-+            android:excludeFromRecents="true"
-+            android:process=":ui"
-+            android:theme="@style/Theme.App.Translucent" />
-+
-+        <activity
-+            android:name="org.microg.gms.ui.GoogleMoreFragment$AsActivity"
-+            android:label="@string/gms_settings_name"
-+            android:process=":ui"
-+            android:taskAffinity="org.microg.gms.settings" />
-+
-+        <activity
-+            android:name="org.microg.gms.ui.SelfCheckFragment$AsActivity"
-+            android:label="@string/self_check_title"
-+            android:process=":ui"
-+            android:taskAffinity="org.microg.gms.settings" />
-+
-+        <activity
-+            android:name="org.microg.gms.accountsettings.ui.MainActivity"
-+            android:process=":ui"
-+            android:exported="false"
-+            android:taskAffinity="org.microg.gms.settings"
-+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.accountsettings.MY_ACCOUNT" />
-+                <action android:name="com.google.android.gms.accountsettings.ACCOUNT_PREFERENCES_SETTINGS" />
-+                <action android:name="com.google.android.gms.accountsettings.PRIVACY_SETTINGS" />
-+                <action android:name="com.google.android.gms.accountsettings.SECURITY_SETTINGS" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </activity>
-+
-+        <activity
-+            android:name="org.microg.gms.accountsettings.ui.LoaderActivity"
-+            android:process=":ui"
-+            android:exported="true"
-+            android:excludeFromRecents="true"
-+            android:theme="@style/Theme.App.DayNight.Dialog.Alert.NoActionBar">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.accountsettings.action.VIEW_SETTINGS" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.accountsettings.action.BROWSE_SETTINGS" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+                <category android:name="android.intent.category.BROWSABLE" />
-+            </intent-filter>
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.location.settings.LOCATION_SHARING"/>
-+                <category android:name="android.intent.category.DEFAULT"/>
-+            </intent-filter>
-+        </activity>
-+
-+        <activity
-+            android:name="org.microg.gms.ui.LocationSettingsActivity"
-+            android:process=":ui"
-+            android:taskAffinity="org.microg.gms.settings">
-+            <intent-filter>
-+                <action android:name="com.google.android.location.settings.LOCATION_REPORTING_SETTINGS" />
-+                <action android:name="com.google.android.gms.location.settings.LOCATION_REPORTING_SETTINGS" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </activity>
-+
-+        <!-- Phenotype -->
-+
-+        <provider
-+            android:name="org.microg.gms.phenotype.ConfigurationProvider"
-+            android:authorities="com.google.android.gms.phenotype"
-+            android:exported="true" />
-+
-+        <service android:name="org.microg.gms.phenotype.PhenotypeService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.phenotype.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <!-- Help -->
-+
-+        <service
-+            android:name="org.microg.gms.googlehelp.GoogleHelpService"
-+            android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.googlehelp.service.GoogleHelpService.START" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+
-+        <activity
-+            android:name="org.microg.gms.googlehelp.ui.GoogleHelpRedirectActivity"
-+            android:theme="@style/Theme.App.Translucent"
-+            android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.googlehelp.HELP" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+
-+            <intent-filter>
-+                <action android:name="android.intent.action.SEARCH" />
-+            </intent-filter>
-+        </activity>
-+
-+        <!-- PoToken -->
-+
-+        <service android:name="org.microg.gms.potokens.PoTokensService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.potokens.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <!-- backup -->
-+
-+        <activity
-+            android:name="org.microg.gms.backup.BackupSettingsActivity"
-+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-+            android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.backup.ACTION_BACKUP_SETTINGS"/>
-+                <category android:name="android.intent.category.DEFAULT"/>
-+            </intent-filter>
-+        </activity>
-+
-+        <!-- Other -->
-+
-+        <service
-+            android:name="org.microg.gms.measurement.MeasurementService"
-+            android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.measurement.START" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+        <service
-+            android:name="org.microg.gms.languageprofile.LanguageProfileService"
-+            android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.languageprofile.service.START" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+        <service android:name="org.microg.gms.mdm.NetworkQualityService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.mdm.services.START" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+        <service android:name="org.microg.gms.icing.LightweightIndexService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.icing.LIGHTWEIGHT_INDEX_SERVICE" />
-+            </intent-filter>
-+        </service>
-+        <service android:name="org.microg.gms.icing.IndexService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.icing.INDEX_SERVICE" />
-+            </intent-filter>
-+        </service>
-+        <service
-+            android:name=".analytics.service.AnalyticsService"
-+            android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.analytics.service.START" />
-+            </intent-filter>
-+        </service>
-+        <service android:name="org.microg.gms.playlog.PlayLogService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.playlog.service.START" />
-+            </intent-filter>
-+        </service>
-+        <service
-+            android:name=".gcm.http.GoogleHttpService"
-+            android:exported="true" />
-+
-+        <service android:name="org.microg.gms.ads.GService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.ads.gservice.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <!-- family -->
-+
-+        <activity
-+            android:name="com.google.android.gms.family.v2.manage.FamilyManagementActivity"
-+            android:exported="true"
-+            android:configChanges="screenSize|screenLayout|orientation"
-+            android:process=":ui">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.family.v2.MANAGE"/>
-+                <category android:name="android.intent.category.DEFAULT"/>
-+            </intent-filter>
-+        </activity>
-+
-+        <activity
-+            android:name="com.google.android.gms.family.v2.manage.DeleteMemberActivity"
-+            android:exported="true"
-+            android:configChanges="screenSize|screenLayout|orientation"
-+            android:process=":ui">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.family.v2.DELETE_MEMBER"/>
-+                <category android:name="android.intent.category.DEFAULT"/>
-+            </intent-filter>
-+        </activity>
-+
-+        <!-- feedback -->
-+
-+        <service android:name="org.microg.gms.feedback.FeedbackService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.feedback.internal.IFeedbackService" />
-+            </intent-filter>
-+        </service>
-+
-+        <activity
-+            android:name="com.google.android.gms.feedback.FeedbackActivity"
-+            android:exported="true"
-+            android:excludeFromRecents="true"
-+            android:theme="@style/Theme.App.Translucent"/>
-+
-+        <activity
-+            android:name="com.google.android.gms.credential.manager.PasswordManagerActivity"
-+            android:exported="true"
-+            android:process=":ui"
-+            android:excludeFromRecents="true"
-+            android:theme="@style/Theme.Translucent"/>
-+
-+        <service android:name="org.microg.gms.clearcut.ClearcutLoggerService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.clearcut.service.START" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+        <service android:name="org.microg.gms.drive.api.DriveApiService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.drive.ApiService.START" />
-+                <action android:name="com.google.android.gms.drive.ApiService.STOP" />
-+                <action android:name="com.google.android.gms.drive.ApiService.RESET_AFTER_BOOT" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+        <service android:name="org.microg.gms.reminders.RemindersService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.reminders.service.START" />
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.wallet.PaymentService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.wallet.service.BIND" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.firebase.dynamiclinks.DynamicLinksService">
-+            <intent-filter>
-+                <action android:name="com.google.firebase.dynamiclinks.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.udc.FacsCacheService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.facs.cache.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.usagereporting.UsageReportingService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.usagereporting.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.pseudonymous.PseudonymousIdService" >
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.pseudonymous.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.gass.GassService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.gass.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.auth.account.data.AccountDataService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.auth.account.data.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name=".semanticlocation.SemanticLocationService" android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.semanticlocation.service.START_ODLH" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name=".semanticlocationhistory.SemanticLocationHistoryService" android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.semanticlocationhistory.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <activity
-+            android:name="com.google.android.location.settings.LocationHistorySettingsActivity"
-+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-+            android:exported="true">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.location.settings.LOCATION_HISTORY"/>
-+                <category android:name="android.intent.category.DEFAULT"/>
-+            </intent-filter>
-+        </activity>
-+
-+        <service android:name="org.microg.gms.audit.AuditService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.audit.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <service android:name="org.microg.gms.common.ClientTelemetryService">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.common.telemetry.service.START" />
-+            </intent-filter>
-+        </service>
-+
-+        <activity
-+            android:name="org.microg.gms.mlkit.BarcodeScanningActivity"
-+            android:exported="true"
-+            android:process=":ui"
-+            android:excludeFromRecents="true"
-+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-+            <intent-filter>
-+                <action android:name="com.google.android.gms.mlkit.ACTION_SCAN_BARCODE" />
-+
-+                <category android:name="android.intent.category.DEFAULT" />
-+            </intent-filter>
-+        </activity>
-+
-+        <service
-+            android:name="com.google.android.gms.maps.auth.ApiTokenService"
-+            android:exported="true"/>
-+
-+        <service android:name="org.microg.gms.DummyService">
-+            <intent-filter>
-+                <action android:name="com.google.android.contextmanager.service.ContextManagerService.START" />
-+                <action android:name="com.google.android.gms.accounts.ACCOUNT_SERVICE" />
-+                <action android:name="com.google.android.gms.ads.identifier.service.EVENT_ATTESTATION" />
-+                <action android:name="com.google.android.gms.ads.service.CACHE" />
-+                <action android:name="com.google.android.gms.ads.service.CONSENT_LOOKUP" />
-+                <action android:name="com.google.android.gms.ads.service.HTTP" />
-+                <action android:name="com.google.android.gms.appstate.service.START" />
-+                <action android:name="com.google.android.gms.appusage.service.START" />
-+                <action android:name="com.google.android.gms.asterism.service.START" />
-+                <action android:name="com.google.android.gms.audiomodem.service.AudioModemService.START" />
-+                <action android:name="com.google.android.gms.auth.account.authapi.START" />
-+                <action android:name="com.google.android.gms.auth.account.authenticator.auto.service.START" />
-+                <action android:name="com.google.android.gms.auth.account.authenticator.chromeos.START" />
-+                <action android:name="com.google.android.gms.auth.account.authenticator.tv.service.START" />
-+                <action android:name="com.google.android.gms.auth.api.identity.service.credentialsaving.START" />
-+                <action android:name="com.google.android.gms.auth.api.phone.service.InternalService.START" />
-+                <action android:name="com.google.android.gms.auth.api.signin.service.START" />
-+                <action android:name="com.google.android.gms.auth.config.service.START" />
-+                <action android:name="com.google.android.gms.auth.cryptauth.cryptauthservice.START" />
-+                <action android:name="com.google.android.gms.auth.proximity.devicesyncservice.START" />
-+                <action android:name="com.google.android.gms.auth.proximity.securechannelservice.START" />
-+                <action android:name="com.google.android.gms.auth.proximity.START" />
-+                <action android:name="com.google.android.gms.auth.service.START" />
-+                <action android:name="com.google.android.gms.backup.G1_BACKUP" />
-+                <action android:name="com.google.android.gms.backup.G1_RESTORE" />
-+                <action android:name="com.google.android.gms.backup.GMS_MODULE_RESTORE" />
-+                <action android:name="com.google.android.gms.beacon.internal.IBleService.START" />
-+                <action android:name="com.google.android.gms.carrierauth.service.START" />
-+                <action android:name="com.google.android.gms.cast.firstparty.START" />
-+                <action android:name="com.google.android.gms.cast_mirroring.service.START" />
-+                <action android:name="com.google.android.gms.cast.remote_display.service.START" />
-+                <action android:name="com.google.android.gms.chromesync.service.START" />
-+                <action android:name="com.google.android.gms.common.download.START" />
-+                <action android:name="com.google.android.gms.common.service.START" />
-+                <action android:name="com.google.android.gms.config.START" />
-+                <action android:name="com.google.android.gms.constellation.service.START" />
-+                <action android:name="com.google.android.gms.deviceconnection.service.START" />
-+                <action android:name="com.google.android.gms.enterprise.loader.service.START" />
-+                <action android:name="com.google.android.gms.facs.internal.service.START" />
-+                <action android:name="com.google.android.gms.fido.credentialstore.internal_service.START" />
-+                <action android:name="com.google.android.gms.fido.fido2.regular.START" />
-+                <action android:name="com.google.android.gms.fido.fido2.zeroparty.START" />
-+                <action android:name="com.google.android.gms.fido.sourcedevice.service.START" />
-+                <action android:name="com.google.android.gms.fido.targetdevice.internal_service.START" />
-+                <action android:name="com.google.android.gms.fido.u2f.privileged.START" />
-+                <action android:name="com.google.android.gms.fido.u2f.thirdparty.START" />
-+                <action android:name="com.google.android.gms.fido.u2f.zeroparty.START" />
-+                <action android:name="com.google.android.gms.fitness.BleApi" />
-+                <action android:name="com.google.android.gms.fitness.GoalsApi" />
-+                <action android:name="com.google.android.gms.fitness.GoogleFitnessService.START" />
-+                <action android:name="com.google.android.gms.fitness.InternalApi" />
-+                <action android:name="com.google.android.gms.fitness.SensorsApi" />
-+                <action android:name="com.google.android.gms.fonts.service.START" />
-+                <action android:name="com.google.android.gms.freighter.service.START" />
-+                <action android:name="com.google.android.gms.growth.service.START" />
-+                <action android:name="com.google.android.gms.googlehelp.service.GoogleHelpService.START" />
-+                <action android:name="com.google.android.gms.herrevad.services.LightweightNetworkQualityAndroidService.START" />
-+                <action android:name="com.google.android.gms.identity.service.BIND" />
-+                <action android:name="com.google.android.gms.inappreach.service.START"/>
-+                <action android:name="com.google.android.gms.instantapps.START" />
-+                <action android:name="com.google.android.gms.kids.service.START" />
-+                <action android:name="com.google.android.gms.learning.internal.dynamitesupport.START" />
-+                <action android:name="com.google.android.gms.learning.intservice.START" />
-+                <action android:name="com.google.android.gms.learning.predictor.START" />
-+                <action android:name="com.google.android.gms.learning.trainer.START" />
-+                <action android:name="com.google.android.gms.learning.training.background.START" />
-+                <action android:name="com.google.android.gms.locationsharing.api.START" />
-+                <action android:name="com.google.android.gms.locationsharingreporter.service.START" />
-+                <action android:name="com.google.android.gms.lockbox.service.START" />
-+                <action android:name="com.google.android.gms.matchstick.lighter.service.START" />
-+                <action android:name="com.google.android.gms.mdm.services.DeviceManagerApiService.START" />
-+                <action android:name="com.google.android.gms.mdns.service.START" />
-+                <action android:name="com.google.android.gms.nearby.bootstrap.service.NearbyBootstrapService.START" />
-+                <action android:name="com.google.android.gms.nearby.connection.service.START" />
-+                <action android:name="com.google.android.gms.nearby.fastpair.START" />
-+                <action android:name="com.google.android.gms.nearby.messages.service.NearbyMessagesService.START" />
-+                <action android:name="com.google.android.gms.nearby.sharing.service.NearbySharingService.START" />
-+                <action android:name="com.google.android.gms.nearby.sharing.START_SERVICE" />
-+                <action android:name="com.google.android.gms.notifications.service.START" />
-+                <action android:name="com.google.android.gms.ocr.service.internal.START" />
-+                <action android:name="com.google.android.gms.ocr.service.START" />
-+                <action android:name="com.google.android.gms.payse.service.BIND" />
-+                <action android:name="com.google.android.gms.people.contactssync.service.START" />
-+                <action android:name="com.google.android.gms.photos.autobackup.service.START" />
-+                <action android:name="com.google.android.gms.plus.service.default.INTENT" />
-+                <action android:name="com.google.android.gms.plus.service.image.INTENT" />
-+                <action android:name="com.google.android.gms.plus.service.internal.START" />
-+                <action android:name="com.google.android.gms.plus.service.START" />
-+                <action android:name="com.google.android.gms.rcs.START" />
-+                <action android:name="com.google.android.gms.romanesco.MODULE_BACKUP_AGENT" />
-+                <action android:name="com.google.android.gms.romanesco.service.START" />
-+                <action android:name="com.google.android.gms.search.service.SEARCH_AUTH_START" />
-+                <action android:name="com.google.android.gms.sesame.service.BIND" />
-+                <action android:name="com.google.android.gms.telephonyspam.service.START" />
-+                <action android:name="com.google.android.gms.testsupport.service.START" />
-+                <action android:name="com.google.android.gms.scheduler.ACTION_PROXY_SCHEDULE" />
-+                <action android:name="com.google.android.gms.setup.auth.SecondDeviceAuth.START" />
-+                <action android:name="com.google.android.gms.smartdevice.d2d.SourceDeviceService.START" />
-+                <action android:name="com.google.android.gms.smartdevice.d2d.TargetDeviceService.START" />
-+                <action android:name="com.google.android.gms.smartdevice.directtransfer.SourceDirectTransferService.START" />
-+                <action android:name="com.google.android.gms.smartdevice.directtransfer.TargetDirectTransferService.START" />
-+                <action android:name="com.google.android.gms.smartdevice.postsetup.PostSetupService.START" />
-+                <action android:name="com.google.android.gms.smartdevice.setup.accounts.AccountsService.START" />
-+                <action android:name="com.google.android.gms.smartdevice.wifi.START_WIFI_HELPER_SERVICE" />
-+                <action android:name="com.google.android.gms.social.location.activity.service.START" />
-+                <action android:name="com.google.android.gms.statementservice.EXECUTE" />
-+                <action android:name="com.google.android.gms.stats.ACTION_UPLOAD_DROPBOX_ENTRIES" />
-+                <action android:name="com.google.android.gms.speech.service.START" />
-+                <action android:name="com.google.android.gms.thunderbird.service.START" />
-+                <action android:name="com.google.android.gms.trustagent.BridgeApi.START" />
-+                <action android:name="com.google.android.gms.trustagent.StateApi.START" />
-+                <action android:name="com.google.android.gms.trustagent.trustlet.trustletmanagerservice.BIND" />
-+                <action android:name="com.google.android.gms.trustlet.bluetooth.service.BIND" />
-+                <action android:name="com.google.android.gms.trustlet.connectionlessble.service.BIND" />
-+                <action android:name="com.google.android.gms.trustlet.face.service.BIND" />
-+                <action android:name="com.google.android.gms.trustlet.nfc.service.BIND" />
-+                <action android:name="com.google.android.gms.trustlet.onbody.service.BIND" />
-+                <action android:name="com.google.android.gms.trustlet.place.service.BIND" />
-+                <action android:name="com.google.android.gms.trustlet.voiceunlock.service.BIND" />
-+                <action android:name="com.google.android.gms.udc.service.START" />
-+                <action android:name="com.google.android.gms.update.START_API_SERVICE" />
-+                <action android:name="com.google.android.gms.update.START_SERVICE" />
-+                <action android:name="com.google.android.gms.update.START_SINGLE_USER_API_SERVICE" />
-+                <action android:name="com.google.android.gms.update.START_TV_API_SERVICE" />
-+                <action android:name="com.google.android.gms.userlocation.service.START" />
-+                <action android:name="com.google.android.gms.vehicle.cabin.service.START" />
-+                <action android:name="com.google.android.gms.vehicle.climate.service.START" />
-+                <action android:name="com.google.android.gms.vehicle.info.service.START" />
-+                <action android:name="com.google.android.gms.walletp2p.service.firstparty.BIND" />
-+                <action android:name="com.google.android.gms.walletp2p.service.zeroparty.BIND" />
-+                <action android:name="com.google.android.gms.wearable.BIND" />
-+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
-+                <action android:name="com.google.android.gms.wearable.NODE_CHANGED" />
-+                <action android:name="com.google.android.mdd.service.START" />
-+                <action android:name="com.google.android.mdh.service.START" />
-+                <action android:name="com.google.android.mdh.service.listener.START" />
-+                <action android:name="com.google.android.mobstore.service.START" />
-+
-+                <action
-+                    android:name="com.google.android.gms.wearable.BIND_LISTENER"
-+                    tools:ignore="WearableBindListener" />
-+            </intent-filter>
-+        </service>
-+    </application>
-+
-+</manifest>
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2026-01-01 18:27:34.269989921 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2026-01-01 18:28:05.489989909 +0300
+--- inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2026-02-27 15:35:37.555992883 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2026-02-27 15:36:06.728861292 +0300
 @@ -17,6 +17,8 @@
  import org.microg.gms.accountaction.ErrorResolverKt;
  import org.microg.gms.accountaction.Resolution;
@@ -4862,7 +3273,7 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthMan
                  .service(service)
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java.orig input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java.orig
 --- inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java.orig	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java.orig	2026-01-01 18:27:15.709989928 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java.orig	2026-02-27 15:36:06.728999381 +0300
 @@ -0,0 +1,367 @@
 +/*
 + * SPDX-FileCopyrightText: 2023 microG Project Team
@@ -5232,8 +3643,8 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthMan
 +    }
 +}
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java input/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2026-01-01 18:27:34.269989921 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2026-01-01 18:28:05.489989909 +0300
+--- inputbak/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2026-02-27 15:35:37.556391740 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2026-02-27 15:36:06.729135807 +0300
 @@ -78,8 +78,7 @@
  import static android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT;
  import static org.microg.gms.accountsettings.ui.ExtensionsKt.EXTRA_URL;
@@ -5254,8 +3665,8 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/login/L
          new AuthRequest().fromContext(this)
                  .appIsGms()
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java input/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2026-01-01 18:27:34.269989921 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2026-01-01 18:28:05.497989909 +0300
+--- inputbak/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2026-02-27 15:35:37.556391740 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2026-02-27 15:36:06.730586840 +0300
 @@ -30,6 +30,7 @@
  import com.google.android.gms.common.internal.CertData;
  import org.microg.gms.auth.*;
@@ -5274,8 +3685,8 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/loginse
                  i.putExtra(KEY_ACCOUNT_NAME, account.name);
                  i.putExtra(KEY_AUTHTOKEN, authTokenType);
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java input/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2026-01-01 18:27:34.273989921 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2026-01-01 18:28:05.497989909 +0300
+--- inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2026-02-27 15:35:37.558342516 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2026-02-27 15:36:06.730917538 +0300
 @@ -20,11 +20,12 @@
  import android.content.ContentValues;
  import android.database.Cursor;
@@ -5293,8 +3704,8 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GS
      public static int setString(ContentResolver resolver, String key, String value) {
          ContentValues values = new ContentValues();
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java input/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2026-01-01 18:27:34.273989921 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2026-01-01 18:28:05.497989909 +0300
+--- inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2026-02-27 15:35:37.558342516 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2026-02-27 15:36:06.731199626 +0300
 @@ -22,6 +22,7 @@
  import android.database.MatrixCursor;
  import android.net.Uri;
@@ -5313,8 +3724,8 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GS
      public static final Uri OVERRIDE_URI = Uri.withAppendedPath(CONTENT_URI, "override");
      public static final Uri PREFIX_URI = Uri.withAppendedPath(CONTENT_URI, "prefix");
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java input/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2026-01-01 18:27:34.277989921 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2026-01-01 18:28:05.501989909 +0300
+--- inputbak/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2026-02-27 15:35:37.558941582 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/people/PeopleManager.java	2026-02-27 15:36:06.732049180 +0300
 @@ -155,7 +155,7 @@
      }
  
@@ -5324,9 +3735,33 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/people/Peopl
          authManager.setPermitted(true);
          String result = authManager.getAuthToken();
          if (result == null) {
+diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2026-02-27 15:35:37.563577728 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2026-02-27 15:36:06.732693876 +0300
+@@ -14,12 +14,14 @@
+ import android.webkit.WebView
+ import org.microg.gms.profile.Build.VERSION.SDK_INT
+ 
+-const val ACTION_BROWSE_SETTINGS = "com.google.android.gms.accountsettings.action.BROWSE_SETTINGS"
+-const val ACTION_MY_ACCOUNT = "com.google.android.gms.accountsettings.MY_ACCOUNT"
+-const val ACTION_ACCOUNT_PREFERENCES_SETTINGS = "com.google.android.gms.accountsettings.ACCOUNT_PREFERENCES_SETTINGS"
+-const val ACTION_PRIVACY_SETTINGS = "com.google.android.gms.accountsettings.PRIVACY_SETTINGS"
+-const val ACTION_SECURITY_SETTINGS = "com.google.android.gms.accountsettings.SECURITY_SETTINGS"
+-const val ACTION_LOCATION_SHARING = "com.google.android.gms.location.settings.LOCATION_SHARING"
++import com.google.android.gms.base.BuildConfig
++
++const val ACTION_BROWSE_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.action.BROWSE_SETTINGS"
++const val ACTION_MY_ACCOUNT = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.MY_ACCOUNT"
++const val ACTION_ACCOUNT_PREFERENCES_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.ACCOUNT_PREFERENCES_SETTINGS"
++const val ACTION_PRIVACY_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.PRIVACY_SETTINGS"
++const val ACTION_SECURITY_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.SECURITY_SETTINGS"
++const val ACTION_LOCATION_SHARING = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.location.settings.LOCATION_SHARING"
+ 
+ const val EXTRA_CALLING_PACKAGE_NAME = "extra.callingPackageName"
+ const val EXTRA_IGNORE_ACCOUNT = "extra.ignoreAccount"
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2026-01-01 18:27:34.289989921 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2026-01-01 18:28:05.501989909 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2026-02-27 15:35:37.563311200 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/WebViewHelper.kt	2026-02-27 15:36:06.732362418 +0300
 @@ -30,6 +30,7 @@
  import org.microg.gms.auth.AuthManager
  import org.microg.gms.auth.login.LoginActivity
@@ -5349,35 +3784,11 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountset
          }"
      }
 -}
-\ No newline at end of file
+\ В конце файла нет новой строки
 +}
-diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2026-01-01 18:27:34.293989920 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/extensions.kt	2026-01-01 18:28:05.505989909 +0300
-@@ -14,12 +14,14 @@
- import android.webkit.WebView
- import org.microg.gms.profile.Build.VERSION.SDK_INT
- 
--const val ACTION_BROWSE_SETTINGS = "com.google.android.gms.accountsettings.action.BROWSE_SETTINGS"
--const val ACTION_MY_ACCOUNT = "com.google.android.gms.accountsettings.MY_ACCOUNT"
--const val ACTION_ACCOUNT_PREFERENCES_SETTINGS = "com.google.android.gms.accountsettings.ACCOUNT_PREFERENCES_SETTINGS"
--const val ACTION_PRIVACY_SETTINGS = "com.google.android.gms.accountsettings.PRIVACY_SETTINGS"
--const val ACTION_SECURITY_SETTINGS = "com.google.android.gms.accountsettings.SECURITY_SETTINGS"
--const val ACTION_LOCATION_SHARING = "com.google.android.gms.location.settings.LOCATION_SHARING"
-+import com.google.android.gms.base.BuildConfig
-+
-+const val ACTION_BROWSE_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.action.BROWSE_SETTINGS"
-+const val ACTION_MY_ACCOUNT = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.MY_ACCOUNT"
-+const val ACTION_ACCOUNT_PREFERENCES_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.ACCOUNT_PREFERENCES_SETTINGS"
-+const val ACTION_PRIVACY_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.PRIVACY_SETTINGS"
-+const val ACTION_SECURITY_SETTINGS = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.accountsettings.SECURITY_SETTINGS"
-+const val ACTION_LOCATION_SHARING = BuildConfig.BASE_PACKAGE_NAME + ".android.gms.location.settings.LOCATION_SHARING"
- 
- const val EXTRA_CALLING_PACKAGE_NAME = "extra.callingPackageName"
- const val EXTRA_IGNORE_ACCOUNT = "extra.ignoreAccount"
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt input/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2026-01-01 18:27:34.297989920 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2026-01-01 18:28:05.505989909 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2026-02-27 15:35:37.566037360 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/chimera/ServiceProvider.kt	2026-02-27 15:36:06.732958924 +0300
 @@ -15,6 +15,7 @@
  import android.os.Bundle
  import android.util.Log
@@ -5396,8 +3807,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/chimera/Se
  
      companion object {
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt input/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2026-01-01 18:27:34.313989920 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2026-01-01 18:28:05.505989909 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2026-02-27 15:35:37.567392020 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/games/extensions.kt	2026-02-27 15:36:06.733330991 +0300
 @@ -218,7 +218,7 @@
  }
  
@@ -5408,8 +3819,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/exte
      val authToken = withContext(Dispatchers.IO) { authManager.requestAuthWithBackgroundResolution(false).auth }
      val androidId = getSettings(context, CheckIn.getContentUri(context), arrayOf(CheckIn.ANDROID_ID)) { cursor: Cursor -> cursor.getLong(0) }
 diff -Naur inputbak/play-services-core/src/main/res/xml/authenticator.xml input/play-services-core/src/main/res/xml/authenticator.xml
---- inputbak/play-services-core/src/main/res/xml/authenticator.xml	2026-01-01 18:27:34.369989920 +0300
-+++ input/play-services-core/src/main/res/xml/authenticator.xml	2026-01-01 18:28:05.509989909 +0300
+--- inputbak/play-services-core/src/main/res/xml/authenticator.xml	2026-02-27 15:35:37.590947879 +0300
++++ input/play-services-core/src/main/res/xml/authenticator.xml	2026-02-27 15:36:06.733750928 +0300
 @@ -16,7 +16,7 @@
  
  <account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
@@ -5420,8 +3831,8 @@ diff -Naur inputbak/play-services-core/src/main/res/xml/authenticator.xml input/
      android:icon="@drawable/proprietary_auth_gls_ic_google_selected"
      android:smallIcon="@drawable/proprietary_auth_gls_ic_google_minitab_selected"
 diff -Naur inputbak/play-services-core/src/main/res/xml/preferences_accounts.xml input/play-services-core/src/main/res/xml/preferences_accounts.xml
---- inputbak/play-services-core/src/main/res/xml/preferences_accounts.xml	2026-01-01 18:27:34.369989920 +0300
-+++ input/play-services-core/src/main/res/xml/preferences_accounts.xml	2026-01-01 18:28:05.509989909 +0300
+--- inputbak/play-services-core/src/main/res/xml/preferences_accounts.xml	2026-02-27 15:35:37.591497685 +0300
++++ input/play-services-core/src/main/res/xml/preferences_accounts.xml	2026-02-27 15:36:06.733925847 +0300
 @@ -17,7 +17,7 @@
              android:title="@string/pref_add_account_summary">
              <intent
@@ -5432,8 +3843,8 @@ diff -Naur inputbak/play-services-core/src/main/res/xml/preferences_accounts.xml
      </PreferenceCategory>
      <PreferenceCategory
 diff -Naur inputbak/play-services-core/src/main/res/xml/preferences_auth.xml input/play-services-core/src/main/res/xml/preferences_auth.xml
---- inputbak/play-services-core/src/main/res/xml/preferences_auth.xml	2026-01-01 18:27:34.369989920 +0300
-+++ input/play-services-core/src/main/res/xml/preferences_auth.xml	2026-01-01 18:28:05.509989909 +0300
+--- inputbak/play-services-core/src/main/res/xml/preferences_auth.xml	2026-02-27 15:35:37.591497685 +0300
++++ input/play-services-core/src/main/res/xml/preferences_auth.xml	2026-02-27 15:36:06.734092786 +0300
 @@ -19,21 +19,21 @@
          android:key="k2"
          android:title="@string/prefs_account_security">
@@ -5463,8 +3874,8 @@ diff -Naur inputbak/play-services-core/src/main/res/xml/preferences_auth.xml inp
      </PreferenceScreen>
  </PreferenceScreen>
 diff -Naur inputbak/play-services-core/src/main/res/xml/preferences_start.xml input/play-services-core/src/main/res/xml/preferences_start.xml
---- inputbak/play-services-core/src/main/res/xml/preferences_start.xml	2026-01-01 18:27:34.373989920 +0300
-+++ input/play-services-core/src/main/res/xml/preferences_start.xml	2026-01-01 18:28:05.509989909 +0300
+--- inputbak/play-services-core/src/main/res/xml/preferences_start.xml	2026-02-27 15:35:37.591497685 +0300
++++ input/play-services-core/src/main/res/xml/preferences_start.xml	2026-02-27 15:36:06.734427313 +0300
 @@ -23,7 +23,7 @@
              android:title="@string/self_check_title">
              <intent
@@ -5484,8 +3895,8 @@ diff -Naur inputbak/play-services-core/src/main/res/xml/preferences_start.xml in
      </PreferenceCategory>
      <PreferenceCategory android:layout="@layout/preference_category_no_label" android:key="prefcat_other_services">
 diff -Naur inputbak/play-services-droidguard/build.gradle input/play-services-droidguard/build.gradle
---- inputbak/play-services-droidguard/build.gradle	2026-01-01 18:27:34.393989920 +0300
-+++ input/play-services-droidguard/build.gradle	2026-01-01 18:28:05.513989909 +0300
+--- inputbak/play-services-droidguard/build.gradle	2026-02-27 15:35:37.596424110 +0300
++++ input/play-services-droidguard/build.gradle	2026-02-27 15:36:06.734669432 +0300
 @@ -22,6 +22,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -5498,8 +3909,8 @@ diff -Naur inputbak/play-services-droidguard/build.gradle input/play-services-dr
  
      sourceSets {
 diff -Naur inputbak/play-services-droidguard/core/src/main/AndroidManifest.xml input/play-services-droidguard/core/src/main/AndroidManifest.xml
---- inputbak/play-services-droidguard/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.393989920 +0300
-+++ input/play-services-droidguard/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.513989909 +0300
+--- inputbak/play-services-droidguard/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.596621058 +0300
++++ input/play-services-droidguard/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.734841451 +0300
 @@ -15,9 +15,9 @@
              android:exported="true"
              android:process="com.google.android.gms.unstable">
@@ -5514,8 +3925,8 @@ diff -Naur inputbak/play-services-droidguard/core/src/main/AndroidManifest.xml i
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
 diff -Naur inputbak/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java input/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java
---- inputbak/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2026-01-01 18:27:34.393989920 +0300
-+++ input/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2026-01-01 18:28:05.513989909 +0300
+--- inputbak/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2026-02-27 15:35:37.596787267 +0300
++++ input/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java	2026-02-27 15:36:06.735060099 +0300
 @@ -13,6 +13,7 @@
  
  import androidx.annotation.Nullable;
@@ -5535,7 +3946,7 @@ diff -Naur inputbak/play-services-droidguard/core/src/main/java/com/google/andro
              return new DroidGuardServiceBroker(this);
 diff -Naur inputbak/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java.orig input/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java.orig
 --- inputbak/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java.orig	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java.orig	2026-01-01 18:27:15.857989928 +0300
++++ input/play-services-droidguard/core/src/main/java/com/google/android/gms/droidguard/DroidGuardChimeraService.java.orig	2026-02-27 15:36:06.735180998 +0300
 @@ -0,0 +1,148 @@
 +/*
 + * SPDX-FileCopyrightText: 2021, microG Project Team
@@ -5686,8 +4097,8 @@ diff -Naur inputbak/play-services-droidguard/core/src/main/java/com/google/andro
 +    }
 +}
 diff -Naur inputbak/play-services-fido/core/build.gradle input/play-services-fido/core/build.gradle
---- inputbak/play-services-fido/core/build.gradle	2026-01-01 18:27:34.413989920 +0300
-+++ input/play-services-fido/core/build.gradle	2026-01-01 18:28:05.517989909 +0300
+--- inputbak/play-services-fido/core/build.gradle	2026-02-27 15:35:37.601957600 +0300
++++ input/play-services-fido/core/build.gradle	2026-02-27 15:36:06.735432166 +0300
 @@ -44,6 +44,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -5700,8 +4111,8 @@ diff -Naur inputbak/play-services-fido/core/build.gradle input/play-services-fid
  
      buildFeatures {
 diff -Naur inputbak/play-services-fido/core/src/main/AndroidManifest.xml input/play-services-fido/core/src/main/AndroidManifest.xml
---- inputbak/play-services-fido/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.413989920 +0300
-+++ input/play-services-fido/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.517989909 +0300
+--- inputbak/play-services-fido/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.602009659 +0300
++++ input/play-services-fido/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.735601575 +0300
 @@ -21,7 +21,7 @@
              android:name=".privileged.Fido2PrivilegedService"
              android:exported="true">
@@ -5712,8 +4123,8 @@ diff -Naur inputbak/play-services-fido/core/src/main/AndroidManifest.xml input/p
              </intent-filter>
          </service>
 diff -Naur inputbak/play-services-gcm/build.gradle input/play-services-gcm/build.gradle
---- inputbak/play-services-gcm/build.gradle	2026-01-01 18:27:34.477989920 +0300
-+++ input/play-services-gcm/build.gradle	2026-01-01 18:28:05.517989909 +0300
+--- inputbak/play-services-gcm/build.gradle	2026-02-27 15:35:37.620705544 +0300
++++ input/play-services-gcm/build.gradle	2026-02-27 15:36:06.735912473 +0300
 @@ -15,6 +15,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -5726,8 +4137,8 @@ diff -Naur inputbak/play-services-gcm/build.gradle input/play-services-gcm/build
  
      compileOptions {
 diff -Naur inputbak/play-services-gcm/src/main/AndroidManifest.xml input/play-services-gcm/src/main/AndroidManifest.xml
---- inputbak/play-services-gcm/src/main/AndroidManifest.xml	2026-01-01 18:27:34.477989920 +0300
-+++ input/play-services-gcm/src/main/AndroidManifest.xml	2026-01-01 18:28:05.517989909 +0300
+--- inputbak/play-services-gcm/src/main/AndroidManifest.xml	2026-02-27 15:35:37.620986291 +0300
++++ input/play-services-gcm/src/main/AndroidManifest.xml	2026-02-27 15:36:06.736160331 +0300
 @@ -18,7 +18,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -5738,8 +4149,8 @@ diff -Naur inputbak/play-services-gcm/src/main/AndroidManifest.xml input/play-se
  
      <!-- Move to play-services-measurement -->
 diff -Naur inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java
---- inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2026-01-01 18:27:34.477989920 +0300
-+++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2026-01-01 18:28:05.521989909 +0300
+--- inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2026-02-27 15:35:37.621135060 +0300
++++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmListenerService.java	2026-02-27 15:36:06.736378540 +0300
 @@ -53,7 +53,7 @@
   *     android:name=".YourGcmListenerService"
   *     android:exported="false" >
@@ -5750,8 +4161,8 @@ diff -Naur inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/G
   * </service></pre>
   */
 diff -Naur inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java
---- inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2026-01-01 18:27:34.477989920 +0300
-+++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2026-01-01 18:28:05.525989909 +0300
+--- inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2026-02-27 15:35:37.621250720 +0300
++++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmNetworkManager.java	2026-02-27 15:36:06.736616628 +0300
 @@ -67,9 +67,9 @@
   * <pre>
   * <service android:name=".MyUploadService"
@@ -5765,8 +4176,8 @@ diff -Naur inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/G
   * </service>
   * </pre>
 diff -Naur inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java
---- inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2026-01-01 18:27:34.477989920 +0300
-+++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2026-01-01 18:28:05.525989909 +0300
+--- inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2026-02-27 15:35:37.621250720 +0300
++++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2026-02-27 15:36:06.736976076 +0300
 @@ -44,12 +44,12 @@
   * <p/>
   * <pre>
@@ -5785,8 +4196,8 @@ diff -Naur inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/G
   *     </intent-filter>
   * </receiver></pre>
 diff -Naur inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java
---- inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2026-01-01 18:27:34.477989920 +0300
-+++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2026-01-01 18:28:05.525989909 +0300
+--- inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2026-02-27 15:35:37.621250720 +0300
++++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmTaskService.java	2026-02-27 15:36:06.737255804 +0300
 @@ -38,10 +38,10 @@
   * {@link com.google.android.gms.gcm.GcmTaskService#SERVICE_ACTION_EXECUTE_TASK}. Here's an example:
   * <pre>
@@ -5801,8 +4212,8 @@ diff -Naur inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/G
   *     </service>
   * </pre>
 diff -Naur inputbak/play-services-gmscompliance/core/build.gradle input/play-services-gmscompliance/core/build.gradle
---- inputbak/play-services-gmscompliance/core/build.gradle	2026-01-01 18:27:34.481989920 +0300
-+++ input/play-services-gmscompliance/core/build.gradle	2026-01-01 18:28:05.529989909 +0300
+--- inputbak/play-services-gmscompliance/core/build.gradle	2026-02-27 15:35:37.622422691 +0300
++++ input/play-services-gmscompliance/core/build.gradle	2026-02-27 15:36:06.737523542 +0300
 @@ -35,6 +35,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -5815,8 +4226,8 @@ diff -Naur inputbak/play-services-gmscompliance/core/build.gradle input/play-ser
  
      sourceSets {
 diff -Naur inputbak/play-services-gmscompliance/core/src/main/AndroidManifest.xml input/play-services-gmscompliance/core/src/main/AndroidManifest.xml
---- inputbak/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.481989920 +0300
-+++ input/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.529989909 +0300
+--- inputbak/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.622481141 +0300
++++ input/play-services-gmscompliance/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.738079738 +0300
 @@ -9,7 +9,7 @@
      <application>
          <service android:name="org.microg.gms.gmscompliance.GmsDeviceComplianceService">
@@ -5827,8 +4238,8 @@ diff -Naur inputbak/play-services-gmscompliance/core/src/main/AndroidManifest.xm
          </service>
      </application>
 diff -Naur inputbak/play-services-iid/build.gradle input/play-services-iid/build.gradle
---- inputbak/play-services-iid/build.gradle	2026-01-01 18:27:34.481989920 +0300
-+++ input/play-services-iid/build.gradle	2026-01-01 18:28:05.529989909 +0300
+--- inputbak/play-services-iid/build.gradle	2026-02-27 15:35:37.623167216 +0300
++++ input/play-services-iid/build.gradle	2026-02-27 15:36:06.738251497 +0300
 @@ -19,6 +19,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -5841,8 +4252,8 @@ diff -Naur inputbak/play-services-iid/build.gradle input/play-services-iid/build
  
      compileOptions {
 diff -Naur inputbak/play-services-iid/src/main/AndroidManifest.xml input/play-services-iid/src/main/AndroidManifest.xml
---- inputbak/play-services-iid/src/main/AndroidManifest.xml	2026-01-01 18:27:34.481989920 +0300
-+++ input/play-services-iid/src/main/AndroidManifest.xml	2026-01-01 18:28:05.529989909 +0300
+--- inputbak/play-services-iid/src/main/AndroidManifest.xml	2026-02-27 15:35:37.623302965 +0300
++++ input/play-services-iid/src/main/AndroidManifest.xml	2026-02-27 15:36:06.738545235 +0300
 @@ -7,6 +7,6 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -5852,8 +4263,8 @@ diff -Naur inputbak/play-services-iid/src/main/AndroidManifest.xml input/play-se
      <uses-permission android:name="android.permission.INTERNET"/>
  </manifest>
 diff -Naur inputbak/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java input/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java
---- inputbak/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2026-01-01 18:27:34.485989920 +0300
-+++ input/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2026-01-01 18:28:05.533989909 +0300
+--- inputbak/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2026-02-27 15:35:37.623745341 +0300
++++ input/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java	2026-02-27 15:36:06.738821573 +0300
 @@ -44,7 +44,7 @@
   * <pre>
   * <service android:name=".YourInstanceIDListenerService" android:exported="false">
@@ -5865,7 +4276,7 @@ diff -Naur inputbak/play-services-iid/src/main/java/com/google/android/gms/iid/I
   * Do not export this service. Instead, keep it private to prevent other apps
 diff -Naur inputbak/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java.orig input/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java.orig
 --- inputbak/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java.orig	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java.orig	2026-01-01 18:28:05.533989909 +0300
++++ input/play-services-iid/src/main/java/com/google/android/gms/iid/InstanceIDListenerService.java.orig	2026-02-27 15:36:06.739130481 +0300
 @@ -0,0 +1,139 @@
 +/*
 + * Copyright (C) 2013-2017 microG Project Team
@@ -6007,8 +4418,8 @@ diff -Naur inputbak/play-services-iid/src/main/java/com/google/android/gms/iid/I
 +
 +}
 diff -Naur inputbak/play-services-location/core/build.gradle input/play-services-location/core/build.gradle
---- inputbak/play-services-location/core/build.gradle	2026-01-01 18:27:34.489989920 +0300
-+++ input/play-services-location/core/build.gradle	2026-01-01 18:28:05.533989909 +0300
+--- inputbak/play-services-location/core/build.gradle	2026-02-27 15:35:37.624458666 +0300
++++ input/play-services-location/core/build.gradle	2026-02-27 15:36:06.739607267 +0300
 @@ -43,6 +43,10 @@
          targetSdkVersion androidTargetSdk
          buildConfigField "String", "FORCE_SHOW_BACKGROUND_PERMISSION", "\"\""
@@ -6021,8 +4432,8 @@ diff -Naur inputbak/play-services-location/core/build.gradle input/play-services
  
      lintOptions {
 diff -Naur inputbak/play-services-location/core/provider/build.gradle input/play-services-location/core/provider/build.gradle
---- inputbak/play-services-location/core/provider/build.gradle	2026-01-01 18:27:34.489989920 +0300
-+++ input/play-services-location/core/provider/build.gradle	2026-01-01 18:28:05.537989909 +0300
+--- inputbak/play-services-location/core/provider/build.gradle	2026-02-27 15:35:37.624458666 +0300
++++ input/play-services-location/core/provider/build.gradle	2026-02-27 15:36:06.739973155 +0300
 @@ -41,6 +41,10 @@
          minSdkVersion androidMinSdk
          targetSdkVersion androidTargetSdk
@@ -6035,8 +4446,8 @@ diff -Naur inputbak/play-services-location/core/provider/build.gradle input/play
  
      sourceSets {
 diff -Naur inputbak/play-services-location/core/provider/src/main/AndroidManifest.xml input/play-services-location/core/provider/src/main/AndroidManifest.xml
---- inputbak/play-services-location/core/provider/src/main/AndroidManifest.xml	2026-01-01 18:27:34.489989920 +0300
-+++ input/play-services-location/core/provider/src/main/AndroidManifest.xml	2026-01-01 18:28:05.537989909 +0300
+--- inputbak/play-services-location/core/provider/src/main/AndroidManifest.xml	2026-02-27 15:35:37.624665935 +0300
++++ input/play-services-location/core/provider/src/main/AndroidManifest.xml	2026-02-27 15:36:06.740406332 +0300
 @@ -78,7 +78,7 @@
              android:permission="android.permission.WRITE_SECURE_SETTINGS">
              <intent-filter>
@@ -6047,8 +4458,8 @@ diff -Naur inputbak/play-services-location/core/provider/src/main/AndroidManifes
              <meta-data
                  android:name="serviceVersion"
 diff -Naur inputbak/play-services-location/core/src/huawei/AndroidManifest.xml input/play-services-location/core/src/huawei/AndroidManifest.xml
---- inputbak/play-services-location/core/src/huawei/AndroidManifest.xml	2026-01-01 18:27:34.497989920 +0300
-+++ input/play-services-location/core/src/huawei/AndroidManifest.xml	2026-01-01 18:28:05.537989909 +0300
+--- inputbak/play-services-location/core/src/huawei/AndroidManifest.xml	2026-02-27 15:35:37.628752515 +0300
++++ input/play-services-location/core/src/huawei/AndroidManifest.xml	2026-02-27 15:36:06.740877698 +0300
 @@ -17,15 +17,15 @@
              android:name="org.microg.gms.location.manager.LocationManagerService"
              android:exported="true">
@@ -6069,8 +4480,8 @@ diff -Naur inputbak/play-services-location/core/src/huawei/AndroidManifest.xml i
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
 diff -Naur inputbak/play-services-location/core/src/main/AndroidManifest.xml input/play-services-location/core/src/main/AndroidManifest.xml
---- inputbak/play-services-location/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.497989920 +0300
-+++ input/play-services-location/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.537989909 +0300
+--- inputbak/play-services-location/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.629576749 +0300
++++ input/play-services-location/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.741335525 +0300
 @@ -31,7 +31,7 @@
              android:launchMode="singleTask"
              android:theme="@style/Theme.App.Translucent">
@@ -6101,8 +4512,8 @@ diff -Naur inputbak/play-services-location/core/src/main/AndroidManifest.xml inp
                  <category android:name="android.intent.category.DEFAULT" />
              </intent-filter>
 diff -Naur inputbak/play-services-maps/build.gradle input/play-services-maps/build.gradle
---- inputbak/play-services-maps/build.gradle	2026-01-01 18:27:34.541989920 +0300
-+++ input/play-services-maps/build.gradle	2026-01-01 18:28:05.541989909 +0300
+--- inputbak/play-services-maps/build.gradle	2026-02-27 15:35:37.643848016 +0300
++++ input/play-services-maps/build.gradle	2026-02-27 15:36:06.741889451 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -6115,8 +4526,8 @@ diff -Naur inputbak/play-services-maps/build.gradle input/play-services-maps/bui
  
      compileOptions {
 diff -Naur inputbak/play-services-maps/src/main/AndroidManifest.xml input/play-services-maps/src/main/AndroidManifest.xml
---- inputbak/play-services-maps/src/main/AndroidManifest.xml	2026-01-01 18:27:34.817989920 +0300
-+++ input/play-services-maps/src/main/AndroidManifest.xml	2026-01-01 18:28:05.909989908 +0300
+--- inputbak/play-services-maps/src/main/AndroidManifest.xml	2026-02-27 15:35:37.684304622 +0300
++++ input/play-services-maps/src/main/AndroidManifest.xml	2026-02-27 15:36:06.742373408 +0300
 @@ -12,7 +12,7 @@
      <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
  
@@ -6127,8 +4538,8 @@ diff -Naur inputbak/play-services-maps/src/main/AndroidManifest.xml input/play-s
  
      <application>
 diff -Naur inputbak/play-services-nearby/build.gradle input/play-services-nearby/build.gradle
---- inputbak/play-services-nearby/build.gradle	2026-01-01 18:27:34.853989920 +0300
-+++ input/play-services-nearby/build.gradle	2026-01-01 18:28:05.909989908 +0300
+--- inputbak/play-services-nearby/build.gradle	2026-02-27 15:35:37.696802921 +0300
++++ input/play-services-nearby/build.gradle	2026-02-27 15:36:06.745135685 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -6141,8 +4552,8 @@ diff -Naur inputbak/play-services-nearby/build.gradle input/play-services-nearby
  
      compileOptions {
 diff -Naur inputbak/play-services-nearby/core/build.gradle input/play-services-nearby/core/build.gradle
---- inputbak/play-services-nearby/core/build.gradle	2026-01-01 18:27:34.853989920 +0300
-+++ input/play-services-nearby/core/build.gradle	2026-01-01 18:28:05.909989908 +0300
+--- inputbak/play-services-nearby/core/build.gradle	2026-02-27 15:35:37.696952350 +0300
++++ input/play-services-nearby/core/build.gradle	2026-02-27 15:36:06.745860913 +0300
 @@ -40,6 +40,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -6155,8 +4566,8 @@ diff -Naur inputbak/play-services-nearby/core/build.gradle input/play-services-n
  
      buildFeatures {
 diff -Naur inputbak/play-services-nearby/core/package/build.gradle input/play-services-nearby/core/package/build.gradle
---- inputbak/play-services-nearby/core/package/build.gradle	2026-01-01 18:27:34.853989920 +0300
-+++ input/play-services-nearby/core/package/build.gradle	2026-01-01 18:28:05.913989908 +0300
+--- inputbak/play-services-nearby/core/package/build.gradle	2026-02-27 15:35:37.697005550 +0300
++++ input/play-services-nearby/core/package/build.gradle	2026-02-27 15:36:06.746023652 +0300
 @@ -24,6 +24,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -6169,8 +4580,8 @@ diff -Naur inputbak/play-services-nearby/core/package/build.gradle input/play-se
  
      sourceSets {
 diff -Naur inputbak/play-services-nearby/core/package/src/main/AndroidManifest.xml input/play-services-nearby/core/package/src/main/AndroidManifest.xml
---- inputbak/play-services-nearby/core/package/src/main/AndroidManifest.xml	2026-01-01 18:27:34.853989920 +0300
-+++ input/play-services-nearby/core/package/src/main/AndroidManifest.xml	2026-01-01 18:28:05.913989908 +0300
+--- inputbak/play-services-nearby/core/package/src/main/AndroidManifest.xml	2026-02-27 15:35:37.697071409 +0300
++++ input/play-services-nearby/core/package/src/main/AndroidManifest.xml	2026-02-27 15:36:06.746195731 +0300
 @@ -15,7 +15,7 @@
      <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
  
@@ -6181,8 +4592,8 @@ diff -Naur inputbak/play-services-nearby/core/package/src/main/AndroidManifest.x
  
      <application>
 diff -Naur inputbak/play-services-nearby/core/src/main/AndroidManifest.xml input/play-services-nearby/core/src/main/AndroidManifest.xml
---- inputbak/play-services-nearby/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.857989920 +0300
-+++ input/play-services-nearby/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.913989908 +0300
+--- inputbak/play-services-nearby/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.697637015 +0300
++++ input/play-services-nearby/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.746384200 +0300
 @@ -5,7 +5,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -6211,8 +4622,8 @@ diff -Naur inputbak/play-services-nearby/core/src/main/AndroidManifest.xml input
              </intent-filter>
          </activity>
 diff -Naur inputbak/play-services-nearby/src/main/AndroidManifest.xml input/play-services-nearby/src/main/AndroidManifest.xml
---- inputbak/play-services-nearby/src/main/AndroidManifest.xml	2026-01-01 18:27:34.873989920 +0300
-+++ input/play-services-nearby/src/main/AndroidManifest.xml	2026-01-01 18:28:05.913989908 +0300
+--- inputbak/play-services-nearby/src/main/AndroidManifest.xml	2026-02-27 15:35:37.713070533 +0300
++++ input/play-services-nearby/src/main/AndroidManifest.xml	2026-02-27 15:36:06.746753087 +0300
 @@ -6,8 +6,8 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
      <application>
@@ -6225,8 +4636,8 @@ diff -Naur inputbak/play-services-nearby/src/main/AndroidManifest.xml input/play
      </application>
  </manifest>
 diff -Naur inputbak/play-services-oss-licenses/build.gradle input/play-services-oss-licenses/build.gradle
---- inputbak/play-services-oss-licenses/build.gradle	2026-01-01 18:27:34.889989920 +0300
-+++ input/play-services-oss-licenses/build.gradle	2026-01-01 18:28:05.913989908 +0300
+--- inputbak/play-services-oss-licenses/build.gradle	2026-02-27 15:35:37.716940065 +0300
++++ input/play-services-oss-licenses/build.gradle	2026-02-27 15:36:06.747057995 +0300
 @@ -21,6 +21,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -6239,8 +4650,8 @@ diff -Naur inputbak/play-services-oss-licenses/build.gradle input/play-services-
  
      lintOptions {
 diff -Naur inputbak/play-services-oss-licenses/core/build.gradle input/play-services-oss-licenses/core/build.gradle
---- inputbak/play-services-oss-licenses/core/build.gradle	2026-01-01 18:27:34.889989920 +0300
-+++ input/play-services-oss-licenses/core/build.gradle	2026-01-01 18:28:05.917989908 +0300
+--- inputbak/play-services-oss-licenses/core/build.gradle	2026-02-27 15:35:37.717074284 +0300
++++ input/play-services-oss-licenses/core/build.gradle	2026-02-27 15:36:06.747233464 +0300
 @@ -23,6 +23,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -6253,8 +4664,8 @@ diff -Naur inputbak/play-services-oss-licenses/core/build.gradle input/play-serv
  
      sourceSets {
 diff -Naur inputbak/play-services-oss-licenses/core/src/main/AndroidManifest.xml input/play-services-oss-licenses/core/src/main/AndroidManifest.xml
---- inputbak/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.889989920 +0300
-+++ input/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.917989908 +0300
+--- inputbak/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.717132224 +0300
++++ input/play-services-oss-licenses/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.747412133 +0300
 @@ -10,7 +10,7 @@
              android:name=".OssLicensesService"
              android:exported="true">
@@ -6265,8 +4676,8 @@ diff -Naur inputbak/play-services-oss-licenses/core/src/main/AndroidManifest.xml
          </service>
      </application>
 diff -Naur inputbak/play-services-oss-licenses/src/main/AndroidManifest.xml input/play-services-oss-licenses/src/main/AndroidManifest.xml
---- inputbak/play-services-oss-licenses/src/main/AndroidManifest.xml	2026-01-01 18:27:34.889989920 +0300
-+++ input/play-services-oss-licenses/src/main/AndroidManifest.xml	2026-01-01 18:28:05.917989908 +0300
+--- inputbak/play-services-oss-licenses/src/main/AndroidManifest.xml	2026-02-27 15:35:37.719138589 +0300
++++ input/play-services-oss-licenses/src/main/AndroidManifest.xml	2026-02-27 15:36:06.747578891 +0300
 @@ -7,8 +7,8 @@
  
      <application>
@@ -6279,8 +4690,8 @@ diff -Naur inputbak/play-services-oss-licenses/src/main/AndroidManifest.xml inpu
      </application>
  </manifest>
 diff -Naur inputbak/play-services-panorama/core/build.gradle input/play-services-panorama/core/build.gradle
---- inputbak/play-services-panorama/core/build.gradle	2026-01-01 18:27:34.905989920 +0300
-+++ input/play-services-panorama/core/build.gradle	2026-01-01 18:28:05.917989908 +0300
+--- inputbak/play-services-panorama/core/build.gradle	2026-02-27 15:35:37.723563387 +0300
++++ input/play-services-panorama/core/build.gradle	2026-02-27 15:36:06.747840490 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -6293,8 +4704,8 @@ diff -Naur inputbak/play-services-panorama/core/build.gradle input/play-services
  
      sourceSets {
 diff -Naur inputbak/play-services-panorama/core/src/main/AndroidManifest.xml input/play-services-panorama/core/src/main/AndroidManifest.xml
---- inputbak/play-services-panorama/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.905989920 +0300
-+++ input/play-services-panorama/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.917989908 +0300
+--- inputbak/play-services-panorama/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.723618086 +0300
++++ input/play-services-panorama/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.748009578 +0300
 @@ -8,7 +8,7 @@
      <application>
          <service android:name="org.microg.gms.panorama.PanoramaService">
@@ -6305,8 +4716,8 @@ diff -Naur inputbak/play-services-panorama/core/src/main/AndroidManifest.xml inp
          </service>
      </application>
 diff -Naur inputbak/play-services-pay/core/build.gradle input/play-services-pay/core/build.gradle
---- inputbak/play-services-pay/core/build.gradle	2026-01-01 18:27:34.905989920 +0300
-+++ input/play-services-pay/core/build.gradle	2026-01-01 18:28:05.921989908 +0300
+--- inputbak/play-services-pay/core/build.gradle	2026-02-27 15:35:37.724262572 +0300
++++ input/play-services-pay/core/build.gradle	2026-02-27 15:36:06.748259247 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -6319,8 +4730,8 @@ diff -Naur inputbak/play-services-pay/core/build.gradle input/play-services-pay/
  
      sourceSets {
 diff -Naur inputbak/play-services-pay/core/src/main/AndroidManifest.xml input/play-services-pay/core/src/main/AndroidManifest.xml
---- inputbak/play-services-pay/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.905989920 +0300
-+++ input/play-services-pay/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.921989908 +0300
+--- inputbak/play-services-pay/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.724320651 +0300
++++ input/play-services-pay/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.748437795 +0300
 @@ -6,13 +6,13 @@
  
      <application>
@@ -6348,8 +4759,8 @@ diff -Naur inputbak/play-services-pay/core/src/main/AndroidManifest.xml input/pl
          </service>
          <service
 diff -Naur inputbak/play-services-recaptcha/core/build.gradle input/play-services-recaptcha/core/build.gradle
---- inputbak/play-services-recaptcha/core/build.gradle	2026-01-01 18:27:34.925989920 +0300
-+++ input/play-services-recaptcha/core/build.gradle	2026-01-01 18:28:05.921989908 +0300
+--- inputbak/play-services-recaptcha/core/build.gradle	2026-02-27 15:35:37.730666315 +0300
++++ input/play-services-recaptcha/core/build.gradle	2026-02-27 15:36:06.749190320 +0300
 @@ -43,6 +43,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -6362,8 +4773,8 @@ diff -Naur inputbak/play-services-recaptcha/core/build.gradle input/play-service
  
      sourceSets {
 diff -Naur inputbak/play-services-recaptcha/core/src/main/AndroidManifest.xml input/play-services-recaptcha/core/src/main/AndroidManifest.xml
---- inputbak/play-services-recaptcha/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.925989920 +0300
-+++ input/play-services-recaptcha/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.921989908 +0300
+--- inputbak/play-services-recaptcha/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.730717735 +0300
++++ input/play-services-recaptcha/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.749369079 +0300
 @@ -11,7 +11,7 @@
          <service android:name="org.microg.gms.recaptcha.RecaptchaService"
                   android:process=":ui">
@@ -6374,8 +4785,8 @@ diff -Naur inputbak/play-services-recaptcha/core/src/main/AndroidManifest.xml in
          </service>
      </application>
 diff -Naur inputbak/play-services-safetynet/core/build.gradle input/play-services-safetynet/core/build.gradle
---- inputbak/play-services-safetynet/core/build.gradle	2026-01-01 18:27:34.933989920 +0300
-+++ input/play-services-safetynet/core/build.gradle	2026-01-01 18:28:05.925989908 +0300
+--- inputbak/play-services-safetynet/core/build.gradle	2026-02-27 15:35:37.734221440 +0300
++++ input/play-services-safetynet/core/build.gradle	2026-02-27 15:36:06.749676157 +0300
 @@ -47,6 +47,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -6388,8 +4799,8 @@ diff -Naur inputbak/play-services-safetynet/core/build.gradle input/play-service
  
      sourceSets {
 diff -Naur inputbak/play-services-safetynet/core/src/main/AndroidManifest.xml input/play-services-safetynet/core/src/main/AndroidManifest.xml
---- inputbak/play-services-safetynet/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.937989920 +0300
-+++ input/play-services-safetynet/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.925989908 +0300
+--- inputbak/play-services-safetynet/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.734277509 +0300
++++ input/play-services-safetynet/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.749856246 +0300
 @@ -9,7 +9,7 @@
      <application>
          <service android:name="org.microg.gms.safetynet.SafetyNetClientService">
@@ -6400,8 +4811,8 @@ diff -Naur inputbak/play-services-safetynet/core/src/main/AndroidManifest.xml in
          </service>
          <activity
 diff -Naur inputbak/play-services-tapandpay/core/build.gradle input/play-services-tapandpay/core/build.gradle
---- inputbak/play-services-tapandpay/core/build.gradle	2026-01-01 18:27:34.945989920 +0300
-+++ input/play-services-tapandpay/core/build.gradle	2026-01-01 18:28:05.925989908 +0300
+--- inputbak/play-services-tapandpay/core/build.gradle	2026-02-27 15:35:37.736943750 +0300
++++ input/play-services-tapandpay/core/build.gradle	2026-02-27 15:36:06.750285703 +0300
 @@ -28,6 +28,10 @@
          versionName version
          minSdkVersion androidMinSdk
@@ -6414,8 +4825,8 @@ diff -Naur inputbak/play-services-tapandpay/core/build.gradle input/play-service
  
      sourceSets {
 diff -Naur inputbak/play-services-tapandpay/core/src/main/AndroidManifest.xml input/play-services-tapandpay/core/src/main/AndroidManifest.xml
---- inputbak/play-services-tapandpay/core/src/main/AndroidManifest.xml	2026-01-01 18:27:34.945989920 +0300
-+++ input/play-services-tapandpay/core/src/main/AndroidManifest.xml	2026-01-01 18:28:05.925989908 +0300
+--- inputbak/play-services-tapandpay/core/src/main/AndroidManifest.xml	2026-02-27 15:35:37.736991339 +0300
++++ input/play-services-tapandpay/core/src/main/AndroidManifest.xml	2026-02-27 15:36:06.750480721 +0300
 @@ -9,7 +9,7 @@
          <service android:name="org.microg.gms.tapandpay.TapAndPayService"
                   android:exported="true">
@@ -6425,9 +4836,35 @@ diff -Naur inputbak/play-services-tapandpay/core/src/main/AndroidManifest.xml in
              </intent-filter>
          </service>
      </application>
+diff -Naur inputbak/README.md input/README.md
+--- inputbak/README.md	2026-02-27 15:35:37.464431408 +0300
++++ input/README.md	2026-02-27 15:36:06.713365841 +0300
+@@ -13,6 +13,22 @@
+ 
+ If you'd like to help translate microG, take a look at [TRANSLATION](TRANSLATION.md).
+ 
++About this fork
++-------
++This repository is a fork of [microG GmsCore](https://github.com/microg/GmsCore) to allow patched Google apps to run without root and under a different package name using GmsCore instead of Google Play Services, via the "GmsCore support" patch by ReVanced from [ReVanced Patches](https://github.com/revanced/revanced-patches) with the minimum amount of changes necessary to upstream.
++
++Goals of this fork:
++- Run next to an existing GMS installation such as [microG GmsCore](https://github.com/microg/GmsCore) or Google Play Services.
++- Usage with the "GmsCore support" patch by ReVanced from [ReVanced Patches](https://github.com/revanced/revanced-patches)
++- Feature parity with upstream
++
++Nongoals of this fork:
++- New features that do not contribute to the goal of this fork
++- Bug fixes that do not contribute to the goal of this fork
++
++Contributing to the fork
++-------
++You can create an issue or pull request to contribute to the fork. In both cases, ensure it aligns with this fork's goals.
+ 
+ License
+ -------
 diff -Naur inputbak/vending-app/build.gradle input/vending-app/build.gradle
---- inputbak/vending-app/build.gradle	2026-01-01 18:27:35.009989920 +0300
-+++ input/vending-app/build.gradle	2026-01-01 18:28:05.929989908 +0300
+--- inputbak/vending-app/build.gradle	2026-02-27 15:35:37.773008358 +0300
++++ input/vending-app/build.gradle	2026-02-27 15:36:06.750754549 +0300
 @@ -17,7 +17,9 @@
          versionCode vendingAppVersionCode
          minSdkVersion androidMinSdk
@@ -6440,8 +4877,8 @@ diff -Naur inputbak/vending-app/build.gradle input/vending-app/build.gradle
      }
  
 diff -Naur inputbak/vending-app/src/main/AndroidManifest.xml input/vending-app/src/main/AndroidManifest.xml
---- inputbak/vending-app/src/main/AndroidManifest.xml	2026-01-01 18:27:35.009989920 +0300
-+++ input/vending-app/src/main/AndroidManifest.xml	2026-01-01 18:51:08.597989381 +0300
+--- inputbak/vending-app/src/main/AndroidManifest.xml	2026-02-27 15:35:37.773298086 +0300
++++ input/vending-app/src/main/AndroidManifest.xml	2026-02-27 15:36:06.751078887 +0300
 @@ -18,8 +18,8 @@
      <uses-permission android:name="org.microg.gms.permission.READ_SETTINGS" />
      <uses-permission android:name="org.microg.gms.permission.WRITE_SETTINGS" />
@@ -6477,8 +4914,8 @@ diff -Naur inputbak/vending-app/src/main/AndroidManifest.xml input/vending-app/s
          </service>
  
 diff -Naur inputbak/vending-app/src/main/java/org/microg/vending/billing/Constants.kt input/vending-app/src/main/java/org/microg/vending/billing/Constants.kt
---- inputbak/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2026-01-01 18:27:35.021989920 +0300
-+++ input/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2026-01-01 18:28:05.929989908 +0300
+--- inputbak/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2026-02-27 15:35:37.777330237 +0300
++++ input/vending-app/src/main/java/org/microg/vending/billing/Constants.kt	2026-02-27 15:36:06.751349165 +0300
 @@ -5,6 +5,8 @@
  
  package org.microg.vending.billing
@@ -6495,4 +4932,4 @@ diff -Naur inputbak/vending-app/src/main/java/org/microg/vending/billing/Constan
 -const val DEFAULT_ACCOUNT_TYPE = "com.google"
 +const val DEFAULT_ACCOUNT_TYPE = BuildConfig.BASE_PACKAGE_NAME
  const val ADD_PAYMENT_METHOD_URL = "https://play.google.com/store/paymentmethods"
-\ No newline at end of file
+\ В конце файла нет новой строки
