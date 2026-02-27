@@ -1,0 +1,996 @@
+diff -Naur inputbak/.github/workflows/release.yml input/.github/workflows/release.yml
+--- inputbak/.github/workflows/release.yml	1970-01-01 03:00:00.000000000 +0300
++++ input/.github/workflows/release.yml	2026-02-16 09:52:52.000000000 +0300
+@@ -0,0 +1,55 @@
++name: Release
++
++on:
++  push:
++    tags:
++      - "v*"
++
++jobs:
++  release:
++    runs-on: ubuntu-latest
++    name: Release
++    steps:
++      - uses: actions/checkout@v6
++
++      - name: Cache Gradle
++        uses: burrunan/gradle-cache-action@v3
++
++      - name: Setup Java
++        uses: actions/setup-java@v5
++        with:
++          distribution: "temurin"
++          java-version: "17"
++
++      - name: Build
++        run: ./gradlew --no-daemon :play-services-core:assembleMapboxDefault :play-services-core:assembleMapboxHuawei
++
++      - name: Move
++        run: |
++          mkdir play-services-core/build/outputs/apk/releases
++          mv \
++            play-services-core/build/outputs/apk/mapboxDefault/release/*.apk \
++            play-services-core/build/outputs/apk/mapboxHuawei/release/*.apk \
++            play-services-core/build/outputs/apk/releases
++
++      - name: Sign
++        id: sign_apk
++        uses: ilharp/sign-android-release@v2
++        with:
++          releaseDir: play-services-core/build/outputs/apk/releases
++          signingKey: ${{ secrets.SIGNING_KEYSTORE }}
++          keyAlias: ${{ secrets.SIGNING_KEY_ALIAS }}
++          keyStorePassword: ${{ secrets.SIGNING_KEYSTORE_PASSWORD }}
++          keyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
++
++      - name: Split
++        uses: jungwinter/split@v2
++        id: signed_files
++        with:
++          msg: ${{ steps.sign_apk.outputs.signedFiles }}
++          separator: ':'
++
++      - name: Release
++        uses: ncipollo/release-action@v1
++        with:
++          artifacts: play-services-core/build/outputs/apk/releases/*-signed.apk
+diff -Naur inputbak/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt input/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt
+--- inputbak/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2026-02-16 09:52:52.000000000 +0300
+@@ -64,7 +64,7 @@
+             for (packageName in packageNames) {
+                 val applicationInfo = context.packageManager.getApplicationInfo(packageName, 0)
+                 if (applicationInfo.targetSdkVersion > 33) {
+-                    if (context.packageManager.checkPermission("com.google.android.gms.permission.AD_ID", packageName) == PackageManager.PERMISSION_DENIED) {
++                    if (context.packageManager.checkPermission("app.revanced.android.gms.permission.AD_ID", packageName) == PackageManager.PERMISSION_DENIED) {
+                         throw SecurityException("Permission not granted")
+                     }
+                 }
+diff -Naur inputbak/play-services-ads-lite/src/main/AndroidManifest.xml input/play-services-ads-lite/src/main/AndroidManifest.xml
+--- inputbak/play-services-ads-lite/src/main/AndroidManifest.xml	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-ads-lite/src/main/AndroidManifest.xml	2026-02-16 09:52:52.000000000 +0300
+@@ -6,7 +6,7 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+     <uses-permission android:name="android.permission.INTERNET" />
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+-    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
++    <uses-permission android:name="app.revanced.android.gms.permission.AD_ID" />
+ 
+     <queries>
+         <!-- Website links -->
+diff -Naur inputbak/play-services-auth-api-phone/src/main/java/com/google/android/gms/auth/api/phone/SmsRetriever.java input/play-services-auth-api-phone/src/main/java/com/google/android/gms/auth/api/phone/SmsRetriever.java
+--- inputbak/play-services-auth-api-phone/src/main/java/com/google/android/gms/auth/api/phone/SmsRetriever.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-auth-api-phone/src/main/java/com/google/android/gms/auth/api/phone/SmsRetriever.java	2026-02-16 09:52:52.000000000 +0300
+@@ -47,7 +47,7 @@
+      * Permission that's used to register the receiver to detect that the broadcaster is the SMS Retriever.
+      */
+     @NonNull
+-    public static final String SEND_PERMISSION = "com.google.android.gms.auth.api.phone.permission.SEND";
++    public static final String SEND_PERMISSION = "app.revanced.android.gms.auth.api.phone.permission.SEND";
+     /**
+      * Intent action when SMS message is retrieved.
+      */
+diff -Naur inputbak/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java input/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java
+--- inputbak/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2026-02-16 09:52:52.000000000 +0300
+@@ -51,6 +51,9 @@
+     @Deprecated
+     public static boolean isGooglePackage(@NonNull Context context, @Nullable String packageName) {
+         if (packageName == null) return false;
++
++        packageName = PackageSpoofUtils.spoofPackageName(context.getPackageManager(), packageName);
++
+         return new ExtendedPackageInfo(context, packageName).isGoogleOrPlatformPackage();
+     }
+ 
+@@ -59,7 +62,7 @@
+      */
+     @Deprecated
+     public static boolean callerHasExtendedAccessPermission(@NonNull Context context) {
+-        return context.checkCallingPermission("org.microg.gms.EXTENDED_ACCESS") == PackageManager.PERMISSION_GRANTED;
++        return context.checkCallingPermission("app.revanced.org.microg.gms.EXTENDED_ACCESS") == PackageManager.PERMISSION_GRANTED;
+     }
+ 
+     public static void assertGooglePackagePermission(@NonNull Context context, GooglePackagePermission permission) {
+@@ -74,7 +77,17 @@
+ 
+     public static boolean callerHasGooglePackagePermission(@NonNull Context context, GooglePackagePermission permission) {
+         for (String packageCandidate : getCallingPackageCandidates(context)) {
+-            if (new ExtendedPackageInfo(context, packageCandidate).hasGooglePackagePermission(permission)) {
++            String packageName = PackageSpoofUtils.spoofPackageName(
++                    context.getPackageManager(),
++                    packageCandidate
++            );
++
++            // See https://github.com/ReVanced/GmsCore/issues/10.
++            ExtendedPackageInfo extendedPackageInfo = new ExtendedPackageInfo(context, packageName);
++            if (!extendedPackageInfo.isInstalled())
++                return true;
++
++            if (new ExtendedPackageInfo(context, packageName).hasGooglePackagePermission(permission)) {
+                 return true;
+             }
+         }
+@@ -162,7 +175,7 @@
+                 for (Signature sig : info.signingInfo.getSigningCertificateHistory()) {
+                     byte[] digest = sha1bytes(sig.toByteArray());
+                     if (digest != null) {
+-                        return digest;
++                        return PackageSpoofUtils.spoofBytesSignature(packageManager, packageName, digest);
+                     }
+                 }
+             }
+@@ -171,7 +184,7 @@
+             for (Signature sig : info.signatures) {
+                 byte[] digest = sha1bytes(sig.toByteArray());
+                 if (digest != null) {
+-                    return digest;
++                    return PackageSpoofUtils.spoofBytesSignature(packageManager, packageName, digest);
+                 }
+             }
+         }
+@@ -185,7 +198,7 @@
+         if (packageName == null) {
+             packageName = firstPackageFromUserId(context, callingUid);
+         }
+-        return packageName;
++        return PackageSpoofUtils.spoofPackageName(context.getPackageManager(), packageName);
+     }
+ 
+     public static String[] getCallingPackageCandidates(@NonNull Context context) {
+diff -Naur inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt input/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt
+--- inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	1970-01-01 03:00:00.000000000 +0300
++++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	2026-02-16 09:52:52.000000000 +0300
+@@ -0,0 +1,157 @@
++package org.microg.gms.common
++
++import android.content.pm.PackageManager
++import android.os.Bundle
++import android.util.Log
++import com.google.android.gms.common.BuildConfig
++import java.util.*
++
++// Slightly modified implementation from https://github.com/shadow578.
++/**
++ * Utilities to spoof package information.
++ */
++object PackageSpoofUtils {
++    private const val TAG = "SpoofUtils"
++    private const val META_SPOOF_PACKAGE_NAME =
++        Constants.USER_MICROG_PACKAGE_NAME + ".SPOOFED_PACKAGE_NAME"
++    private const val META_SPOOF_PACKAGE_SIGNATURE =
++        Constants.USER_MICROG_PACKAGE_NAME + ".SPOOFED_PACKAGE_SIGNATURE"
++
++    private val spoofedPackageNameCache = HashMap<String, String>()
++    private val spoofedPackageSignatureCache = HashMap<String, String>()
++
++    /**
++     * Spoof the package name of a package, if a spoofed name is set.
++     *
++     * @param packageManager [PackageManager] used to get package information.
++     * @param realPackageName The real package name.
++     * @return Either the spoofed or the real package name, depending on if the package requested spoofing.
++     */
++    @JvmStatic
++    fun spoofPackageName(
++        packageManager: PackageManager,
++        realPackageName: String?
++    ): String? {
++        if (realPackageName.isNullOrEmpty()) return realPackageName
++
++        val spoofedPackageName = getSpoofedPackageName(packageManager, realPackageName)
++        return if (!spoofedPackageName.isNullOrEmpty()) {
++            Log.i(TAG, "Package name of $realPackageName spoofed to $spoofedPackageName")
++            spoofedPackageName
++        } else realPackageName
++    }
++
++    /**
++     * Spoof the signature of a package, if a spoofed name is set.
++     *
++     * @param packageManager [PackageManager] used to get package information.
++     * @param packageName Name of the package to check.
++     * @param realSignature The real package signature.
++     * @return Either the spoofed or the real signature, depending on if the package requested spoofing.
++     */
++    @JvmStatic
++    @JvmName("spoofStringSignature")
++    fun spoofSignature(
++        packageManager: PackageManager,
++        packageName: String,
++        realSignature: String?
++    ): String? {
++        val spoofedSignature = getSpoofedSignature(packageManager, packageName)
++
++        if (spoofedSignature.isNullOrEmpty()) return realSignature
++
++        Log.i(TAG, "Package signature of $packageName spoofed to $spoofedSignature")
++        return spoofedSignature
++    }
++
++    /**
++     * Spoof the signature of a package, if a spoofed name is set.
++     *
++     * @param packageManager [PackageManager] used to get package information.
++     * @param packageName Name of the package to check.
++     * @param realSignature The real package signature.
++     * @return Either the spoofed or the real signature, depending on if the package requested spoofing.
++     */
++    @JvmStatic
++    @JvmName("spoofBytesSignature")
++    fun spoofSignature(
++        packageManager: PackageManager,
++        packageName: String,
++        realSignature: ByteArray?
++    ): ByteArray? {
++        val spoofedSignatureString = getSpoofedSignature(packageManager, packageName)
++
++        if (spoofedSignatureString.isNullOrEmpty()) return realSignature
++
++        Log.i(TAG, "Package signature of $packageName spoofed to $spoofedSignatureString")
++
++        return spoofedSignatureString.chunked(2)
++            .map { it.toInt(16).toByte() }
++            .toByteArray()
++    }
++
++    /**
++     * Get the spoofed package name for a package.
++     *
++     * @param packageManager [PackageManager] used to get package information.
++     * @param packageName Name of the package to get the spoofed name of.
++     * @return Spoofed name string, or null if none set.
++     */
++    private fun getSpoofedPackageName(
++        packageManager: PackageManager,
++        packageName: String
++    ): String? {
++        return spoofedPackageNameCache[packageName] ?: run {
++            val meta = getPackageMetadata(packageManager, packageName)
++            val spoofedPackageName = meta?.getString(META_SPOOF_PACKAGE_NAME)
++            if (spoofedPackageName != null) {
++                spoofedPackageNameCache[packageName] = spoofedPackageName
++            }
++
++            spoofedPackageName
++        }
++    }
++
++    /**
++     * Get the spoofed package signature for a package.
++     *
++     * @param packageManager [PackageManager] used to get package information.
++     * @param packageName Name of the package to get spoofed signature of.
++     * @return Spoofed signature string, or null if none set.
++     */
++    private fun getSpoofedSignature(
++        packageManager: PackageManager,
++        packageName: String
++    ): String? {
++        return spoofedPackageSignatureCache[packageName] ?: run {
++            val meta = getPackageMetadata(packageManager, packageName)
++            val spoofedSignature = meta?.getString(META_SPOOF_PACKAGE_SIGNATURE)
++            if (spoofedSignature != null) {
++                spoofedPackageSignatureCache[packageName] = spoofedSignature
++            }
++
++            spoofedSignature
++        }
++    }
++
++    /**
++     * Get package metadata.
++     *
++     * @param packageManager [PackageManager] used to get package information.
++     * @param packageName Name of the package to get metadata of.
++     * @return Package metadata bundle.
++     */
++    private fun getPackageMetadata(packageManager: PackageManager, packageName: String): Bundle? {
++        return try {
++            // PackageManager.getPackageInfo() has been deprecated in targetSdkVersion 30+
++            // To solve this, add the QUERY_ALL_PACKAGES permission to AndroidManifest.xml
++            packageManager
++                .getPackageInfo(packageName, PackageManager.GET_META_DATA)
++                ?.applicationInfo
++                ?.metaData
++        } catch (e: PackageManager.NameNotFoundException) {
++            Log.e(TAG, "Failed to get application metadata for $packageName", e)
++            null
++        }
++    }
++}
+\ В конце файла нет новой строки
+diff -Naur inputbak/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java
+--- inputbak/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2026-02-16 09:52:52.000000000 +0300
+@@ -112,6 +112,10 @@
+     }
+ 
+     private String getTargetPackageWithoutPref() {
++        // Must be self, as we want to bind to our own services, and not to GMS or microG ones,
++        // in case system GMS is installed alongside.
++        if (true) return context.getPackageName();
++
+         // Pref: gms > microG > self
+         PackageManager pm = context.getPackageManager();
+         try {
+@@ -253,7 +257,7 @@
+                         if (requireMicrog && !isMicrog(resolveInfo)) {
+                             Log.w(TAG, "GMS service found for " + actionString + " but looks not like microG");
+                         } else {
+-                            if (isSystemGoogleOrMicrogSig(pm, targetPackage)){
++                            if (isSystemGoogleOrMicrogSig(pm, targetPackage)) {
+                                 Log.d(TAG, "GMS service found for " + actionString);
+                                 return intent;
+                             } else {
+@@ -297,7 +301,7 @@
+             if (resolveInfo == null || resolveInfo.serviceInfo == null) return false;
+             if (resolveInfo.serviceInfo.name.startsWith("org.microg.")) return true;
+             try {
+-                PermissionInfo info = context.getPackageManager().getPermissionInfo("org.microg.gms.EXTENDED_ACCESS", 0);
++                PermissionInfo info = context.getPackageManager().getPermissionInfo("app.revanced.org.microg.gms.EXTENDED_ACCESS", 0);
+                 return info.packageName.equals(resolveInfo.serviceInfo.packageName);
+             } catch (PackageManager.NameNotFoundException e) {
+                 return false;
+diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java input/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java
+--- inputbak/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2026-02-16 09:52:52.000000000 +0300
+@@ -23,7 +23,7 @@
+     public static final String PROVIDER_METHOD_CLEAR_PASSWORD = "clear_password";
+     public static final String PROVIDER_EXTRA_CLEAR_PASSWORD = "clear_password";
+     public static final String PROVIDER_EXTRA_ACCOUNTS = "accounts";
+-    public static final String DEFAULT_ACCOUNT_TYPE = "com.google";
++    public static final String DEFAULT_ACCOUNT_TYPE = "app.revanced";
+     public static final String WORK_ACCOUNT_TYPE = "com.google.work";
+ 
+     public static final String KEY_ACCOUNT_SERVICES = "services";
+diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/common/Constants.java input/play-services-basement/src/main/java/org/microg/gms/common/Constants.java
+--- inputbak/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2026-02-16 09:52:52.000000000 +0300
+@@ -21,7 +21,7 @@
+ public class Constants {
+     public static final int GMS_VERSION_CODE = (BuildConfig.VERSION_CODE / 1000) * 1000;
+     public static final String GMS_PACKAGE_NAME = "com.google.android.gms";
+-    public static final String USER_MICROG_PACKAGE_NAME = "org.microg.gms";
++    public static final String USER_MICROG_PACKAGE_NAME = "app.revanced.android.gms";
+     public static final String GSF_PACKAGE_NAME = "com.google.android.gsf";
+     public static final String GMS_PACKAGE_SIGNATURE_SHA1 = "38918a453d07199354f8b19af05ec6562ced5788";
+     public static final String GMS_SECONDARY_PACKAGE_SIGNATURE_SHA1 = "bd32424203e0fb25f36b57e5aa356f9bdd1da998";
+diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java
+--- inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2026-02-16 09:52:52.000000000 +0300
+@@ -85,10 +85,10 @@
+     public static final String SCHEDULER_ACTION_CANCEL_ALL = "CANCEL_ALL";
+     public static final String SCHEDULER_ACTION_SCHEDULE = "SCHEDULE_TASK";
+ 
+-    public static final String PERMISSION_GTALK = "com.google.android.gtalkservice.permission.GTALK_SERVICE";
++    public static final String PERMISSION_GTALK = "app.revanced.android.gtalkservice.permission.GTALK_SERVICE";
+     public static final String PERMISSION_NETWORK_TASK = "com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE";
+-    public static final String PERMISSION_RECEIVE = "com.google.android.c2dm.permission.RECEIVE";
+-    public static final String PERMISSION_SEND = "com.google.android.c2dm.permission.SEND";
++    public static final String PERMISSION_RECEIVE = "app.revanced.android.c2dm.permission.RECEIVE";
++    public static final String PERMISSION_SEND = "app.revanced.android.c2dm.permission.SEND";
+ 
+     public static final String ERROR_SERVICE_NOT_AVAILABLE = "SERVICE_NOT_AVAILABLE";
+ 
+diff -Naur inputbak/play-services-core/build.gradle input/play-services-core/build.gradle
+--- inputbak/play-services-core/build.gradle	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-core/build.gradle	2026-02-16 09:52:52.000000000 +0300
+@@ -119,6 +119,8 @@
+     }
+ 
+     defaultConfig {
++        applicationId = "app.revanced.android.gms"
++
+         versionName version
+         versionCode appVersionCode
+ 
+@@ -128,8 +130,8 @@
+         multiDexEnabled true
+         multiDexKeepProguard file('multidex-keep.pro')
+ 
+-        manifestPlaceholders = [appLabel:"@string/gms_app_name"]
+-        resValue "string", "package_id", "com.google.android.gms"
++        manifestPlaceholders = [appLabel: "@string/gms_app_name"]
++        resValue "string", "package_id", "app.revanced.android.gms"
+ 
+         buildConfigField "String", "SAFETYNET_KEY", "\"${localProperties.get("safetynet.key", "")}\""
+         buildConfigField "String", "RECAPTCHA_SITE_KEY", "\"${localProperties.get("recaptcha.siteKey", "")}\""
+@@ -183,7 +185,7 @@
+             dimension 'target'
+             applicationId = "org.microg.gms"
+             versionNameSuffix "-user"
+-            manifestPlaceholders = [appLabel:"@string/limited_services_app_name"]
++            manifestPlaceholders = [appLabel: "@string/limited_services_app_name"]
+             matchingFallbacks = ['default']
+             resValue "string", "package_id", "org.microg.gms"
+         }
+diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-services-core/src/main/AndroidManifest.xml
+--- inputbak/play-services-core/src/main/AndroidManifest.xml	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-core/src/main/AndroidManifest.xml	2026-02-16 09:52:52.000000000 +0300
+@@ -17,124 +17,124 @@
+     xmlns:tools="http://schemas.android.com/tools">
+ 
+     <permission
+-        android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"
++        android:name="app.revanced.android.providers.gsf.permission.READ_GSERVICES"
+         android:label="@string/perm_gsf_read_gservices_label"
+         android:protectionLevel="normal" />
+     <permission
+-        android:name="com.google.android.c2dm.permission.RECEIVE"
++        android:name="app.revanced.android.c2dm.permission.RECEIVE"
+         android:label="@string/perm_c2dm_receive_label"
+         android:permissionGroup="android.permission-group.NETWORK"
+         android:protectionLevel="normal" />
+     <permission
+-        android:name="com.google.android.c2dm.permission.SEND"
++        android:name="app.revanced.android.c2dm.permission.SEND"
+         android:label="@string/perm_c2dm_send_label"
+         android:permissionGroup="android.permission-group.NETWORK"
+         android:protectionLevel="privileged|signature" />
+     <permission
+-        android:name="com.google.android.gtalkservice.permission.GTALK_SERVICE"
++        android:name="app.revanced.android.gtalkservice.permission.GTALK_SERVICE"
+         android:label="@string/perm_gtalk_svc_label"
+         android:permissionGroup="android.permission-group.MESSAGES"
+         android:protectionLevel="signature" />
+ 
+     <permission-tree
+-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH"
++        android:name="app.revanced.android.googleapps.permission.GOOGLE_AUTH"
+         android:icon="@drawable/proprietary_auth_ic_scope_icon_default" />
+ 
+     <permission
+-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.cp"
++        android:name="app.revanced.android.googleapps.permission.GOOGLE_AUTH.cp"
+         android:description="@string/permission_service_cp_description"
+         android:label="@string/permission_service_cp_label"
+         android:protectionLevel="dangerous" />
+     <permission
+-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.local"
++        android:name="app.revanced.android.googleapps.permission.GOOGLE_AUTH.local"
+         android:description="@string/permission_service_local_description"
+         android:label="@string/permission_service_local_label"
+         android:protectionLevel="dangerous" />
+     <permission
+-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.mail"
++        android:name="app.revanced.android.googleapps.permission.GOOGLE_AUTH.mail"
+         android:description="@string/permission_service_mail_description"
+         android:label="@string/permission_service_mail_label"
+         android:protectionLevel="dangerous" />
+     <permission
+-        android:name="com.google.android.googleapps.permission.GOOGLE_AUTH.writely"
++        android:name="app.revanced.android.googleapps.permission.GOOGLE_AUTH.writely"
+         android:description="@string/permission_service_writely_description"
+         android:label="@string/permission_service_writely_label"
+         android:protectionLevel="dangerous" />
+ 
+     <permission
+-        android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"
++        android:name="app.revanced.android.gms.permission.ACTIVITY_RECOGNITION"
+         android:label="@string/perm_activity_recognition_label"
+         android:description="@string/perm_activity_recognition_description"
+         android:protectionLevel="normal" />
+ 
+     <permission
+-        android:name="com.google.android.gms.permission.AD_ID"
++        android:name="app.revanced.android.gms.permission.AD_ID"
+         android:label="@string/perm_ad_id_label"
+         android:description="@string/perm_ad_id_description"
+         android:protectionLevel="normal" />
+     <permission
+-        android:name="com.google.android.gms.permission.AD_ID_NOTIFICATION"
++        android:name="app.revanced.android.gms.permission.AD_ID_NOTIFICATION"
+         android:label="@string/perm_ad_id_notification_label"
+         android:description="@string/perm_ad_id_notification_description"
+         android:protectionLevel="normal" />
+ 
+ 
+     <permission
+-        android:name="com.google.android.gms.auth.api.phone.permission.SEND"
++        android:name="app.revanced.android.gms.auth.api.phone.permission.SEND"
+         android:protectionLevel="signature" />
+ 
+     <permission
+-        android:name="org.microg.gms.STATUS_BROADCAST"
++        android:name="app.revanced.org.microg.gms.STATUS_BROADCAST"
+         android:label="@string/perm_status_broadcast_label"
+         android:protectionLevel="normal" />
+     <permission
+-        android:name="org.microg.gms.EXTENDED_ACCESS"
++        android:name="app.revanced.org.microg.gms.EXTENDED_ACCESS"
+         android:label="@string/perm_extended_access_label"
+         android:protectionLevel="dangerous" />
+     <permission
+-        android:name="org.microg.gms.PROVISION"
++        android:name="app.revanced.org.microg.gms.PROVISION"
+         android:description="@string/perm_provision_description"
+         android:label="@string/perm_provision_label"
+         android:protectionLevel="privileged|signature" />
+ 
+     <permission
+-        android:name="com.google.android.gms.permission.CAR_SPEED"
++        android:name="app.revanced.android.gms.permission.CAR_SPEED"
+         android:label="@string/perm_car_speed_label"
+         android:description="@string/perm_car_speed_description"
+         android:permissionGroup="android.permission-group.LOCATION"
+         android:protectionLevel="dangerous" />
+ 
+     <permission-group
+-        android:name="com.google.android.gms.permission.CAR_INFORMATION"
++        android:name="app.revanced.android.gms.permission.CAR_INFORMATION"
+         android:label="@string/perm_car_info_label"
+         android:description="@string/perm_car_info_description" />
+     <permission
+-        android:name="com.google.android.gms.permission.CAR_FUEL"
++        android:name="app.revanced.android.gms.permission.CAR_FUEL"
+         android:label="@string/perm_car_fuel_label"
+         android:description="@string/perm_car_fuel_description"
+-        android:permissionGroup="com.google.android.gms.permission.CAR_INFORMATION"
++        android:permissionGroup="app.revanced.android.gms.permission.CAR_INFORMATION"
+         android:protectionLevel="dangerous" />
+     <permission
+-        android:name="com.google.android.gms.permission.CAR_MILEAGE"
++        android:name="app.revanced.android.gms.permission.CAR_MILEAGE"
+         android:label="@string/perm_car_mileage_label"
+         android:description="@string/perm_car_mileage_description"
+-        android:permissionGroup="com.google.android.gms.permission.CAR_INFORMATION"
++        android:permissionGroup="app.revanced.android.gms.permission.CAR_INFORMATION"
+         android:protectionLevel="dangerous" />
+     <permission
+-        android:name="com.google.android.gms.permission.CAR_VENDOR_EXTENSION"
++        android:name="app.revanced.android.gms.permission.CAR_VENDOR_EXTENSION"
+         android:label="@string/perm_car_vendor_extension_label"
+         android:description="@string/perm_car_vendor_extension_description"
+-        android:permissionGroup="com.google.android.gms.permission.CAR_INFORMATION"
++        android:permissionGroup="app.revanced.android.gms.permission.CAR_INFORMATION"
+         android:protectionLevel="dangerous" />
+     <permission
+-        android:name="com.google.android.gms.locationsharingreporter.periodic.STATUS_UPDATE"
++        android:name="app.revanced.android.gms.locationsharingreporter.periodic.STATUS_UPDATE"
+         android:protectionLevel="signature"/>
+-    <uses-permission android:name="com.google.android.gms.locationsharingreporter.periodic.STATUS_UPDATE"/>
++    <uses-permission android:name="app.revanced.android.gms.locationsharingreporter.periodic.STATUS_UPDATE"/>
+ 
+     <permission
+-        android:name="com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE"
++        android:name="app.revanced.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE"
+         android:protectionLevel="signature"/>
+-    <uses-permission android:name="com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE" />
++    <uses-permission android:name="app.revanced.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE" />
+ 
+     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+     <uses-permission android:name="android.permission.INTERNET" />
+@@ -157,12 +157,12 @@
+     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+ 
+-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+-    <uses-permission android:name="com.google.android.c2dm.permission.SEND" />
+-    <uses-permission android:name="com.google.android.gtalkservice.permission.GTALK_SERVICE" />
+-    <uses-permission android:name="com.google.android.gms.auth.api.phone.permission.SEND" />
++    <uses-permission android:name="app.revanced.android.c2dm.permission.RECEIVE" />
++    <uses-permission android:name="app.revanced.android.c2dm.permission.SEND" />
++    <uses-permission android:name="app.revanced.android.gtalkservice.permission.GTALK_SERVICE" />
++    <uses-permission android:name="app.revanced.android.gms.auth.api.phone.permission.SEND" />
+ 
+-    <uses-permission android:name="org.microg.gms.STATUS_BROADCAST" />
++    <uses-permission android:name="app.revanced.org.microg.gms.STATUS_BROADCAST" />
+ 
+     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+@@ -218,7 +218,7 @@
+         <service
+             android:name="org.microg.gms.provision.ProvisionService"
+             android:exported="true"
+-            android:permission="org.microg.gms.PROVISION" />
++            android:permission="app.revanced.org.microg.gms.PROVISION" />
+ 
+         <!-- Location -->
+ 
+@@ -279,21 +279,21 @@
+ 
+         <provider
+             android:name="org.microg.gms.gservices.GServicesProvider"
+-            android:authorities="com.google.android.gsf.gservices"
++            android:authorities="app.revanced.android.gsf.gservices"
+             android:exported="true" />
+         <provider
+             android:name="org.microg.gms.settings.GoogleSettingsProvider"
+-            android:authorities="com.google.settings"
++            android:authorities="app.revanced.settings"
+             android:exported="true" />
+         <provider
+             android:name="org.microg.gms.feeds.SubscribedFeedsProvider"
+-            android:authorities="subscribedfeeds"
++            android:authorities="app.revanced.subscribedfeeds"
+             android:exported="true"
+             android:multiprocess="false"
+             android:readPermission="android.permission.SUBSCRIBED_FEEDS_READ"
+             android:writePermission="android.permission.SUBSCRIBED_FEEDS_WRITE" />
+         <provider
+-            android:authorities="com.google.android.gms.fileprovider"
++            android:authorities="app.revanced.android.gms.fileprovider"
+             android:name="org.microg.gms.settings.GmsFileProvider"
+             android:exported="false"
+             android:grantUriPermissions="true">
+@@ -543,7 +543,7 @@
+ 
+         <provider
+             android:name="org.microg.gms.auth.AccountContentProvider"
+-            android:authorities="com.google.android.gms.auth.accounts"
++            android:authorities="app.revanced.android.gms.auth.accounts"
+             android:exported="true" />
+ 
+         <activity
+@@ -741,13 +741,13 @@
+         <!-- Chimera -->
+         <provider
+             android:name="org.microg.gms.chimera.ServiceProvider"
+-            android:authorities="com.google.android.gms.chimera"
++            android:authorities="app.revanced.android.gms.chimera"
+             android:exported="true" />
+ 
+         <!-- Fonts -->
+         <provider
+             android:name="org.microg.gms.fonts.FontsProvider"
+-            android:authorities="com.google.android.gms.fonts"
++            android:authorities="app.revanced.android.gms.fonts"
+             android:exported="true" />
+ 
+         <!-- microG Settings activity -->
+@@ -908,12 +908,12 @@
+ 
+         <provider
+             android:name="org.microg.gms.phenotype.ConfigurationProvider"
+-            android:authorities="com.google.android.gms.phenotype"
++            android:authorities="app.revanced.android.gms.phenotype"
+             android:exported="true" />
+ 
+         <service android:name="org.microg.gms.phenotype.PhenotypeService">
+             <intent-filter>
+-                <action android:name="com.google.android.gms.phenotype.service.START" />
++                <action android:name="app.revanced.android.gms.phenotype.service.START" />
+             </intent-filter>
+         </service>
+ 
+@@ -1235,7 +1235,7 @@
+                 <action android:name="com.google.android.gms.fitness.GoogleFitnessService.START" />
+                 <action android:name="com.google.android.gms.fitness.InternalApi" />
+                 <action android:name="com.google.android.gms.fitness.SensorsApi" />
+-                <action android:name="com.google.android.gms.fonts.service.START" />
++                <action android:name="app.revanced.android.gms.fonts.service.START" />
+                 <action android:name="com.google.android.gms.freighter.service.START" />
+                 <action android:name="com.google.android.gms.growth.service.START" />
+                 <action android:name="com.google.android.gms.googlehelp.service.GoogleHelpService.START" />
+@@ -1326,6 +1326,20 @@
+                     tools:ignore="WearableBindListener" />
+             </intent-filter>
+         </service>
++
++
++        <meta-data
++                android:name="org.microg.gms.settings.checkin_enable_service"
++                android:value="true" />
++        <meta-data
++                android:name="org.microg.gms.settings.gcm_enable_mcs_service"
++                android:value="true" />
++        <meta-data
++                android:name="org.microg.gms.settings.droidguard_enabled"
++                android:value="true" />
++        <meta-data
++                android:name="org.microg.gms.settings.safetynet_enabled"
++                android:value="true" />
+     </application>
+ 
+ </manifest>
+diff -Naur inputbak/play-services-core/src/main/java/com/google/android/gms/auth/TokenActivity.java input/play-services-core/src/main/java/com/google/android/gms/auth/TokenActivity.java
+--- inputbak/play-services-core/src/main/java/com/google/android/gms/auth/TokenActivity.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-core/src/main/java/com/google/android/gms/auth/TokenActivity.java	2026-02-16 09:52:52.000000000 +0300
+@@ -30,7 +30,7 @@
+         extras.get("KEY");
+         Log.d(TAG, extras.toString());
+         /*AccountManager accountManager = AccountManager.get(this);
+-        accountManager.getAuthToken(new Account(extras.getString("authAccount"), "com.google"), extras.getString("service"), extras.getBundle("callerExtras"), this, new AccountManagerCallback<Bundle>() {
++        accountManager.getAuthToken(new Account(extras.getString("authAccount"), "app.revanced"), extras.getString("service"), extras.getBundle("callerExtras"), this, new AccountManagerCallback<Bundle>() {
+             @Override
+             public void run(AccountManagerFuture<Bundle> future) {
+                 try {
+diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java
+--- inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2026-02-16 09:52:52.000000000 +0300
+@@ -17,6 +17,7 @@
+ import org.microg.gms.accountaction.ErrorResolverKt;
+ import org.microg.gms.accountaction.Resolution;
+ import org.microg.gms.common.NotOkayException;
++import org.microg.gms.common.PackageSpoofUtils;
+ import org.microg.gms.common.PackageUtils;
+ import org.microg.gms.settings.SettingsContract;
+ 
+@@ -330,8 +331,10 @@
+         }
+         AuthRequest request = new AuthRequest().fromContext(context)
+                 .source("android")
+-                .app(packageName, getPackageSignature())
+-                .email(accountName)
++                .app(
++                        PackageSpoofUtils.spoofPackageName(context.getPackageManager(), packageName),
++                        PackageSpoofUtils.spoofStringSignature(context.getPackageManager(), packageName, getPackageSignature())
++                ).email(accountName)
+                 .token(getAccountManager().getPassword(getAccount()))
+                 .service(service)
+                 .delegation(delegationType, delegateeUserId)
+diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java input/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java
+--- inputbak/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2026-02-16 09:52:52.000000000 +0300
+@@ -100,8 +100,8 @@
+     private static final String GOOGLE_SIGNUP_URL = "https://accounts.google.com/signup";
+     private static final String MAGIC_USER_AGENT = " MinuteMaid";
+     private static final String COOKIE_OAUTH_TOKEN = "oauth_token";
+-    private static final String ACTION_UPDATE_ACCOUNT = "com.google.android.gms.auth.GOOGLE_ACCOUNT_CHANGE";
+-    private static final String PERMISSION_UPDATE_ACCOUNT = "com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE";
++    private static final String ACTION_UPDATE_ACCOUNT = "app.revanced.android.gms.auth.GOOGLE_ACCOUNT_CHANGE";
++    private static final String PERMISSION_UPDATE_ACCOUNT = "app.revanced.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE";
+     private static final int REQUEST_CODE_SIGNUP = 1001;
+ 
+     private final FidoHandler fidoHandler = new FidoHandler(this);
+diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java input/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java
+--- inputbak/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2026-02-16 09:52:52.000000000 +0300
+@@ -30,6 +30,7 @@
+ import com.google.android.gms.common.internal.CertData;
+ import org.microg.gms.auth.*;
+ import org.microg.gms.auth.login.LoginActivity;
++import org.microg.gms.common.PackageSpoofUtils;
+ import org.microg.gms.common.PackageUtils;
+ import org.microg.gms.auth.AuthResponse;
+ import org.microg.gms.utils.PackageManagerUtilsKt;
+@@ -142,7 +143,7 @@
+                 Intent i = new Intent(context, AskPermissionActivity.class);
+                 i.putExtras(options);
+                 i.putExtra(KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
+-                i.putExtra(KEY_ANDROID_PACKAGE_NAME, app);
++                i.putExtra(KEY_ANDROID_PACKAGE_NAME, PackageSpoofUtils.spoofPackageName(context.getPackageManager(), app));
+                 i.putExtra(KEY_ACCOUNT_TYPE, account.type);
+                 i.putExtra(KEY_ACCOUNT_NAME, account.name);
+                 i.putExtra(KEY_AUTHTOKEN, authTokenType);
+diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java input/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java
+--- inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2026-02-16 09:52:52.000000000 +0300
+@@ -22,9 +22,9 @@
+ import android.net.Uri;
+ 
+ public class GServices {
+-    public static final Uri CONTENT_URI = Uri.parse("content://com.google.android.gsf.gservices");
+-    public static final Uri MAIN_URI = Uri.parse("content://com.google.android.gsf.gservices/main");
+-    public static final Uri OVERRIDE_URI = Uri.parse("content://com.google.android.gsf.gservices/override");
++    public static final Uri CONTENT_URI = Uri.parse("content://app.revanced.android.gsf.gservices");
++    public static final Uri MAIN_URI = Uri.parse("content://app.revanced.android.gsf.gservices/main");
++    public static final Uri OVERRIDE_URI = Uri.parse("content://app.revanced.android.gsf.gservices/override");
+ 
+     public static int setString(ContentResolver resolver, String key, String value) {
+         ContentValues values = new ContentValues();
+diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java input/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java
+--- inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2026-02-16 09:52:52.000000000 +0300
+@@ -39,7 +39,7 @@
+  * if certain "experiments" are enabled on the device.
+  */
+ public class GServicesProvider extends ContentProvider {
+-    public static final Uri CONTENT_URI = Uri.parse("content://com.google.android.gsf.gservices/");
++    public static final Uri CONTENT_URI = Uri.parse("content://app.revanced.android.gsf.gservices/");
+     public static final Uri MAIN_URI = Uri.withAppendedPath(CONTENT_URI, "main");
+     public static final Uri OVERRIDE_URI = Uri.withAppendedPath(CONTENT_URI, "override");
+     public static final Uri PREFIX_URI = Uri.withAppendedPath(CONTENT_URI, "prefix");
+diff -Naur inputbak/play-services-core/src/main/res/xml/authenticator.xml input/play-services-core/src/main/res/xml/authenticator.xml
+--- inputbak/play-services-core/src/main/res/xml/authenticator.xml	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-core/src/main/res/xml/authenticator.xml	2026-02-16 09:52:52.000000000 +0300
+@@ -16,7 +16,7 @@
+ 
+ <account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
+     android:accountPreferences="@xml/preferences_auth"
+-    android:accountType="com.google"
++    android:accountType="app.revanced"
+     android:customTokens="true"
+     android:icon="@drawable/proprietary_auth_gls_ic_google_selected"
+     android:smallIcon="@drawable/proprietary_auth_gls_ic_google_minitab_selected"
+diff -Naur inputbak/play-services-core/src/main/res/xml/contact_syncadapter.xml input/play-services-core/src/main/res/xml/contact_syncadapter.xml
+--- inputbak/play-services-core/src/main/res/xml/contact_syncadapter.xml	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-core/src/main/res/xml/contact_syncadapter.xml	2026-02-16 09:52:52.000000000 +0300
+@@ -16,6 +16,6 @@
+   -->
+ 
+ <sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
+-              android:accountType="com.google"
++              android:accountType="app.revanced"
+               android:contentAuthority="com.android.contacts"
+               android:userVisible="false"/>
+\ В конце файла нет новой строки
+diff -Naur inputbak/play-services-core/src/main/res/xml/preferences_accounts.xml input/play-services-core/src/main/res/xml/preferences_accounts.xml
+--- inputbak/play-services-core/src/main/res/xml/preferences_accounts.xml	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-core/src/main/res/xml/preferences_accounts.xml	2026-02-16 09:52:52.000000000 +0300
+@@ -17,7 +17,7 @@
+             android:title="@string/pref_add_account_summary">
+             <intent
+                 android:targetClass="org.microg.gms.auth.login.LoginActivity"
+-                android:targetPackage="com.google.android.gms" />
++                android:targetPackage="@string/package_id" />
+         </Preference>
+     </PreferenceCategory>
+     <PreferenceCategory
+diff -Naur inputbak/play-services-gcm/src/main/AndroidManifest.xml input/play-services-gcm/src/main/AndroidManifest.xml
+--- inputbak/play-services-gcm/src/main/AndroidManifest.xml	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-gcm/src/main/AndroidManifest.xml	2026-02-16 09:52:52.000000000 +0300
+@@ -18,7 +18,7 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ 
+     <!-- Permissions required for GCM -->
+-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
++    <uses-permission android:name="app.revanced.android.c2dm.permission.RECEIVE"/>
+     <uses-permission android:name="android.permission.INTERNET"/>
+ 
+     <!-- Move to play-services-measurement -->
+diff -Naur inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java
+--- inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2026-02-16 09:52:52.000000000 +0300
+@@ -46,7 +46,7 @@
+  * <receiver
+  *     android:name="com.google.android.gms.gcm.GcmReceiver"
+  *     android:exported="true"
+- *     android:permission="com.google.android.c2dm.permission.SEND" >
++ *     android:permission="app.revanced.android.c2dm.permission.SEND" >
+  *     <intent-filter>
+  *         <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+  *         <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+diff -Naur inputbak/play-services-iid/src/main/AndroidManifest.xml input/play-services-iid/src/main/AndroidManifest.xml
+--- inputbak/play-services-iid/src/main/AndroidManifest.xml	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-iid/src/main/AndroidManifest.xml	2026-02-16 09:52:52.000000000 +0300
+@@ -7,6 +7,6 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ 
+     <!-- Permissions required for IID -->
+-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
++    <uses-permission android:name="app.revanced.android.c2dm.permission.RECEIVE"/>
+     <uses-permission android:name="android.permission.INTERNET"/>
+ </manifest>
+diff -Naur inputbak/play-services-nearby/core/package/src/main/AndroidManifest.xml input/play-services-nearby/core/package/src/main/AndroidManifest.xml
+--- inputbak/play-services-nearby/core/package/src/main/AndroidManifest.xml	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-nearby/core/package/src/main/AndroidManifest.xml	2026-02-16 09:52:52.000000000 +0300
+@@ -15,7 +15,7 @@
+     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+ 
+     <permission
+-        android:name="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK"
++        android:name="app.revanced.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK"
+         android:protectionLevel="normal" />
+ 
+     <application>
+diff -Naur inputbak/play-services-nearby/core/src/main/AndroidManifest.xml input/play-services-nearby/core/src/main/AndroidManifest.xml
+--- inputbak/play-services-nearby/core/src/main/AndroidManifest.xml	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-nearby/core/src/main/AndroidManifest.xml	2026-02-16 09:52:52.000000000 +0300
+@@ -5,7 +5,7 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+ 
+     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+-    <uses-permission android:name="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK" />
++    <uses-permission android:name="app.revanced.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK" />
+     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+ 
+     <application>
+diff -Naur inputbak/play-services-nearby/core/src/main/kotlin/org/microg/gms/nearby/exposurenotification/Constants.kt input/play-services-nearby/core/src/main/kotlin/org/microg/gms/nearby/exposurenotification/Constants.kt
+--- inputbak/play-services-nearby/core/src/main/kotlin/org/microg/gms/nearby/exposurenotification/Constants.kt	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-nearby/core/src/main/kotlin/org/microg/gms/nearby/exposurenotification/Constants.kt	2026-02-16 09:52:52.000000000 +0300
+@@ -33,7 +33,7 @@
+ const val CONFIRM_ACTION_KEYS = "keys"
+ const val CONFIRM_PERMISSION_VALIDITY = 60 * 60 * 1000L
+ 
+-const val PERMISSION_EXPOSURE_CALLBACK = "com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK"
++const val PERMISSION_EXPOSURE_CALLBACK = "app.revanced.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK"
+ 
+ const val TX_POWER_LOW = -15
+ 
+diff -Naur inputbak/play-services-nearby/src/main/AndroidManifest.xml input/play-services-nearby/src/main/AndroidManifest.xml
+--- inputbak/play-services-nearby/src/main/AndroidManifest.xml	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-nearby/src/main/AndroidManifest.xml	2026-02-16 09:52:52.000000000 +0300
+@@ -8,6 +8,6 @@
+         <service
+                 android:name="com.google.android.gms.nearby.exposurenotification.WakeUpService"
+                 android:exported="true"
+-                android:permission="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK"/>
++                android:permission="app.revanced.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK"/>
+     </application>
+ </manifest>
+diff -Naur inputbak/play-services-nearby/src/main/java/com/google/android/gms/nearby/exposurenotification/ExposureNotificationClient.java input/play-services-nearby/src/main/java/com/google/android/gms/nearby/exposurenotification/ExposureNotificationClient.java
+--- inputbak/play-services-nearby/src/main/java/com/google/android/gms/nearby/exposurenotification/ExposureNotificationClient.java	2026-02-11 02:16:22.000000000 +0300
++++ input/play-services-nearby/src/main/java/com/google/android/gms/nearby/exposurenotification/ExposureNotificationClient.java	2026-02-16 09:52:52.000000000 +0300
+@@ -248,7 +248,7 @@
+      * <ul>
+      * <li>{@code com.google.android.gms.exposurenotification.ACTION_EXPOSURE_STATE_UPDATED}</li>
+      * </ul>
+-     * This receiver should also be guarded by the {@code com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK} permission so that other apps are not able to fake this broadcast.
++     * This receiver should also be guarded by the {@code app.revanced.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK} permission so that other apps are not able to fake this broadcast.
+      */
+     Task<Void> start();
+ 
+diff -Naur inputbak/README.md input/README.md
+--- inputbak/README.md	2026-02-11 02:16:22.000000000 +0300
++++ input/README.md	2026-02-16 09:52:52.000000000 +0300
+@@ -13,6 +13,22 @@
+ 
+ If you'd like to help translate microG, take a look at [TRANSLATION](TRANSLATION.md).
+ 
++About this fork
++-------
++This repository is a fork of [microG GmsCore](https://github.com/microg/GmsCore) to allow patched Google apps to run without root and under a different package name using GmsCore instead of Google Play Services, via the "GmsCore support" patch by ReVanced from [ReVanced Patches](https://github.com/revanced/revanced-patches) with the minimum amount of changes necessary to upstream.
++
++Goals of this fork:
++- Run next to an existing GMS installation such as [microG GmsCore](https://github.com/microg/GmsCore) or Google Play Services.
++- Usage with the "GmsCore support" patch by ReVanced from [ReVanced Patches](https://github.com/revanced/revanced-patches)
++- Feature parity with upstream
++
++Nongoals of this fork:
++- New features that do not contribute to the goal of this fork
++- Bug fixes that do not contribute to the goal of this fork
++
++Contributing to the fork
++-------
++You can create an issue or pull request to contribute to the fork. In both cases, ensure it aligns with this fork's goals.
+ 
+ License
+ -------
+diff -Naur inputbak/vending-app/src/main/AndroidManifest.xml input/vending-app/src/main/AndroidManifest.xml
+--- inputbak/vending-app/src/main/AndroidManifest.xml	2026-02-11 02:16:22.000000000 +0300
++++ input/vending-app/src/main/AndroidManifest.xml	2026-02-16 09:52:52.000000000 +0300
+@@ -28,7 +28,7 @@
+         tools:ignore="ProtectedPermissions" />
+     <uses-permission android:name="android.permission.DELETE_PACKAGES"
+         tools:ignore="ProtectedPermissions" />
+-    <uses-permission android:name="com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE"/>
++    <uses-permission android:name="app.revanced.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE"/>
+ 
+     <permission
+         android:description="@string/billing_permission_desc"
+@@ -272,7 +272,7 @@
+       
+         <receiver
+             android:name="com.google.android.finsky.accounts.impl.AccountsChangedReceiver"
+-            android:permission="com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE"
++            android:permission="app.revanced.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE"
+             android:exported="true">
+             <intent-filter>
+                 <action android:name="com.google.android.gms.auth.GOOGLE_ACCOUNT_CHANGE"/>
+diff -Naur inputbak/vending-app/src/main/java/org/microg/vending/billing/GServices.kt input/vending-app/src/main/java/org/microg/vending/billing/GServices.kt
+--- inputbak/vending-app/src/main/java/org/microg/vending/billing/GServices.kt	2026-02-11 02:16:22.000000000 +0300
++++ input/vending-app/src/main/java/org/microg/vending/billing/GServices.kt	2026-02-16 09:52:52.000000000 +0300
+@@ -5,7 +5,7 @@
+ 
+ // TODO: Move
+ object GServices {
+-    private val CONTENT_URI: Uri = Uri.parse("content://com.google.android.gsf.gservices")
++    private val CONTENT_URI: Uri = Uri.parse("content://app.revanced.android.gsf.gservices")
+ 
+     fun getString(resolver: ContentResolver, key: String, defaultValue: String?): String? {
+         var result = defaultValue
