@@ -7,15 +7,10 @@ cd input
 patch -t -s -p1 < ../gmscore.patch
 cp -r ../profiles/*.xml play-services-core/src/main/res/xml
 export GRADLE_MICROG_VERSION_WITHOUT_GIT=0
-./gradlew :play-services-core:assembleMapboxDefault :play-services-core:assembleMapboxHuawei
-mkdir ../outputog
-mkdir ../outputhw
-cp play-services-core/build/outputs/apk/mapboxDefault/release/*.apk ../outputog
-cp play-services-core/build/outputs/apk/mapboxHuawei/release/*.apk ../outputhw
-zipalign -p 4 ../outputog/*.apk ../outputog/aligned.apk
-zipalign -p 4 ../outputhw/*.apk ../outputhw/aligned.apk
-apksigner sign --ks-key-alias lob --ks ../sign.keystore --ks-pass pass:369852 --key-pass pass:369852 ../outputog/aligned.apk
-apksigner sign --ks-key-alias lob --ks ../sign.keystore --ks-pass pass:369852 --key-pass pass:369852 ../outputhw/aligned.apk
+./gradlew :play-services-core:assembleMapboxUser
+mkdir ../output
+cp play-services-core/build/outputs/apk/mapboxUser/release/*.apk ../output
+zipalign -p 4 ../output/*.apk ../output/aligned.apk
+apksigner sign --ks-key-alias lob --ks ../sign.keystore --ks-pass pass:369852 --key-pass pass:369852 ../output/aligned.apk
 mkdir ../prebuilt
-cp ../outputhw/aligned.apk ../prebuilt/gmscore-huawei.apk
-cp ../outputog/aligned.apk ../prebuilt/gmscore-original.apk
+cp ../output/aligned.apk ../prebuilt/gmscore-user.apk
