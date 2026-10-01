@@ -1,6 +1,6 @@
 diff -Naur inputbak/.github/workflows/release.yml input/.github/workflows/release.yml
 --- inputbak/.github/workflows/release.yml	1970-01-01 03:00:00.000000000 +0300
-+++ input/.github/workflows/release.yml	2026-09-27 12:45:03.950845458 +0300
++++ input/.github/workflows/release.yml	2026-10-01 12:15:31.806193060 +0300
 @@ -0,0 +1,55 @@
 +name: Release
 +
@@ -58,8 +58,8 @@ diff -Naur inputbak/.github/workflows/release.yml input/.github/workflows/releas
 +        with:
 +          artifacts: play-services-core/build/outputs/apk/releases/*-signed.apk
 diff -Naur inputbak/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt input/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt
---- inputbak/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2026-09-27 12:44:43.635507776 +0300
-+++ input/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2026-09-27 12:45:03.950959387 +0300
+--- inputbak/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2026-10-01 12:15:56.007266081 +0300
++++ input/play-services-ads-identifier/core/src/main/kotlin/org/microg/gms/ads/identifier/AdvertisingIdService.kt	2026-10-01 12:15:31.806649210 +0300
 @@ -64,7 +64,7 @@
              for (packageName in packageNames) {
                  val applicationInfo = context.packageManager.getApplicationInfo(packageName, 0)
@@ -70,8 +70,8 @@ diff -Naur inputbak/play-services-ads-identifier/core/src/main/kotlin/org/microg
                      }
                  }
 diff -Naur inputbak/play-services-auth-api-phone/core/src/main/kotlin/org/microg/gms/auth/phone/SmsRetrieverCore.kt input/play-services-auth-api-phone/core/src/main/kotlin/org/microg/gms/auth/phone/SmsRetrieverCore.kt
---- inputbak/play-services-auth-api-phone/core/src/main/kotlin/org/microg/gms/auth/phone/SmsRetrieverCore.kt	2026-09-27 12:44:43.661571049 +0300
-+++ input/play-services-auth-api-phone/core/src/main/kotlin/org/microg/gms/auth/phone/SmsRetrieverCore.kt	2026-09-27 12:45:03.954358290 +0300
+--- inputbak/play-services-auth-api-phone/core/src/main/kotlin/org/microg/gms/auth/phone/SmsRetrieverCore.kt	2026-10-01 12:15:56.055126329 +0300
++++ input/play-services-auth-api-phone/core/src/main/kotlin/org/microg/gms/auth/phone/SmsRetrieverCore.kt	2026-10-01 12:15:31.806950490 +0300
 @@ -41,7 +41,6 @@
  import kotlinx.coroutines.sync.withLock
  import org.microg.gms.auth.phone.SmsRetrieverRequestType.RETRIEVER
@@ -90,8 +90,8 @@ diff -Naur inputbak/play-services-auth-api-phone/core/src/main/kotlin/org/microg
              override fun handleMessage(msg: Message) {
                  if (Binder.getCallingUid() == Process.myUid()) {
 diff -Naur inputbak/play-services-auth-api-phone/src/main/java/com/google/android/gms/auth/api/phone/SmsRetriever.java input/play-services-auth-api-phone/src/main/java/com/google/android/gms/auth/api/phone/SmsRetriever.java
---- inputbak/play-services-auth-api-phone/src/main/java/com/google/android/gms/auth/api/phone/SmsRetriever.java	2026-09-27 12:44:43.665343858 +0300
-+++ input/play-services-auth-api-phone/src/main/java/com/google/android/gms/auth/api/phone/SmsRetriever.java	2026-09-27 12:45:03.954590857 +0300
+--- inputbak/play-services-auth-api-phone/src/main/java/com/google/android/gms/auth/api/phone/SmsRetriever.java	2026-10-01 12:15:56.064015040 +0300
++++ input/play-services-auth-api-phone/src/main/java/com/google/android/gms/auth/api/phone/SmsRetriever.java	2026-10-01 12:15:31.807267100 +0300
 @@ -47,7 +47,7 @@
       * Permission that's used to register the receiver to detect that the broadcaster is the SMS Retriever.
       */
@@ -102,8 +102,8 @@ diff -Naur inputbak/play-services-auth-api-phone/src/main/java/com/google/androi
       * Intent action when SMS message is retrieved.
       */
 diff -Naur inputbak/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java input/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java
---- inputbak/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2026-09-27 12:44:43.678017818 +0300
-+++ input/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2026-09-27 12:45:03.954763085 +0300
+--- inputbak/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2026-10-01 12:15:56.079381143 +0300
++++ input/play-services-base/core/src/main/java/org/microg/gms/common/PackageUtils.java	2026-10-01 12:15:31.807514120 +0300
 @@ -51,6 +51,9 @@
      @Deprecated
      public static boolean isGooglePackage(@NonNull Context context, @Nullable String packageName) {
@@ -171,7 +171,7 @@ diff -Naur inputbak/play-services-base/core/src/main/java/org/microg/gms/common/
      public static String[] getCallingPackageCandidates(@NonNull Context context) {
 diff -Naur inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt input/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt
 --- inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	1970-01-01 03:00:00.000000000 +0300
-+++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	2026-09-27 12:45:03.954991193 +0300
++++ input/play-services-base/core/src/main/kotlin/org/microg/gms/common/PackageSpoofUtils.kt	2026-10-01 12:15:31.807866800 +0300
 @@ -0,0 +1,157 @@
 +package org.microg.gms.common
 +
@@ -332,8 +332,8 @@ diff -Naur inputbak/play-services-base/core/src/main/kotlin/org/microg/gms/commo
 +}
 \ В конце файла нет новой строки
 diff -Naur inputbak/play-services-base/src/main/java/com/google/android/gms/common/GooglePlayServicesUtil.java input/play-services-base/src/main/java/com/google/android/gms/common/GooglePlayServicesUtil.java
---- inputbak/play-services-base/src/main/java/com/google/android/gms/common/GooglePlayServicesUtil.java	2026-09-27 12:44:43.688880059 +0300
-+++ input/play-services-base/src/main/java/com/google/android/gms/common/GooglePlayServicesUtil.java	2026-09-27 12:45:03.955117052 +0300
+--- inputbak/play-services-base/src/main/java/com/google/android/gms/common/GooglePlayServicesUtil.java	2026-10-01 12:15:56.096570515 +0300
++++ input/play-services-base/src/main/java/com/google/android/gms/common/GooglePlayServicesUtil.java	2026-10-01 12:15:31.807995190 +0300
 @@ -137,7 +137,7 @@
       */
      public static Context getRemoteContext(Context context) {
@@ -353,8 +353,8 @@ diff -Naur inputbak/play-services-base/src/main/java/com/google/android/gms/comm
              return null;
          }
 diff -Naur inputbak/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java
---- inputbak/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2026-09-27 12:44:43.692660427 +0300
-+++ input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2026-09-27 12:45:03.955316880 +0300
+--- inputbak/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2026-10-01 12:15:56.102863458 +0300
++++ input/play-services-base/src/main/java/org/microg/gms/common/MultiConnectionKeeper.java	2026-10-01 12:15:31.808253480 +0300
 @@ -113,6 +113,10 @@
      }
  
@@ -385,8 +385,8 @@ diff -Naur inputbak/play-services-base/src/main/java/org/microg/gms/common/Multi
              } catch (PackageManager.NameNotFoundException e) {
                  return false;
 diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java input/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java
---- inputbak/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2026-09-27 12:44:43.696877361 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2026-09-27 12:45:03.988465682 +0300
+--- inputbak/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2026-10-01 12:15:56.107889473 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/auth/AuthConstants.java	2026-10-01 12:15:31.808544520 +0300
 @@ -23,7 +23,7 @@
      public static final String PROVIDER_METHOD_CLEAR_PASSWORD = "clear_password";
      public static final String PROVIDER_EXTRA_CLEAR_PASSWORD = "clear_password";
@@ -397,8 +397,8 @@ diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/auth/Aut
  
      public static final String KEY_ACCOUNT_SERVICES = "services";
 diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/common/Constants.java input/play-services-basement/src/main/java/org/microg/gms/common/Constants.java
---- inputbak/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2026-09-27 12:44:43.696979860 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2026-09-27 12:45:03.988649750 +0300
+--- inputbak/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2026-10-01 12:15:56.108419942 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/common/Constants.java	2026-10-01 12:15:31.808712020 +0300
 @@ -21,7 +21,7 @@
  public class Constants {
      public static final int GMS_VERSION_CODE = (BuildConfig.VERSION_CODE / 1000) * 1000;
@@ -409,8 +409,8 @@ diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/common/C
      public static final String GMS_PACKAGE_SIGNATURE_SHA1 = "38918a453d07199354f8b19af05ec6562ced5788";
      public static final String GMS_SECONDARY_PACKAGE_SIGNATURE_SHA1 = "bd32424203e0fb25f36b57e5aa356f9bdd1da998";
 diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java
---- inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2026-09-27 12:44:43.697232027 +0300
-+++ input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2026-09-27 12:45:03.988794599 +0300
+--- inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2026-10-01 12:15:56.108595242 +0300
++++ input/play-services-basement/src/main/java/org/microg/gms/gcm/GcmConstants.java	2026-10-01 12:15:31.808878280 +0300
 @@ -88,10 +88,10 @@
      public static final String SCHEDULER_ACTION_CANCEL_ALL = "CANCEL_ALL";
      public static final String SCHEDULER_ACTION_SCHEDULE = "SCHEDULE_TASK";
@@ -426,8 +426,8 @@ diff -Naur inputbak/play-services-basement/src/main/java/org/microg/gms/gcm/GcmC
      public static final String ERROR_SERVICE_NOT_AVAILABLE = "SERVICE_NOT_AVAILABLE";
  
 diff -Naur inputbak/play-services-core/build.gradle input/play-services-core/build.gradle
---- inputbak/play-services-core/build.gradle	2026-09-27 12:44:43.706844051 +0300
-+++ input/play-services-core/build.gradle	2026-09-27 12:45:03.988952477 +0300
+--- inputbak/play-services-core/build.gradle	2026-10-01 12:15:56.124174075 +0300
++++ input/play-services-core/build.gradle	2026-10-01 12:15:31.809080129 +0300
 @@ -126,6 +126,8 @@
      }
  
@@ -468,8 +468,8 @@ diff -Naur inputbak/play-services-core/build.gradle input/play-services-core/bui
          "hms" {
              dimension 'maps'
 diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-services-core/src/main/AndroidManifest.xml
---- inputbak/play-services-core/src/main/AndroidManifest.xml	2026-09-27 12:44:43.710368232 +0300
-+++ input/play-services-core/src/main/AndroidManifest.xml	2026-09-27 12:45:03.989277383 +0300
+--- inputbak/play-services-core/src/main/AndroidManifest.xml	2026-10-01 12:15:56.130507928 +0300
++++ input/play-services-core/src/main/AndroidManifest.xml	2026-10-01 12:15:31.809429249 +0300
 @@ -17,124 +17,124 @@
      xmlns:tools="http://schemas.android.com/tools">
  
@@ -676,7 +676,7 @@ diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-s
              android:name="org.microg.gms.settings.GmsFileProvider"
              android:exported="false"
              android:grantUriPermissions="true">
-@@ -538,7 +538,7 @@
+@@ -564,7 +564,7 @@
  
          <provider
              android:name="org.microg.gms.auth.AccountContentProvider"
@@ -685,7 +685,7 @@ diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-s
              android:exported="true" />
  
          <activity
-@@ -808,13 +808,13 @@
+@@ -834,13 +834,13 @@
          <!-- Chimera -->
          <provider
              android:name="org.microg.gms.chimera.ServiceProvider"
@@ -701,7 +701,7 @@ diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-s
              android:exported="true" />
  
          <!-- microG Settings activity -->
-@@ -987,7 +987,7 @@
+@@ -1013,7 +1013,7 @@
  
          <provider
              android:name="org.microg.gms.phenotype.ConfigurationProvider"
@@ -710,7 +710,7 @@ diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-s
              android:exported="true" />
  
          <service android:name="org.microg.gms.phenotype.PhenotypeService">
-@@ -1514,6 +1514,23 @@
+@@ -1540,6 +1540,23 @@
                      tools:ignore="WearableBindListener" />
              </intent-filter>
          </service>
@@ -735,8 +735,8 @@ diff -Naur inputbak/play-services-core/src/main/AndroidManifest.xml input/play-s
  
  </manifest>
 diff -Naur inputbak/play-services-core/src/main/java/com/google/android/gms/auth/TokenActivity.java input/play-services-core/src/main/java/com/google/android/gms/auth/TokenActivity.java
---- inputbak/play-services-core/src/main/java/com/google/android/gms/auth/TokenActivity.java	2026-09-27 12:44:43.711003716 +0300
-+++ input/play-services-core/src/main/java/com/google/android/gms/auth/TokenActivity.java	2026-09-27 12:45:03.989593500 +0300
+--- inputbak/play-services-core/src/main/java/com/google/android/gms/auth/TokenActivity.java	2026-10-01 12:15:56.130921818 +0300
++++ input/play-services-core/src/main/java/com/google/android/gms/auth/TokenActivity.java	2026-10-01 12:15:31.809717169 +0300
 @@ -30,7 +30,7 @@
          extras.get("KEY");
          Log.d(TAG, extras.toString());
@@ -747,8 +747,8 @@ diff -Naur inputbak/play-services-core/src/main/java/com/google/android/gms/auth
              public void run(AccountManagerFuture<Bundle> future) {
                  try {
 diff -Naur inputbak/play-services-core/src/main/java/com/google/android/gms/chimera/container/DynamiteContext.java input/play-services-core/src/main/java/com/google/android/gms/chimera/container/DynamiteContext.java
---- inputbak/play-services-core/src/main/java/com/google/android/gms/chimera/container/DynamiteContext.java	2026-09-27 12:44:43.711101844 +0300
-+++ input/play-services-core/src/main/java/com/google/android/gms/chimera/container/DynamiteContext.java	2026-09-27 12:45:03.989743038 +0300
+--- inputbak/play-services-core/src/main/java/com/google/android/gms/chimera/container/DynamiteContext.java	2026-10-01 12:15:56.131048578 +0300
++++ input/play-services-core/src/main/java/com/google/android/gms/chimera/container/DynamiteContext.java	2026-10-01 12:15:31.809899159 +0300
 @@ -7,6 +7,8 @@
  
  import android.content.Context;
@@ -776,8 +776,8 @@ diff -Naur inputbak/play-services-core/src/main/java/com/google/android/gms/chim
          return appContext;
      }
 diff -Naur inputbak/play-services-core/src/main/java/com/google/android/gms/chimera/DynamiteContextFactory.java input/play-services-core/src/main/java/com/google/android/gms/chimera/DynamiteContextFactory.java
---- inputbak/play-services-core/src/main/java/com/google/android/gms/chimera/DynamiteContextFactory.java	2026-09-27 12:44:43.711003716 +0300
-+++ input/play-services-core/src/main/java/com/google/android/gms/chimera/DynamiteContextFactory.java	2026-09-27 12:45:03.989886067 +0300
+--- inputbak/play-services-core/src/main/java/com/google/android/gms/chimera/DynamiteContextFactory.java	2026-10-01 12:15:56.130921818 +0300
++++ input/play-services-core/src/main/java/com/google/android/gms/chimera/DynamiteContextFactory.java	2026-10-01 12:15:31.810075919 +0300
 @@ -15,12 +15,11 @@
  import android.os.Process;
  import android.util.Log;
@@ -802,8 +802,8 @@ diff -Naur inputbak/play-services-core/src/main/java/com/google/android/gms/chim
  
              DynamiteContext dynamiteContext;
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2026-09-27 12:44:43.712560928 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2026-09-27 12:45:03.990053075 +0300
+--- inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2026-10-01 12:15:56.132603416 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/AuthManager.java	2026-10-01 12:15:31.810303559 +0300
 @@ -17,6 +17,7 @@
  import org.microg.gms.accountaction.ErrorResolverKt;
  import org.microg.gms.accountaction.Resolution;
@@ -812,7 +812,7 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthMan
  import org.microg.gms.common.PackageUtils;
  import org.microg.gms.settings.SettingsContract;
  
-@@ -331,8 +332,10 @@
+@@ -335,8 +336,10 @@
          }
          AuthRequest request = new AuthRequest().fromContext(context)
                  .source("android")
@@ -826,8 +826,8 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/AuthMan
                  .service(service)
                  .delegation(delegationType, delegateeUserId)
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java input/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2026-09-27 12:44:43.712885115 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2026-09-27 12:45:03.990247613 +0300
+--- inputbak/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2026-10-01 12:15:56.132964916 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java	2026-10-01 12:15:31.810491689 +0300
 @@ -46,6 +46,7 @@
  import androidx.annotation.StringRes;
  import androidx.webkit.WebViewClientCompat;
@@ -866,17 +866,17 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/login/L
          sendBroadcast(intent);
      }
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java input/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2026-09-27 12:44:43.712885115 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2026-09-27 12:45:03.990740864 +0300
-@@ -30,6 +30,7 @@
- import com.google.android.gms.common.internal.CertData;
+--- inputbak/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2026-10-01 12:15:56.132964916 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/auth/loginservice/AccountAuthenticator.java	2026-10-01 12:16:45.982207105 +0300
+@@ -22,6 +22,7 @@
+ import org.microg.gms.accountaction.Resolution;
  import org.microg.gms.auth.*;
  import org.microg.gms.auth.login.LoginActivity;
 +import org.microg.gms.common.PackageSpoofUtils;
+ import org.microg.gms.common.NotOkayException;
  import org.microg.gms.common.PackageUtils;
  import org.microg.gms.auth.AuthResponse;
- import org.microg.gms.utils.PackageManagerUtilsKt;
-@@ -142,7 +143,7 @@
+@@ -153,7 +154,7 @@
                  Intent i = new Intent(context, AskPermissionActivity.class);
                  i.putExtras(options);
                  i.putExtra(KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
@@ -886,8 +886,8 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/auth/loginse
                  i.putExtra(KEY_ACCOUNT_NAME, account.name);
                  i.putExtra(KEY_AUTHTOKEN, authTokenType);
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/games/GamesStubService.java input/play-services-core/src/main/java/org/microg/gms/games/GamesStubService.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/games/GamesStubService.java	2026-09-27 12:44:43.713554777 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/games/GamesStubService.java	2026-09-27 12:45:03.991467810 +0300
+--- inputbak/play-services-core/src/main/java/org/microg/gms/games/GamesStubService.java	2026-10-01 12:15:56.133958205 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/games/GamesStubService.java	2026-10-01 12:15:31.811151199 +0300
 @@ -22,6 +22,7 @@
  import android.os.RemoteException;
  
@@ -906,8 +906,8 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/games/GamesS
          Bundle bundle = new Bundle();
          bundle.putParcelable("pendingIntent", PendingIntentCompat.getActivity(this, packageName.hashCode(), intent, FLAG_UPDATE_CURRENT, false));
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gcm/McsService.java input/play-services-core/src/main/java/org/microg/gms/gcm/McsService.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/gcm/McsService.java	2026-09-27 12:44:43.714037132 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/gcm/McsService.java	2026-09-27 12:45:03.991648858 +0300
+--- inputbak/play-services-core/src/main/java/org/microg/gms/gcm/McsService.java	2026-10-01 12:15:56.134561474 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/gcm/McsService.java	2026-10-01 12:15:31.811407359 +0300
 @@ -45,6 +45,7 @@
  import androidx.core.app.PendingIntentCompat;
  import androidx.legacy.content.WakefulBroadcastReceiver;
@@ -916,7 +916,7 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gcm/McsServi
  import com.squareup.wire.Message;
  
  import org.microg.gms.checkin.LastCheckinInfo;
-@@ -506,7 +507,7 @@
+@@ -525,7 +526,7 @@
  
      private void notifyGcmConnected() {
          Intent intent = new Intent(ACTION_GCM_CONNECTED);
@@ -926,8 +926,8 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gcm/McsServi
      }
  
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java input/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2026-09-27 12:44:43.714519807 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2026-09-27 12:45:03.991876825 +0300
+--- inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2026-10-01 12:15:56.135099283 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServices.java	2026-10-01 12:15:31.811591319 +0300
 @@ -22,9 +22,9 @@
  import android.net.Uri;
  
@@ -942,9 +942,9 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GS
      public static int setString(ContentResolver resolver, String key, String value) {
          ContentValues values = new ContentValues();
 diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java input/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java
---- inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2026-09-27 12:44:43.714557166 +0300
-+++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2026-09-27 12:45:03.992030784 +0300
-@@ -39,7 +39,7 @@
+--- inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2026-10-01 12:15:56.135167283 +0300
++++ input/play-services-core/src/main/java/org/microg/gms/gservices/GServicesProvider.java	2026-10-01 12:15:31.811770539 +0300
+@@ -48,7 +48,7 @@
   * if certain "experiments" are enabled on the device.
   */
  public class GServicesProvider extends ContentProvider {
@@ -954,8 +954,8 @@ diff -Naur inputbak/play-services-core/src/main/java/org/microg/gms/gservices/GS
      public static final Uri OVERRIDE_URI = Uri.withAppendedPath(CONTENT_URI, "override");
      public static final Uri PREFIX_URI = Uri.withAppendedPath(CONTENT_URI, "prefix");
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/MainActivity.kt input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/MainActivity.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/MainActivity.kt	2026-09-27 12:44:43.720494011 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/MainActivity.kt	2026-09-27 12:45:03.992216232 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/MainActivity.kt	2026-10-01 12:15:56.150290647 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/accountsettings/ui/MainActivity.kt	2026-10-01 12:15:31.811933759 +0300
 @@ -28,6 +28,7 @@
  import androidx.appcompat.widget.Toolbar
  import androidx.core.content.ContextCompat
@@ -974,8 +974,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/accountset
          }.let { sendBroadcast(it) }
      }
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/credentials/identity/AuthorizationService.kt input/play-services-core/src/main/kotlin/org/microg/gms/auth/credentials/identity/AuthorizationService.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/credentials/identity/AuthorizationService.kt	2026-09-27 12:44:43.722469009 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/auth/credentials/identity/AuthorizationService.kt	2026-09-27 12:45:03.992444689 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/credentials/identity/AuthorizationService.kt	2026-10-01 12:15:56.153126964 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/auth/credentials/identity/AuthorizationService.kt	2026-10-01 12:15:31.812255089 +0300
 @@ -16,6 +16,7 @@
  import androidx.lifecycle.Lifecycle
  import androidx.lifecycle.LifecycleOwner
@@ -1009,8 +1009,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/crede
 \ В конце файла нет новой строки
 +}
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/folsom/KeyRetrievalService.kt input/play-services-core/src/main/kotlin/org/microg/gms/auth/folsom/KeyRetrievalService.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/folsom/KeyRetrievalService.kt	2026-09-27 12:44:43.723538128 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/auth/folsom/KeyRetrievalService.kt	2026-09-27 12:45:03.992644027 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/folsom/KeyRetrievalService.kt	2026-10-01 12:15:56.153987223 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/auth/folsom/KeyRetrievalService.kt	2026-10-01 12:15:31.812570918 +0300
 @@ -42,6 +42,7 @@
  import org.microg.gms.common.PackageUtils
  import org.microg.gms.utils.warnOnTransactionIssues
@@ -1020,8 +1020,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/folso
  private const val TAG = "KeyRetrievalService"
  
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/signin/AssistedSignInActivity.kt input/play-services-core/src/main/kotlin/org/microg/gms/auth/signin/AssistedSignInActivity.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/signin/AssistedSignInActivity.kt	2026-09-27 12:44:43.724996542 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/auth/signin/AssistedSignInActivity.kt	2026-09-27 12:45:03.992842965 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/signin/AssistedSignInActivity.kt	2026-10-01 12:15:56.156237321 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/auth/signin/AssistedSignInActivity.kt	2026-10-01 12:15:31.812890888 +0300
 @@ -9,6 +9,7 @@
  import android.os.Bundle
  import android.util.Log
@@ -1048,8 +1048,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/auth/signi
              putExtra("nonce", signInIntentRequest?.nonce)
          }
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/credential/CredentialManagerService.kt input/play-services-core/src/main/kotlin/org/microg/gms/credential/CredentialManagerService.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/credential/CredentialManagerService.kt	2026-09-27 12:44:43.726382216 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/credential/CredentialManagerService.kt	2026-09-27 12:46:29.279670051 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/credential/CredentialManagerService.kt	2026-10-01 12:15:56.157787269 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/credential/CredentialManagerService.kt	2026-10-01 12:15:31.813114758 +0300
 @@ -15,6 +15,7 @@
  import androidx.lifecycle.Lifecycle
  import androidx.lifecycle.LifecycleOwner
@@ -1083,8 +1083,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/credential
 \ В конце файла нет новой строки
 +}
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/GamesService.kt input/play-services-core/src/main/kotlin/org/microg/gms/games/GamesService.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/GamesService.kt	2026-09-27 12:44:43.727453665 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/games/GamesService.kt	2026-09-27 12:45:03.993254271 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/GamesService.kt	2026-10-01 12:15:56.159418777 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/games/GamesService.kt	2026-10-01 12:15:31.813469718 +0300
 @@ -63,6 +63,7 @@
  import java.io.File
  import java.io.FileOutputStream
@@ -1103,8 +1103,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/Game
          putExtra(EXTRA_GAME_PACKAGE_NAME, packageName)
          addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/ui/GamesUiFragment.kt input/play-services-core/src/main/kotlin/org/microg/gms/games/ui/GamesUiFragment.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/ui/GamesUiFragment.kt	2026-09-27 12:44:43.728636432 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/games/ui/GamesUiFragment.kt	2026-09-27 12:45:03.993500518 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/ui/GamesUiFragment.kt	2026-10-01 12:15:56.161078395 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/games/ui/GamesUiFragment.kt	2026-10-01 12:15:31.813895608 +0300
 @@ -28,6 +28,7 @@
  import androidx.lifecycle.lifecycleScope
  import androidx.recyclerview.widget.LinearLayoutManager
@@ -1131,8 +1131,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/games/ui/G
              intent.putExtra(EXTRA_ACCOUNT_KEY, Integer.toHexString(currentAccount?.name.hashCode()))
              intent.putExtra(EXTRA_LEADERBOARD_ID, leaderboard.id)
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmInGmsService.kt input/play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmInGmsService.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmInGmsService.kt	2026-09-27 12:44:43.728636432 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmInGmsService.kt	2026-09-27 12:45:03.993729776 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmInGmsService.kt	2026-10-01 12:15:56.161190205 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmInGmsService.kt	2026-10-01 12:15:31.814212298 +0300
 @@ -69,7 +69,7 @@
                      handleIntent(intent)
                  } else {
@@ -1164,8 +1164,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmInG
              }.let { sendBroadcast(it) }
          }
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/gcm/registeration/ChimeGmsRegistrationHelper.kt input/play-services-core/src/main/kotlin/org/microg/gms/gcm/registeration/ChimeGmsRegistrationHelper.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/gcm/registeration/ChimeGmsRegistrationHelper.kt	2026-09-27 12:44:43.729513052 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/gcm/registeration/ChimeGmsRegistrationHelper.kt	2026-09-27 12:45:03.993904744 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/gcm/registeration/ChimeGmsRegistrationHelper.kt	2026-10-01 12:15:56.163176283 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/gcm/registeration/ChimeGmsRegistrationHelper.kt	2026-10-01 12:15:31.814479418 +0300
 @@ -12,6 +12,7 @@
  import android.util.Log
  import androidx.core.app.NotificationManagerCompat
@@ -1184,8 +1184,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/gcm/regist
              versionName = packageInfo.versionName
              release = Build.VERSION.RELEASE
 diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/ui/AccountsFragment.kt input/play-services-core/src/main/kotlin/org/microg/gms/ui/AccountsFragment.kt
---- inputbak/play-services-core/src/main/kotlin/org/microg/gms/ui/AccountsFragment.kt	2026-09-27 12:44:43.730698189 +0300
-+++ input/play-services-core/src/main/kotlin/org/microg/gms/ui/AccountsFragment.kt	2026-09-27 12:45:03.994212100 +0300
+--- inputbak/play-services-core/src/main/kotlin/org/microg/gms/ui/AccountsFragment.kt	2026-10-01 12:15:56.165704690 +0300
++++ input/play-services-core/src/main/kotlin/org/microg/gms/ui/AccountsFragment.kt	2026-10-01 12:15:31.814838958 +0300
 @@ -21,11 +21,11 @@
  import androidx.preference.PreferenceCategory
  import androidx.preference.PreferenceFragmentCompat
@@ -1209,8 +1209,8 @@ diff -Naur inputbak/play-services-core/src/main/kotlin/org/microg/gms/ui/Account
      }
  
 diff -Naur inputbak/play-services-core/src/main/res/xml/authenticator.xml input/play-services-core/src/main/res/xml/authenticator.xml
---- inputbak/play-services-core/src/main/res/xml/authenticator.xml	2026-09-27 12:44:43.754774104 +0300
-+++ input/play-services-core/src/main/res/xml/authenticator.xml	2026-09-27 12:45:03.994384849 +0300
+--- inputbak/play-services-core/src/main/res/xml/authenticator.xml	2026-10-01 12:15:56.197376286 +0300
++++ input/play-services-core/src/main/res/xml/authenticator.xml	2026-10-01 12:15:31.815045558 +0300
 @@ -16,7 +16,7 @@
  
  <account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
@@ -1221,8 +1221,8 @@ diff -Naur inputbak/play-services-core/src/main/res/xml/authenticator.xml input/
      android:icon="@drawable/proprietary_auth_gls_ic_google_selected"
      android:smallIcon="@drawable/proprietary_auth_gls_ic_google_minitab_selected"
 diff -Naur inputbak/play-services-core/src/main/res/xml/contact_syncadapter.xml input/play-services-core/src/main/res/xml/contact_syncadapter.xml
---- inputbak/play-services-core/src/main/res/xml/contact_syncadapter.xml	2026-09-27 12:44:43.754987249 +0300
-+++ input/play-services-core/src/main/res/xml/contact_syncadapter.xml	2026-09-27 12:45:03.994518717 +0300
+--- inputbak/play-services-core/src/main/res/xml/contact_syncadapter.xml	2026-10-01 12:15:56.197376286 +0300
++++ input/play-services-core/src/main/res/xml/contact_syncadapter.xml	2026-10-01 12:15:31.815201848 +0300
 @@ -16,6 +16,6 @@
    -->
  
@@ -1233,8 +1233,8 @@ diff -Naur inputbak/play-services-core/src/main/res/xml/contact_syncadapter.xml 
                android:userVisible="false"/>
 \ В конце файла нет новой строки
 diff -Naur inputbak/play-services-core/src/main/res/xml/preferences_accounts.xml input/play-services-core/src/main/res/xml/preferences_accounts.xml
---- inputbak/play-services-core/src/main/res/xml/preferences_accounts.xml	2026-09-27 12:44:43.754987249 +0300
-+++ input/play-services-core/src/main/res/xml/preferences_accounts.xml	2026-09-27 12:45:03.994652676 +0300
+--- inputbak/play-services-core/src/main/res/xml/preferences_accounts.xml	2026-10-01 12:15:56.197747026 +0300
++++ input/play-services-core/src/main/res/xml/preferences_accounts.xml	2026-10-01 12:15:31.815353468 +0300
 @@ -17,7 +17,7 @@
              android:title="@string/pref_add_account_summary">
              <intent
@@ -1245,8 +1245,8 @@ diff -Naur inputbak/play-services-core/src/main/res/xml/preferences_accounts.xml
      </PreferenceCategory>
      <PreferenceCategory
 diff -Naur inputbak/play-services-gcm/src/main/AndroidManifest.xml input/play-services-gcm/src/main/AndroidManifest.xml
---- inputbak/play-services-gcm/src/main/AndroidManifest.xml	2026-09-27 12:44:43.787413725 +0300
-+++ input/play-services-gcm/src/main/AndroidManifest.xml	2026-09-27 12:45:04.022565855 +0300
+--- inputbak/play-services-gcm/src/main/AndroidManifest.xml	2026-10-01 12:15:56.251735348 +0300
++++ input/play-services-gcm/src/main/AndroidManifest.xml	2026-10-01 12:15:31.815540328 +0300
 @@ -18,7 +18,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -1257,8 +1257,8 @@ diff -Naur inputbak/play-services-gcm/src/main/AndroidManifest.xml input/play-se
  
      <!-- Move to play-services-measurement -->
 diff -Naur inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java
---- inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2026-09-27 12:44:43.787633633 +0300
-+++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2026-09-27 12:45:04.024006599 +0300
+--- inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2026-10-01 12:15:56.251981867 +0300
++++ input/play-services-gcm/src/main/java/com/google/android/gms/gcm/GcmReceiver.java	2026-10-01 12:15:31.815705098 +0300
 @@ -46,7 +46,7 @@
   * <receiver
   *     android:name="com.google.android.gms.gcm.GcmReceiver"
@@ -1269,8 +1269,8 @@ diff -Naur inputbak/play-services-gcm/src/main/java/com/google/android/gms/gcm/G
   *         <action android:name="com.google.android.c2dm.intent.RECEIVE" />
   *         <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 diff -Naur inputbak/play-services-iid/src/main/AndroidManifest.xml input/play-services-iid/src/main/AndroidManifest.xml
---- inputbak/play-services-iid/src/main/AndroidManifest.xml	2026-09-27 12:44:43.793224801 +0300
-+++ input/play-services-iid/src/main/AndroidManifest.xml	2026-09-27 12:45:04.024391275 +0300
+--- inputbak/play-services-iid/src/main/AndroidManifest.xml	2026-10-01 12:15:56.259904139 +0300
++++ input/play-services-iid/src/main/AndroidManifest.xml	2026-10-01 12:15:31.815944427 +0300
 @@ -7,6 +7,6 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -1280,8 +1280,8 @@ diff -Naur inputbak/play-services-iid/src/main/AndroidManifest.xml input/play-se
      <uses-permission android:name="android.permission.INTERNET"/>
  </manifest>
 diff -Naur inputbak/play-services-maps/core/mapbox/src/main/java/com/google/android/gms/maps/internal/CreatorImpl.java input/play-services-maps/core/mapbox/src/main/java/com/google/android/gms/maps/internal/CreatorImpl.java
---- inputbak/play-services-maps/core/mapbox/src/main/java/com/google/android/gms/maps/internal/CreatorImpl.java	2026-09-27 12:44:44.154842486 +0300
-+++ input/play-services-maps/core/mapbox/src/main/java/com/google/android/gms/maps/internal/CreatorImpl.java	2026-09-27 12:45:04.024609393 +0300
+--- inputbak/play-services-maps/core/mapbox/src/main/java/com/google/android/gms/maps/internal/CreatorImpl.java	2026-10-01 12:15:56.330284793 +0300
++++ input/play-services-maps/core/mapbox/src/main/java/com/google/android/gms/maps/internal/CreatorImpl.java	2026-10-01 12:15:31.816134857 +0300
 @@ -29,6 +29,7 @@
  import com.google.android.gms.maps.GoogleMapOptions;
  import com.google.android.gms.maps.StreetViewPanoramaOptions;
@@ -1317,8 +1317,8 @@ diff -Naur inputbak/play-services-maps/core/mapbox/src/main/java/com/google/andr
      }
  
 diff -Naur inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/GoogleMap.kt input/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/GoogleMap.kt
---- inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/GoogleMap.kt	2026-09-27 12:44:44.155428170 +0300
-+++ input/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/GoogleMap.kt	2026-09-27 12:45:04.024829430 +0300
+--- inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/GoogleMap.kt	2026-10-01 12:15:56.330912053 +0300
++++ input/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/GoogleMap.kt	2026-10-01 12:15:31.816362997 +0300
 @@ -36,7 +36,6 @@
  import com.google.android.gms.maps.model.*
  import com.google.android.gms.maps.model.CircleOptions
@@ -1344,8 +1344,8 @@ diff -Naur inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gm
              Mapbox.getInstance(mapContext, BuildConfig.MAPBOX_KEY, WellKnownTileServer.Mapbox)
          }
 diff -Naur inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MapContext.kt input/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MapContext.kt
---- inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MapContext.kt	2026-09-27 12:44:44.156731066 +0300
-+++ input/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MapContext.kt	2026-09-27 12:45:04.025055378 +0300
+--- inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MapContext.kt	2026-10-01 12:15:56.332611801 +0300
++++ input/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MapContext.kt	2026-10-01 12:15:31.816812207 +0300
 @@ -20,12 +20,14 @@
  import android.content.ContextWrapper
  import android.content.Intent
@@ -1404,8 +1404,8 @@ diff -Naur inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gm
      }
  }
 diff -Naur inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MultiArchLoader.kt input/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MultiArchLoader.kt
---- inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MultiArchLoader.kt	2026-09-27 12:44:44.156829675 +0300
-+++ input/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MultiArchLoader.kt	2026-09-27 12:45:04.025211096 +0300
+--- inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MultiArchLoader.kt	2026-10-01 12:15:56.332737691 +0300
++++ input/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gms/maps/mapbox/utils/MultiArchLoader.kt	2026-10-01 12:15:31.817005277 +0300
 @@ -17,45 +17,17 @@
  package org.microg.gms.maps.mapbox.utils
  
@@ -1478,8 +1478,8 @@ diff -Naur inputbak/play-services-maps/core/mapbox/src/main/kotlin/org/microg/gm
  
      companion object {
 diff -Naur inputbak/play-services-nearby/core/package/src/main/AndroidManifest.xml input/play-services-nearby/core/package/src/main/AndroidManifest.xml
---- inputbak/play-services-nearby/core/package/src/main/AndroidManifest.xml	2026-09-27 12:44:44.209956901 +0300
-+++ input/play-services-nearby/core/package/src/main/AndroidManifest.xml	2026-09-27 12:45:04.025441654 +0300
+--- inputbak/play-services-nearby/core/package/src/main/AndroidManifest.xml	2026-10-01 12:15:56.348432904 +0300
++++ input/play-services-nearby/core/package/src/main/AndroidManifest.xml	2026-10-01 12:15:31.817168707 +0300
 @@ -15,7 +15,7 @@
      <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
  
@@ -1490,8 +1490,8 @@ diff -Naur inputbak/play-services-nearby/core/package/src/main/AndroidManifest.x
  
      <application>
 diff -Naur inputbak/play-services-nearby/core/src/main/AndroidManifest.xml input/play-services-nearby/core/src/main/AndroidManifest.xml
---- inputbak/play-services-nearby/core/src/main/AndroidManifest.xml	2026-09-27 12:44:44.210373366 +0300
-+++ input/play-services-nearby/core/src/main/AndroidManifest.xml	2026-09-27 12:45:04.025600752 +0300
+--- inputbak/play-services-nearby/core/src/main/AndroidManifest.xml	2026-10-01 12:15:56.348712383 +0300
++++ input/play-services-nearby/core/src/main/AndroidManifest.xml	2026-10-01 12:15:31.817334397 +0300
 @@ -5,7 +5,7 @@
  <manifest xmlns:android="http://schemas.android.com/apk/res/android">
  
@@ -1502,8 +1502,8 @@ diff -Naur inputbak/play-services-nearby/core/src/main/AndroidManifest.xml input
  
      <application>
 diff -Naur inputbak/play-services-nearby/core/src/main/kotlin/org/microg/gms/nearby/exposurenotification/Constants.kt input/play-services-nearby/core/src/main/kotlin/org/microg/gms/nearby/exposurenotification/Constants.kt
---- inputbak/play-services-nearby/core/src/main/kotlin/org/microg/gms/nearby/exposurenotification/Constants.kt	2026-09-27 12:44:44.210714163 +0300
-+++ input/play-services-nearby/core/src/main/kotlin/org/microg/gms/nearby/exposurenotification/Constants.kt	2026-09-27 12:45:04.025755900 +0300
+--- inputbak/play-services-nearby/core/src/main/kotlin/org/microg/gms/nearby/exposurenotification/Constants.kt	2026-10-01 12:15:56.348988003 +0300
++++ input/play-services-nearby/core/src/main/kotlin/org/microg/gms/nearby/exposurenotification/Constants.kt	2026-10-01 12:15:31.817649397 +0300
 @@ -33,7 +33,7 @@
  const val CONFIRM_ACTION_KEYS = "keys"
  const val CONFIRM_PERMISSION_VALIDITY = 60 * 60 * 1000L
@@ -1514,8 +1514,8 @@ diff -Naur inputbak/play-services-nearby/core/src/main/kotlin/org/microg/gms/nea
  const val TX_POWER_LOW = -15
  
 diff -Naur inputbak/play-services-nearby/src/main/AndroidManifest.xml input/play-services-nearby/src/main/AndroidManifest.xml
---- inputbak/play-services-nearby/src/main/AndroidManifest.xml	2026-09-27 12:44:44.282765961 +0300
-+++ input/play-services-nearby/src/main/AndroidManifest.xml	2026-09-27 12:45:04.025907599 +0300
+--- inputbak/play-services-nearby/src/main/AndroidManifest.xml	2026-10-01 12:15:56.356749985 +0300
++++ input/play-services-nearby/src/main/AndroidManifest.xml	2026-10-01 12:15:31.817811697 +0300
 @@ -8,6 +8,6 @@
          <service
                  android:name="com.google.android.gms.nearby.exposurenotification.WakeUpService"
@@ -1525,8 +1525,8 @@ diff -Naur inputbak/play-services-nearby/src/main/AndroidManifest.xml input/play
      </application>
  </manifest>
 diff -Naur inputbak/play-services-nearby/src/main/java/com/google/android/gms/nearby/exposurenotification/ExposureNotificationClient.java input/play-services-nearby/src/main/java/com/google/android/gms/nearby/exposurenotification/ExposureNotificationClient.java
---- inputbak/play-services-nearby/src/main/java/com/google/android/gms/nearby/exposurenotification/ExposureNotificationClient.java	2026-09-27 12:44:44.285543531 +0300
-+++ input/play-services-nearby/src/main/java/com/google/android/gms/nearby/exposurenotification/ExposureNotificationClient.java	2026-09-27 12:45:04.026078897 +0300
+--- inputbak/play-services-nearby/src/main/java/com/google/android/gms/nearby/exposurenotification/ExposureNotificationClient.java	2026-10-01 12:15:56.359101582 +0300
++++ input/play-services-nearby/src/main/java/com/google/android/gms/nearby/exposurenotification/ExposureNotificationClient.java	2026-10-01 12:15:31.817994447 +0300
 @@ -248,7 +248,7 @@
       * <ul>
       * <li>{@code com.google.android.gms.exposurenotification.ACTION_EXPOSURE_STATE_UPDATED}</li>
@@ -1537,8 +1537,8 @@ diff -Naur inputbak/play-services-nearby/src/main/java/com/google/android/gms/ne
      Task<Void> start();
  
 diff -Naur inputbak/README.md input/README.md
---- inputbak/README.md	2026-09-27 12:44:43.562589028 +0300
-+++ input/README.md	2026-09-27 12:45:04.026269795 +0300
+--- inputbak/README.md	2026-10-01 12:15:55.979823320 +0300
++++ input/README.md	2026-10-01 12:15:31.818265267 +0300
 @@ -13,6 +13,22 @@
  
  If you'd like to help translate microG, take a look at [TRANSLATION](TRANSLATION.md).
@@ -1563,8 +1563,8 @@ diff -Naur inputbak/README.md input/README.md
  License
  -------
 diff -Naur inputbak/vending-app/src/main/AndroidManifest.xml input/vending-app/src/main/AndroidManifest.xml
---- inputbak/vending-app/src/main/AndroidManifest.xml	2026-09-27 12:44:44.327086184 +0300
-+++ input/vending-app/src/main/AndroidManifest.xml	2026-09-27 12:45:04.026454673 +0300
+--- inputbak/vending-app/src/main/AndroidManifest.xml	2026-10-01 12:15:56.400020488 +0300
++++ input/vending-app/src/main/AndroidManifest.xml	2026-10-01 12:15:31.818480717 +0300
 @@ -28,7 +28,7 @@
          tools:ignore="ProtectedPermissions" />
      <uses-permission android:name="android.permission.DELETE_PACKAGES"
@@ -1584,8 +1584,8 @@ diff -Naur inputbak/vending-app/src/main/AndroidManifest.xml input/vending-app/s
              <intent-filter>
                  <action android:name="com.google.android.gms.auth.GOOGLE_ACCOUNT_CHANGE"/>
 diff -Naur inputbak/vending-app/src/main/java/org/microg/vending/billing/GServices.kt input/vending-app/src/main/java/org/microg/vending/billing/GServices.kt
---- inputbak/vending-app/src/main/java/org/microg/vending/billing/GServices.kt	2026-09-27 12:44:44.331180249 +0300
-+++ input/vending-app/src/main/java/org/microg/vending/billing/GServices.kt	2026-09-27 12:45:04.026614791 +0300
+--- inputbak/vending-app/src/main/java/org/microg/vending/billing/GServices.kt	2026-10-01 12:15:56.406145752 +0300
++++ input/vending-app/src/main/java/org/microg/vending/billing/GServices.kt	2026-10-01 12:15:31.818736087 +0300
 @@ -5,7 +5,7 @@
  
  // TODO: Move
